@@ -4,14 +4,22 @@ const menuToggle = document.querySelector(".admin-menu-toggle");
 const adminSidebar = document.querySelector("#adminSidebar");
 const liveClocks = Array.from(document.querySelectorAll("[data-live-clock]"));
 const adminToast = document.querySelector("#adminToast");
+const adminConfirm = document.querySelector("#adminConfirm");
+const adminConfirmText = adminConfirm?.querySelector("[data-confirm-text]");
 const searchableAreas = Array.from(document.querySelectorAll("[data-admin-search-area], .admin-panel"));
+let adminToastTimer;
+let pendingConfirmForm;
 
 const showAdminToast = (message) => {
   if (!adminToast || !message) return;
 
+  window.clearTimeout(adminToastTimer);
   adminToast.textContent = message;
-  adminToast.classList.add("is-visible");
-  window.setTimeout(() => adminToast.classList.remove("is-visible"), 3200);
+  adminToast.classList.remove("is-visible");
+  window.requestAnimationFrame(() => {
+    adminToast.classList.add("is-visible");
+  });
+  adminToastTimer = window.setTimeout(() => adminToast.classList.remove("is-visible"), 3800);
 };
 
 monthFilter?.addEventListener("change", () => {
@@ -88,6 +96,10 @@ document.addEventListener("click", (event) => {
   const addButton = event.target.closest("[data-add-staff-row]");
   const removeButton = event.target.closest("[data-remove-staff-row]");
   const toastButton = event.target.closest("[data-toast-click]");
+  const editorSummary = event.target.closest(".inline-editor > summary");
+  const closeEditorButton = event.target.closest("[data-close-editor]");
+  const confirmCancel = event.target.closest("[data-confirm-cancel]");
+  const confirmAccept = event.target.closest("[data-confirm-accept]");
 
   if (addButton) {
     const list = addButton.closest("form")?.querySelector("[data-staff-assignment-list]");
@@ -114,6 +126,78 @@ document.addEventListener("click", (event) => {
   if (toastButton) {
     showAdminToast(toastButton.dataset.toastClick);
   }
+
+  if (editorSummary) {
+    const activeEditor = editorSummary.parentElement;
+    document.querySelectorAll(".inline-editor[open]").forEach((editor) => {
+      if (editor !== activeEditor) {
+        editor.removeAttribute("open");
+      }
+    });
+    const hasBackButton = Array.from(activeEditor.children).some((child) => child.matches?.("[data-close-editor]"));
+    if (!hasBackButton) {
+      const backButton = document.createElement("button");
+      backButton.className = "drawer-back";
+      backButton.type = "button";
+      backButton.dataset.closeEditor = "";
+      backButton.textContent = "\u2190 Tutup";
+      editorSummary.insertAdjacentElement("afterend", backButton);
+    }
+  }
+
+  if (closeEditorButton) {
+    closeEditorButton.closest(".inline-editor")?.removeAttribute("open");
+  }
+
+  if (confirmCancel) {
+    pendingConfirmForm = undefined;
+    adminConfirm?.setAttribute("hidden", "");
+    showAdminToast("Aksi dibatalkan.");
+  }
+
+  if (confirmAccept && pendingConfirmForm) {
+    const form = pendingConfirmForm;
+    pendingConfirmForm = undefined;
+    adminConfirm?.setAttribute("hidden", "");
+    form.dataset.skipConfirm = "true";
+    form.requestSubmit();
+  }
+});
+
+document.addEventListener("submit", (event) => {
+  const form = event.target.closest("form");
+  if (!form) return;
+
+  const noteInput = form.querySelector("[name='keterangan']");
+  if (form.hasAttribute("data-requires-note") && !noteInput?.value.trim()) {
+    event.preventDefault();
+    noteInput?.focus();
+    showAdminToast(form.dataset.noteMessage || "Lengkapi keterangan terlebih dahulu.");
+    return;
+  }
+
+  if (form.dataset.confirmMessage && form.dataset.skipConfirm !== "true") {
+    event.preventDefault();
+    pendingConfirmForm = form;
+    if (adminConfirmText) {
+      adminConfirmText.textContent = form.dataset.confirmMessage;
+    }
+    adminConfirm?.removeAttribute("hidden");
+    adminConfirm?.querySelector("[data-confirm-accept]")?.focus();
+    return;
+  }
+
+  delete form.dataset.skipConfirm;
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+
+  document.body.classList.remove("admin-menu-open");
+  menuToggle?.setAttribute("aria-expanded", "false");
+  document.querySelectorAll(".inline-editor[open]").forEach((editor) => editor.removeAttribute("open"));
+  pendingConfirmForm = undefined;
+  adminConfirm?.setAttribute("hidden", "");
 });
 
 showAdminToast(document.body.dataset.toastMessage);

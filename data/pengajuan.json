@@ -74,7 +74,7 @@
   },
   {
     "kode_pengajuan": "2026060004",
-    "status": "Menunggu Input Hasil",
+    "status": "Selesai",
     "instansi": "Universitas Nasional",
     "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
     "tanggal": "2026-06-29",
@@ -90,11 +90,11 @@
     "surat_file": "2026060004-Simodar-logo_1.png",
     "logistik": [],
     "created_at": "2026-06-03 12:39:26",
-    "deskripsi": "Kegiatan selesai dan menunggu input hasil kegiatan."
+    "deskripsi": "Hasil kegiatan sudah diinput dan tersimpan di histori."
   },
   {
     "kode_pengajuan": "2026060005",
-    "status": "Siap Kegiatan",
+    "status": "Menunggu Input Hasil",
     "instansi": "SMA 2 Babelan",
     "lokasi": "babelan",
     "tanggal": "2026-06-15",
@@ -110,6 +110,68 @@
     "surat_file": "2026060005-Simodar-logo_1.png",
     "logistik": [],
     "created_at": "2026-06-04 00:11:27",
+    "deskripsi": "Kegiatan selesai dan menunggu input hasil kegiatan."
+  },
+  {
+    "kode_pengajuan": "2026060006",
+    "status": "Siap Kegiatan",
+    "instansi": "pt",
+    "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
+    "tanggal": "2026-06-02",
+    "jam_mulai": "20:20",
+    "jam_selesai": "23:01",
+    "peserta": "202",
+    "nama_pic": "Muhammad Fauzan",
+    "whatsapp_pic": "0224",
+    "email_pic": "ojan14021@gmail.com",
+    "latitude": "-6.186173",
+    "longitude": "106.801263",
+    "surat_pengajuan": "Simodar-logo.png",
+    "surat_file": "2026060006-Simodar-logo.png",
+    "logistik": [],
+    "created_at": "2026-06-04 00:46:05",
+    "deskripsi": "Petugas sudah ditugaskan dan kegiatan siap dijadwalkan."
+  },
+  {
+    "kode_pengajuan": "2026060007",
+    "status": "Siap Kegiatan",
+    "instansi": "Mandiri Inhealth",
+    "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
+    "tanggal": "2026-06-17",
+    "jam_mulai": "22:00",
+    "jam_selesai": "23:00",
+    "peserta": "54",
+    "nama_pic": "Muhammad Fauzan",
+    "whatsapp_pic": "0224",
+    "email_pic": "ojan14021@gmail.com",
+    "latitude": "-6.224490",
+    "longitude": "106.823310",
+    "surat_pengajuan": "simodar_logo.png",
+    "surat_file": "2026060007-simodar_logo.png",
+    "logistik": [],
+    "created_at": "2026-06-04 01:03:04",
+    "deskripsi": "Petugas sudah ditugaskan dan kegiatan siap dijadwalkan."
+  },
+  {
+    "kode_pengajuan": "2026060008",
+    "status": "Siap Kegiatan",
+    "instansi": "SMA 12 Jakarta",
+    "lokasi": "SMA Negeri 12 Jakarta, Jl. Pertanian, Duren Sawit, Jakarta Timur",
+    "tanggal": "2026-06-17",
+    "jam_mulai": "22:00",
+    "jam_selesai": "23:00",
+    "peserta": "54",
+    "nama_pic": "Muhammad Fauzan",
+    "whatsapp_pic": "0224",
+    "email_pic": "ojan14021@gmail.com",
+    "latitude": "-6.232170",
+    "longitude": "106.915730",
+    "surat_pengajuan": "Simodar-logo_1.png",
+    "surat_file": "2026060008-Simodar-logo_1.png",
+    "logistik": [
+      "listrik"
+    ],
+    "created_at": "2026-06-04 01:28:57",
     "deskripsi": "Petugas sudah ditugaskan dan kegiatan siap dijadwalkan."
   }
 ]

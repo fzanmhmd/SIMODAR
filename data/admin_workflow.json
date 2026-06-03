@@ -2,6 +2,134 @@
   "assignments": [],
   "schedules": [
     {
+      "kode_pengajuan": "2026060006",
+      "tanggal_pengajuan": "2026-06-04 00:46:05",
+      "instansi": "pt",
+      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
+      "tanggal": "2026-06-02",
+      "jam_mulai": "20:20",
+      "jam_selesai": "23:01",
+      "peserta": "202",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0224",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [],
+      "surat_pengajuan": "Simodar-logo.png",
+      "created_at": "2026-06-04 00:46:05",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "aftap"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "aftap"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "admin"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "aftap"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "dokter"
+        }
+      ],
+      "pj_petugas": "dr.Yanto",
+      "status": "Siap Kegiatan",
+      "assigned_at": "2026-06-04 00:48:10",
+      "updated_at": "2026-06-04 01:32:27"
+    },
+    {
+      "kode_pengajuan": "2026060007",
+      "tanggal_pengajuan": "2026-06-04 01:03:04",
+      "instansi": "Mandiri Inhealth",
+      "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
+      "tanggal": "2026-06-17",
+      "jam_mulai": "22:00",
+      "jam_selesai": "23:00",
+      "peserta": "54",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0224",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [],
+      "surat_pengajuan": "simodar_logo.png",
+      "created_at": "2026-06-04 01:03:04",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter"
+        }
+      ],
+      "pj_petugas": "Muhammad Fauzan",
+      "status": "Siap Kegiatan",
+      "assigned_at": "2026-06-04 01:03:38"
+    },
+    {
+      "kode_pengajuan": "2026060008",
+      "tanggal_pengajuan": "2026-06-04 01:28:57",
+      "instansi": "SMA 12 Jakarta",
+      "lokasi": "SMA Negeri 12 Jakarta, Jl. Pertanian, Duren Sawit, Jakarta Timur",
+      "tanggal": "2026-06-17",
+      "jam_mulai": "22:00",
+      "jam_selesai": "23:00",
+      "peserta": "54",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0224",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [
+        "listrik"
+      ],
+      "surat_pengajuan": "Simodar-logo_1.png",
+      "created_at": "2026-06-04 01:28:57",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "aftap"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "aftap"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "hb"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "driver"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "dokter"
+        }
+      ],
+      "pj_petugas": "dr.Yanto",
+      "status": "Siap Kegiatan",
+      "assigned_at": "2026-06-04 01:30:10"
+    }
+  ],
+  "results": [
+    {
       "kode_pengajuan": "2026060005",
       "tanggal_pengajuan": "2026-06-04 00:11:27",
       "instansi": "SMA 2 Babelan",
@@ -18,46 +146,15 @@
       "created_at": "2026-06-04 00:11:27",
       "staff_assignments": [
         {
-          "name": "Muhammad Fauzan",
-          "role": "dokter"
-        },
-        {
           "name": "dr.Yanto",
-          "role": "dokter"
-        }
-      ],
-      "pj_petugas": "Muhammad Fauzan",
-      "status": "Siap Kegiatan",
-      "assigned_at": "2026-06-04 00:12:19"
-    }
-  ],
-  "results": [
-    {
-      "kode_pengajuan": "2026060004",
-      "tanggal_pengajuan": "2026-06-03 12:39:26",
-      "instansi": "Universitas Nasional",
-      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
-      "tanggal": "2026-06-29",
-      "jam_mulai": "22:00",
-      "jam_selesai": "23:00",
-      "peserta": "100",
-      "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "0224",
-      "email_pic": "ojan14021@gmail.com",
-      "logistik": [],
-      "surat_pengajuan": "Simodar-logo_1.png",
-      "created_at": "2026-06-03 12:39:26",
-      "staff_assignments": [
-        {
-          "name": "Muhammad Fauzan",
-          "role": "admin"
+          "role": "driver"
         }
       ],
       "pj_petugas": "Muhammad Fauzan",
       "status": "Menunggu Input Hasil",
-      "assigned_at": "2026-06-04 00:09:43",
-      "updated_at": "2026-06-04 00:10:09",
-      "finished_at": "2026-06-04 00:10:24"
+      "assigned_at": "2026-06-04 00:12:19",
+      "updated_at": "2026-06-04 00:53:22",
+      "finished_at": "2026-06-04 01:07:43"
     }
   ],
   "histories": [
@@ -175,6 +272,42 @@
         "catatan": ""
       },
       "completed_at": "2026-06-04 00:12:42"
+    },
+    {
+      "kode_pengajuan": "2026060004",
+      "tanggal_pengajuan": "2026-06-03 12:39:26",
+      "instansi": "Universitas Nasional",
+      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
+      "tanggal": "2026-06-29",
+      "jam_mulai": "22:00",
+      "jam_selesai": "23:00",
+      "peserta": "100",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0224",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [],
+      "surat_pengajuan": "Simodar-logo_1.png",
+      "created_at": "2026-06-03 12:39:26",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "admin"
+        }
+      ],
+      "pj_petugas": "Muhammad Fauzan",
+      "status": "Selesai",
+      "assigned_at": "2026-06-04 00:09:43",
+      "updated_at": "2026-06-04 00:10:09",
+      "finished_at": "2026-06-04 00:10:24",
+      "result": {
+        "donor_terdaftar": "463",
+        "donor_berhasil": "346",
+        "donor_gagal": "346",
+        "kantong_darah": "346",
+        "snack_terpakai": "",
+        "catatan": ""
+      },
+      "completed_at": "2026-06-04 00:49:20"
     }
   ],
   "staff": [
@@ -182,11 +315,13 @@
       "id": "ptg-1780506527",
       "name": "Muhammad Fauzan",
       "roles": [
+        "aftap",
         "admin",
         "driver"
       ],
       "absen": "4988",
-      "password": "1112233"
+      "password": "1112233",
+      "rekening": ""
     },
     {
       "id": "ptg-1780506550",
@@ -195,7 +330,8 @@
         "dokter"
       ],
       "absen": "1001",
-      "password": "1001"
+      "password": "1001",
+      "rekening": ""
     }
   ],
   "locations": [
@@ -218,6 +354,11 @@
       "id": "lok-1780506372",
       "name": "GKY Joglo",
       "address": "Joglo"
+    },
+    {
+      "id": "lok-1780508623",
+      "name": "tes",
+      "address": "tes"
     }
   ]
 }

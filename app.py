@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 from pathlib import Path
 
-from flask import Flask, abort, redirect, render_template, request, send_from_directory, session, url_for
+from flask import Flask, Response, abort, redirect, render_template, request, send_from_directory, session, url_for
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -128,6 +128,7 @@ def default_workflow():
                 "roles": ["admin", "driver"],
                 "absen": "0001",
                 "password": "1234",
+                "rekening": "",
             },
             {
                 "id": "ptg-002",
@@ -135,6 +136,7 @@ def default_workflow():
                 "roles": ["dokter"],
                 "absen": "0002",
                 "password": "1234",
+                "rekening": "",
             },
             {
                 "id": "ptg-003",
@@ -142,6 +144,7 @@ def default_workflow():
                 "roles": ["aftap", "hb"],
                 "absen": "0003",
                 "password": "1234",
+                "rekening": "",
             },
             {
                 "id": "ptg-004",
@@ -149,6 +152,7 @@ def default_workflow():
                 "roles": ["admin", "hb"],
                 "absen": "0004",
                 "password": "1234",
+                "rekening": "",
             },
             {
                 "id": "ptg-005",
@@ -156,6 +160,7 @@ def default_workflow():
                 "roles": ["driver"],
                 "absen": "0005",
                 "password": "1234",
+                "rekening": "",
             },
         ],
         "locations": [
@@ -184,6 +189,9 @@ def load_workflow():
 
     for key, value in defaults.items():
         workflow.setdefault(key, value)
+
+    for staff in workflow.get("staff", []):
+        staff.setdefault("rekening", "")
 
     return workflow
 
@@ -390,6 +398,21 @@ def rows_by_month(rows, selected_month):
     return [row for row in rows if same_month(row.get("tanggal") or row.get("completed_at"), selected_month)]
 
 
+def history_status_counts(rows):
+    counts = {"total": len(rows), "selesai": 0, "batal": 0, "ditolak": 0}
+
+    for row in rows:
+        status = (row.get("status") or "").lower()
+        if status == "selesai":
+            counts["selesai"] += 1
+        elif status == "batal":
+            counts["batal"] += 1
+        elif status == "ditolak":
+            counts["ditolak"] += 1
+
+    return counts
+
+
 def staff_history_rows(workflow, selected_month):
     rows = []
     activities = workflow.get("schedules", []) + workflow.get("results", []) + workflow.get("histories", [])
@@ -409,10 +432,11 @@ def staff_history_rows(workflow, selected_month):
                         "kode": activity.get("kode_pengajuan"),
                         "lokasi": activity.get("instansi"),
                         "tanggal": activity.get("tanggal"),
+                        "status": activity.get("status", "-"),
                         "fungsi": ", ".join(sorted({item.get("role", "-") for item in assigned})),
                     }
                 )
-        rows.append({"staff": staff, "total": len(places), "places": places})
+        rows.append({"staff": staff, "places": places, **history_status_counts(places)})
 
     return rows
 
@@ -424,9 +448,20 @@ def location_activity_rows(workflow, selected_month):
         if not same_month(history.get("tanggal"), selected_month):
             continue
         name = history.get("instansi", "-")
-        grouped.setdefault(name, {"name": name, "address": history.get("lokasi", "-"), "total": 0, "events": []})
-        grouped[name]["total"] += 1
+        grouped.setdefault(
+            name,
+            {
+                "name": name,
+                "address": history.get("lokasi", "-"),
+                "total": 0,
+                "selesai": 0,
+                "batal": 0,
+                "ditolak": 0,
+                "events": [],
+            },
+        )
         grouped[name]["events"].append(history)
+        grouped[name].update(history_status_counts(grouped[name]["events"]))
 
     return sorted(grouped.values(), key=lambda item: item["total"], reverse=True)
 
@@ -486,15 +521,47 @@ def admin_data(selected_month, now=None):
             )
             known_locations.add(instansi.lower())
 
+    histories_month = rows_by_month(workflow.get("histories", []), selected_month)
+    next_priorities = [
+        {
+            "label": "Verifikasi pengajuan",
+            "title": approvals[0].get("instansi") if approvals else "Tidak ada pengajuan masuk",
+            "meta": approvals[0].get("kode_pengajuan") if approvals else "Semua pengajuan sudah diproses",
+            "href": url_for("admin_page", page="approval-pengajuan", sort="terbaru"),
+        },
+        {
+            "label": "Buat penugasan",
+            "title": (workflow.get("assignments") or [{}])[0].get("instansi", "Tidak ada data menunggu"),
+            "meta": f"{len(workflow.get('assignments', []))} kegiatan perlu petugas",
+            "href": url_for("admin_page", page="penugasan-petugas"),
+        },
+        {
+            "label": "Input hasil",
+            "title": (workflow.get("results") or [{}])[0].get("instansi", "Tidak ada hasil tertunda"),
+            "meta": f"{len(workflow.get('results', []))} kegiatan menunggu hasil",
+            "href": url_for("admin_page", page="hasil-kegiatan"),
+        },
+    ]
+
+    workflow_steps = [
+        {"label": "Masuk", "value": len(approvals)},
+        {"label": "Penugasan", "value": len(workflow.get("assignments", []))},
+        {"label": "Siap", "value": len(workflow.get("schedules", []))},
+        {"label": "Hasil", "value": len(workflow.get("results", []))},
+    ]
+
     return {
         "month_label": month_label(selected_month),
         "approvals": approvals,
         "cards": cards,
+        "next_priorities": next_priorities,
+        "workflow_steps": workflow_steps,
         "today_running": today_running,
         "assignments": workflow.get("assignments", []),
         "schedules": workflow.get("schedules", []),
         "results": workflow.get("results", []),
-        "histories": rows_by_month(workflow.get("histories", []), selected_month),
+        "histories": histories_month,
+        "history_counts": history_status_counts(histories_month),
         "all_histories": workflow.get("histories", []),
         "staff": workflow.get("staff", []),
         "staff_history": staff_history_rows(workflow, selected_month),
@@ -567,6 +634,205 @@ def admin_redirect(page, message=None, **kwargs):
     if message:
         kwargs["pesan"] = message
     return redirect(url_for("admin_page", page=page, **kwargs))
+
+
+def pdf_escape(value):
+    return str(value or "-").replace("\\", "\\\\").replace("(", "\\(").replace(")", "\\)")
+
+
+def wrap_text(value, limit=86):
+    words = str(value or "-").split()
+    if not words:
+        return ["-"]
+
+    lines = []
+    current = []
+    current_length = 0
+
+    for word in words:
+        next_length = current_length + len(word) + (1 if current else 0)
+        if current and next_length > limit:
+            lines.append(" ".join(current))
+            current = [word]
+            current_length = len(word)
+        else:
+            current.append(word)
+            current_length = next_length
+
+    if current:
+        lines.append(" ".join(current))
+
+    return lines
+
+
+def build_pdf(commands_by_page):
+    objects = {
+        1: b"<< /Type /Catalog /Pages 2 0 R >>",
+        3: b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+        4: b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>",
+    }
+    page_ids = []
+    next_id = 5
+
+    for commands in commands_by_page:
+        content = "\n".join(commands).encode("latin-1", "replace")
+        page_id = next_id
+        content_id = next_id + 1
+        next_id += 2
+        page_ids.append(page_id)
+        objects[page_id] = (
+            f"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] "
+            f"/Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents {content_id} 0 R >>"
+        ).encode("latin-1")
+        objects[content_id] = (
+            f"<< /Length {len(content)} >>\nstream\n".encode("latin-1")
+            + content
+            + b"\nendstream"
+        )
+
+    kids = " ".join(f"{page_id} 0 R" for page_id in page_ids)
+    objects[2] = f"<< /Type /Pages /Kids [{kids}] /Count {len(page_ids)} >>".encode("latin-1")
+
+    output = bytearray(b"%PDF-1.4\n%\xe2\xe3\xcf\xd3\n")
+    offsets = [0]
+    max_id = max(objects)
+
+    for object_id in range(1, max_id + 1):
+        offsets.append(len(output))
+        output.extend(f"{object_id} 0 obj\n".encode("latin-1"))
+        output.extend(objects[object_id])
+        output.extend(b"\nendobj\n")
+
+    xref_at = len(output)
+    output.extend(f"xref\n0 {max_id + 1}\n0000000000 65535 f \n".encode("latin-1"))
+    for offset in offsets[1:]:
+        output.extend(f"{offset:010d} 00000 n \n".encode("latin-1"))
+    output.extend(
+        f"trailer\n<< /Size {max_id + 1} /Root 1 0 R >>\nstartxref\n{xref_at}\n%%EOF".encode("latin-1")
+    )
+    return bytes(output)
+
+
+def schedule_pdf_bytes(item):
+    commands = []
+    pages = [commands]
+    y = 790
+
+    def add_command(command):
+        commands.append(command)
+
+    def new_page():
+        nonlocal commands, y
+        commands = []
+        pages.append(commands)
+        y = 790
+
+    def text(x, value, size=10, bold=False, color="0 0 0"):
+        font = "F2" if bold else "F1"
+        add_command(f"BT /{font} {size} Tf {color} rg 1 0 0 1 {x} {y} Tm ({pdf_escape(value)}) Tj ET")
+
+    def line(x1, y1, x2, y2, color="0.88 0.70 0.70", width=1):
+        add_command(f"q {color} RG {width} w {x1} {y1} m {x2} {y2} l S Q")
+
+    def box(x, y_box, width, height, fill="0.99 0.96 0.96", stroke="0.90 0.72 0.72"):
+        add_command(f"q {fill} rg {stroke} RG 1 w {x} {y_box} {width} {height} re B Q")
+
+    def move(amount):
+        nonlocal y
+        y -= amount
+        if y < 72:
+            new_page()
+
+    def label_value(label, value):
+        nonlocal y
+        text(64, label, 9, True, "0.36 0.20 0.21")
+        first = True
+        for wrapped in wrap_text(value, 64):
+            text(196, wrapped, 9, False, "0.12 0.10 0.10" if first else "0.28 0.28 0.28")
+            first = False
+            move(15)
+        move(3)
+
+    box(36, 736, 523, 72, fill="0.73 0.06 0.08", stroke="0.73 0.06 0.08")
+    text(56, "SIMODAR", 24, True, "1 1 1")
+    move(26)
+    text(56, "Jadwal Mobile Unit Donor Darah", 12, False, "1 1 1")
+    move(30)
+    box(44, 690, 507, 32, fill="1 0.98 0.98", stroke="0.93 0.74 0.74")
+    text(60, f"Kode Pengajuan: {item.get('kode_pengajuan', '-')}", 10, True, "0.73 0.06 0.08")
+    text(380, f"Status: {item.get('status', 'Siap Kegiatan')}", 10, True, "0.73 0.06 0.08")
+    move(38)
+
+    text(52, "Informasi Kegiatan", 12, True, "0.73 0.06 0.08")
+    move(18)
+    box(52, y - 167, 491, 183, fill="0.99 0.97 0.97", stroke="0.92 0.75 0.75")
+    label_value("Lokasi", item.get("instansi", "-"))
+    label_value("Alamat", item.get("lokasi", "-"))
+    label_value("Tanggal", format_date_id(item.get("tanggal")))
+    label_value("Waktu", f"{item.get('jam_mulai', '-')} - {item.get('jam_selesai', '-')}")
+    label_value("Estimasi", f"{item.get('peserta', '0')} donor")
+    label_value("PIC", f"{item.get('nama_pic', '-')} | {item.get('whatsapp_pic', '-')}")
+    label_value("Email PIC", item.get("email_pic", "-"))
+    label_value("PJ Petugas", item.get("pj_petugas") or "-")
+
+    move(12)
+    text(52, "Daftar Petugas", 12, True, "0.73 0.06 0.08")
+    move(18)
+    box(52, y - 7, 491, 22, fill="0.73 0.06 0.08", stroke="0.73 0.06 0.08")
+    text(66, "No", 9, True, "1 1 1")
+    text(104, "Nama Petugas", 9, True, "1 1 1")
+    text(402, "Fungsi", 9, True, "1 1 1")
+    move(26)
+    staff_rows = item.get("staff_assignments", [])
+    if staff_rows:
+        for index, staff in enumerate(staff_rows, start=1):
+            box(52, y - 7, 491, 20, fill="1 1 1", stroke="0.92 0.82 0.82")
+            text(68, str(index), 9, False, "0.12 0.10 0.10")
+            text(104, staff.get("name", "-"), 9, False, "0.12 0.10 0.10")
+            text(402, staff.get("role", "-").upper(), 9, True, "0.36 0.20 0.21")
+            move(22)
+    else:
+        box(52, y - 7, 491, 24, fill="1 1 1", stroke="0.92 0.82 0.82")
+        text(66, "Belum ada petugas ditugaskan.", 9, False, "0.45 0.45 0.45")
+        move(26)
+
+    move(8)
+    text(52, "Kelengkapan", 12, True, "0.73 0.06 0.08")
+    move(18)
+    label_value("Logistik", ", ".join(item.get("logistik", [])) if item.get("logistik") else "-")
+    move(12)
+    line(52, y + 8, 543, y + 8)
+    text(52, f"Dicetak: {format_datetime_id(datetime.now())}", 8, False, "0.45 0.45 0.45")
+    move(16)
+    text(52, "Dokumen ini dibuat otomatis oleh SIMODAR.", 8, False, "0.45 0.45 0.45")
+
+    return build_pdf(pages)
+
+
+@app.get("/admin/jadwal-kegiatan/export")
+def export_schedule():
+    if not session.get("admin_username"):
+        return redirect(url_for("index"))
+    return admin_redirect("jadwal-kegiatan", "Download PDF tersedia pada masing-masing jadwal.")
+
+
+@app.get("/admin/jadwal-kegiatan/<kode>/pdf")
+def export_schedule_pdf(kode):
+    if not session.get("admin_username"):
+        return redirect(url_for("index"))
+
+    now = datetime.now()
+    schedule = find_record(load_workflow().get("schedules", []), "kode_pengajuan", kode)
+
+    if not schedule:
+        abort(404)
+
+    filename = f"jadwal-simodar-{kode}-{now:%Y%m%d-%H%M}.pdf"
+    return Response(
+        schedule_pdf_bytes(schedule),
+        content_type="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename={filename}"},
+    )
 
 
 def collect_staff_assignments():
@@ -754,6 +1020,31 @@ def save_activity_result(kode):
     return admin_redirect("hasil-kegiatan", "Hasil kegiatan tersimpan di Histori Kegiatan.")
 
 
+@app.post("/admin/histori-kegiatan/<kode>/edit")
+def edit_history_result(kode):
+    workflow = load_workflow()
+    history = find_record(workflow["histories"], "kode_pengajuan", kode)
+
+    if not history:
+        abort(404)
+
+    history.setdefault("result", {})
+    history["result"].update(
+        {
+            "donor_terdaftar": request.form.get("donor_terdaftar", history["result"].get("donor_terdaftar", "0")),
+            "donor_berhasil": request.form.get("donor_berhasil", history["result"].get("donor_berhasil", "0")),
+            "donor_gagal": request.form.get("donor_gagal", history["result"].get("donor_gagal", "0")),
+            "kantong_darah": request.form.get("kantong_darah", history["result"].get("kantong_darah", "0")),
+            "snack_terpakai": request.form.get("snack_terpakai", history["result"].get("snack_terpakai", "0")),
+            "catatan": request.form.get("catatan", "").strip(),
+        }
+    )
+    history["history_updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    save_workflow(workflow)
+    selected_month = request.form.get("bulan", datetime.now().strftime("%Y-%m"))
+    return admin_redirect("histori-kegiatan", "Histori kegiatan diperbarui.", bulan=selected_month)
+
+
 @app.post("/admin/petugas/tambah")
 def add_staff():
     workflow = load_workflow()
@@ -765,6 +1056,7 @@ def add_staff():
             "roles": roles,
             "absen": request.form.get("absen", "").strip(),
             "password": request.form.get("password", "").strip(),
+            "rekening": request.form.get("rekening", "").strip(),
         }
     )
     save_workflow(workflow)
@@ -783,6 +1075,7 @@ def edit_staff(staff_id):
     staff["roles"] = request.form.getlist("roles") or staff.get("roles", ["other"])
     staff["absen"] = request.form.get("absen", "").strip()
     staff["password"] = request.form.get("password", "").strip()
+    staff["rekening"] = request.form.get("rekening", "").strip()
     save_workflow(workflow)
     return admin_redirect("data-petugas", "Data petugas diperbarui.")
 
@@ -901,7 +1194,19 @@ def pengajuan():
 @app.route("/cek-pengajuan")
 def cek_pengajuan():
     kode = request.args.get("kode", "").strip()
-    return render_template("cek_pengajuan.html", kode=kode, pengajuan=find_pengajuan(kode))
+    is_admin_session = bool(session.get("admin_username"))
+    return render_template(
+        "cek_pengajuan.html",
+        kode=kode,
+        pengajuan=find_pengajuan(kode),
+        is_admin_session=is_admin_session,
+        back_href=url_for("admin_page", page="dashboard") if is_admin_session else url_for("index"),
+    )
+
+
+@app.route("/surat-pengajuan-file/<path:filename>")
+def surat_pengajuan_file(filename):
+    return send_from_directory(UPLOAD_DIR, secure_filename(filename), as_attachment=False)
 
 
 @app.route("/surat-pengajuan/<kode>")
@@ -912,11 +1217,29 @@ def surat_pengajuan(kode):
         abort(404)
 
     surat_file = pengajuan_data.get("surat_file", "")
+    is_admin_session = bool(session.get("admin_username"))
+    back_href = (
+        url_for("admin_page", page="dashboard")
+        if is_admin_session
+        else url_for("cek_pengajuan", kode=pengajuan_data.get("kode_pengajuan"))
+    )
 
     if surat_file and (UPLOAD_DIR / surat_file).exists():
+        if is_admin_session:
+            return render_template(
+                "surat_pengajuan.html",
+                pengajuan=pengajuan_data,
+                back_href=back_href,
+                attached_file_url=url_for("surat_pengajuan_file", filename=surat_file),
+            )
         return send_from_directory(UPLOAD_DIR, surat_file, as_attachment=False)
 
-    return render_template("surat_pengajuan.html", pengajuan=pengajuan_data)
+    return render_template(
+        "surat_pengajuan.html",
+        pengajuan=pengajuan_data,
+        back_href=back_href,
+        attached_file_url="",
+    )
 
 
 if __name__ == "__main__":
