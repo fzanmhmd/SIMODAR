@@ -443,6 +443,7 @@ def logout():
 @app.route("/pengajuan", methods=["GET", "POST"])
 def pengajuan():
     records = load_pengajuan()
+    is_admin_pengajuan = request.args.get("from") == "admin" and bool(session.get("admin_username"))
 
     if request.method == "POST":
         submitted_code = request.form.get("kode_pengajuan", "").strip()
@@ -482,13 +483,21 @@ def pengajuan():
             }
         )
         save_pengajuan(records)
-        return redirect(url_for("pengajuan", terkirim=code))
+        redirect_args = {"terkirim": code}
+        if is_admin_pengajuan:
+            redirect_args["from"] = "admin"
+        return redirect(url_for("pengajuan", **redirect_args))
 
     success_code = request.args.get("terkirim", "").strip()
+    back_href = url_for("admin_page", page="dashboard") if is_admin_pengajuan else url_for("index")
+    pengajuan_action_args = {"from": "admin"} if is_admin_pengajuan else {}
     return render_template(
         "pengajuan.html",
         kode_pengajuan=next_pengajuan_code(records),
         success_pengajuan=find_pengajuan(success_code),
+        is_admin_pengajuan=is_admin_pengajuan,
+        back_href=back_href,
+        pengajuan_action=url_for("pengajuan", **pengajuan_action_args),
     )
 
 

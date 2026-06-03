@@ -24,6 +24,10 @@
       <div class="admin-brand">
         <strong>SIMODAR Admin</strong>
         <span>Blood Unit Management</span>
+        <div class="admin-sidebar-greeting">
+          <b>{{ greeting }}, {{ username }}</b>
+          <time class="live-clock" datetime="{{ current_time_iso }}" data-live-clock data-start="{{ current_time_iso }}">{{ current_time }}</time>
+        </div>
       </div>
 
       <nav class="admin-menu" aria-label="Menu admin SIMODAR">
@@ -51,13 +55,12 @@
 
     <main class="admin-main">
       <header class="admin-topbar">
-        <div>
+        <div class="admin-page-heading">
           <p class="eyebrow">{{ page_group }}</p>
           <h1>{{ page_title }}</h1>
-          <span>{{ greeting }}, {{ username }} | <time class="live-clock" datetime="{{ current_time_iso }}" data-live-clock data-start="{{ current_time_iso }}">{{ current_time }}</time></span>
         </div>
-        {% if show_month_filter %}
-          <div class="admin-topbar-actions">
+        <div class="admin-topbar-actions">
+          {% if show_month_filter %}
             <form class="month-filter" action="{{ url_for('admin_page', page=page) }}" method="get">
               <label for="bulanAdmin">Filter Bulan</label>
               <select id="bulanAdmin" name="bulan">
@@ -66,23 +69,12 @@
                 {% endfor %}
               </select>
             </form>
-          </div>
-        {% endif %}
+          {% endif %}
+          <a class="admin-add-request" href="{{ url_for('pengajuan') }}?from=admin">Tambah Pengajuan</a>
+        </div>
       </header>
 
       {% if page == "dashboard" %}
-        <section class="admin-welcome">
-          <div>
-            <p class="eyebrow">Beranda</p>
-            <h2>{{ greeting|upper }}, {{ username }}</h2>
-            <span>Jam sistem: <time class="live-clock" datetime="{{ current_time_iso }}" data-live-clock data-start="{{ current_time_iso }}">{{ current_time }}</time></span>
-          </div>
-          <div class="admin-welcome-note">
-            <b>SIMODAR siap digunakan</b>
-            <span>Ringkasan operasional dan pintasan pekerjaan utama petugas.</span>
-          </div>
-        </section>
-
         <section class="admin-stat-grid">
           {% for item in data.stats %}
             <article class="admin-stat-card admin-stat-card--{{ item.tone }}">

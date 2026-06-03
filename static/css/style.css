@@ -2847,6 +2847,30 @@ h1 {
   border-bottom: 1px solid #f1d4d5;
 }
 
+.admin-sidebar-greeting {
+  display: grid;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid #f3d6d7;
+  border-radius: 10px;
+  background: #fff8f8;
+}
+
+.admin-sidebar-greeting b {
+  color: var(--primary-deep);
+  font-family: "Urbanist", Arial, sans-serif;
+  font-size: 1.08rem;
+  font-weight: 900;
+}
+
+.admin-sidebar-greeting time {
+  color: #3f2325;
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
 .admin-menu {
   gap: 6px;
 }
@@ -2916,13 +2940,41 @@ h1 {
   position: sticky;
   top: 0;
   z-index: 6;
-  align-items: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
   padding: 0 0 18px;
   background: linear-gradient(180deg, #f4f6f9 78%, rgba(244, 246, 249, 0));
 }
 
 .admin-topbar h1 {
   font-size: clamp(1.55rem, 3vw, 2.1rem);
+}
+
+.admin-page-heading {
+  min-width: 0;
+}
+
+.admin-add-request {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  color: #ffffff;
+  border-radius: 12px;
+  background: var(--primary-deep);
+  box-shadow: 0 14px 26px rgba(185, 15, 20, 0.18);
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 0.86rem;
+  font-weight: 900;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.admin-add-request:hover {
+  background: #9f0d12;
 }
 
 .admin-welcome {
@@ -3221,7 +3273,21 @@ h1 {
   }
 
   .admin-topbar {
-    position: static;
+    position: sticky;
+    top: 0;
+    align-items: stretch;
+    flex-direction: column;
+    padding-top: 4px;
+  }
+
+  .admin-topbar-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-add-request,
+  .month-filter {
+    width: 100%;
   }
 
   .admin-welcome,

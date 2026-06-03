@@ -28,7 +28,7 @@
     </div>
 
     <header class="submission-topbar">
-      <a class="back-link" href="/" aria-label="Kembali ke halaman awal">
+      <a class="back-link" href="{{ back_href }}" aria-label="{% if is_admin_pengajuan %}Kembali ke beranda admin{% else %}Kembali ke halaman awal{% endif %}">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M19 12H5"></path>
           <path d="M12 19l-7-7 7-7"></path>
@@ -45,7 +45,7 @@
       </section>
 
       <div class="submission-layout">
-        <form class="submission-form" action="/pengajuan" method="post" enctype="multipart/form-data" data-submission-form>
+        <form class="submission-form" action="{{ pengajuan_action }}" method="post" enctype="multipart/form-data" data-submission-form>
           <div class="request-code-box" aria-label="Kode pengajuan otomatis">
             <div>
               <span>Kode Pengajuan Otomatis</span>
@@ -345,7 +345,7 @@
 
           <div class="success-modal-actions">
             <a class="success-action" href="/cek-pengajuan?kode={{ success_pengajuan.kode_pengajuan }}">Cek Status</a>
-            <a class="success-action success-action--secondary" href="/">Kembali</a>
+            <a class="success-action success-action--secondary" href="{{ back_href }}">{% if is_admin_pengajuan %}Kembali ke Admin{% else %}Kembali{% endif %}</a>
           </div>
         </section>
       </div>
