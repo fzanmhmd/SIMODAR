@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page_title }} - SIMODAR Admin</title>
+    <meta name="description" content="Dashboard admin SIMODAR untuk pengelolaan mobile unit donor darah.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&family=Urbanist:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="/static/css/style.css">
+  </head>
+  <body class="admin-page">
+    <button class="admin-menu-toggle" type="button" aria-label="Buka menu admin" aria-controls="adminSidebar" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="admin-brand">
+        <strong>SIMODAR Admin</strong>
+        <span>Blood Unit Management</span>
+      </div>
+
+      <nav class="admin-menu" aria-label="Menu admin SIMODAR">
+        {% for group in admin_nav %}
+          <details class="admin-menu-group" {% if group["title"] == page_group %}open{% endif %}>
+            <summary>{{ group["title"] }}</summary>
+            {% for slug, label in group["items"] %}
+              <a
+                class="{% if slug == page %}is-active{% endif %}"
+                href="{% if slug in filter_pages %}{{ url_for('admin_page', page=slug, bulan=selected_month) }}{% else %}{{ url_for('admin_page', page=slug) }}{% endif %}"
+              >{{ label }}</a>
+            {% endfor %}
+          </details>
+        {% endfor %}
+        <a class="admin-menu-logout" href="/logout">Logout</a>
+      </nav>
+
+      <div class="admin-user-card">
+        <div>
+          <b>{{ username }}</b>
+          <small>Akses sementara</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <header class="admin-topbar">
+        <div>
+          <p class="eyebrow">{{ page_group }}</p>
+          <h1>{{ page_title }}</h1>
+          <span>{{ greeting }}, {{ username }} | <time class="live-clock" datetime="{{ current_time_iso }}" data-live-clock data-start="{{ current_time_iso }}">{{ current_time }}</time></span>
+        </div>
+        {% if show_month_filter %}
+          <div class="admin-topbar-actions">
+            <form class="month-filter" action="{{ url_for('admin_page', page=page) }}" method="get">
+              <label for="bulanAdmin">Filter Bulan</label>
+              <select id="bulanAdmin" name="bulan">
+                {% for month in month_options %}
+                  <option value="{{ month.value }}" {% if month.value == selected_month %}selected{% endif %}>{{ month.label }}</option>
+                {% endfor %}
+              </select>
+            </form>
+          </div>
+        {% endif %}
+      </header>
+
+      {% if page == "dashboard" %}
+        <section class="admin-welcome">
+          <div>
+            <p class="eyebrow">Beranda</p>
+            <h2>{{ greeting|upper }}, {{ username }}</h2>
+            <span>Jam sistem: <time class="live-clock" datetime="{{ current_time_iso }}" data-live-clock data-start="{{ current_time_iso }}">{{ current_time }}</time></span>
+          </div>
+          <div class="admin-welcome-note">
+            <b>SIMODAR siap digunakan</b>
+            <span>Ringkasan operasional dan pintasan pekerjaan utama petugas.</span>
+          </div>
+        </section>
+
+        <section class="admin-stat-grid">
+          {% for item in data.stats %}
+            <article class="admin-stat-card admin-stat-card--{{ item.tone }}">
+              <span>{{ item.label }}</span>
+              <strong>{{ item.value }}</strong>
+              <small>{{ item.trend }} | {{ data.month_label }}</small>
+            </article>
+          {% endfor %}
+        </section>
+
+        <section class="admin-content-grid">
+          <article class="admin-panel">
+            <div class="admin-panel-head">
+              <div>
+                <p class="eyebrow">Prioritas</p>
+                <h2>Approval Pengajuan Masuk</h2>
+              </div>
+              <a class="text-action" href="{{ url_for('admin_page', page='approval-pengajuan', bulan=selected_month) }}">Lihat semua</a>
+            </div>
+            <div class="admin-clean-list">
+              {% for item in data.approval_rows[:3] %}
+                <div>
+                  <b>{{ item.instansi }}</b>
+                  <span>{{ item.kode_pengajuan }} | {{ item.tanggal }} | {{ item.status }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </article>
+
+          <article class="admin-panel">
+            <div class="admin-panel-head">
+              <div>
+                <p class="eyebrow">Hari Ini</p>
+                <h2>Kegiatan Mobile Unit</h2>
+              </div>
+            </div>
+            <div class="admin-clean-list">
+              {% for item in data.running %}
+                <div>
+                  <b>{{ item.place }}</b>
+                  <span>{{ item.time }} | {{ item.progress }} | {{ item.staff }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </article>
+        </section>
+
+      {% elif page == "notifikasi" %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Dashboard</p>
+              <h2>Notifikasi</h2>
+              <span>Pemberitahuan operasional yang perlu diketahui petugas.</span>
+            </div>
+          </div>
+          <div class="admin-notification-grid admin-notification-grid--page">
+            {% for notification in data.notifications %}
+              <article class="admin-notification-card">
+                <span>{{ notification.meta }}</span>
+                <h3>{{ notification.title }}</h3>
+                <p>{{ notification.body }}</p>
+              </article>
+            {% endfor %}
+          </div>
+        </section>
+
+      {% elif page == "approval-pengajuan" %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Approval</p>
+              <h2>ACC Pengajuan Kegiatan</h2>
+            </div>
+            <span>{{ data.month_label }}</span>
+          </div>
+          <div class="review-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kode</th>
+                  <th>Instansi</th>
+                  <th>Lokasi</th>
+                  <th>Tanggal</th>
+                  <th>Peserta</th>
+                  <th>Status</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data.approval_rows %}
+                  <tr>
+                    <td>{{ item.kode_pengajuan }}</td>
+                    <td>{{ item.instansi }}</td>
+                    <td>{{ item.lokasi }}</td>
+                    <td>{{ item.tanggal }}</td>
+                    <td>{{ item.peserta }}</td>
+                    <td>{{ item.status }}</td>
+                    <td>
+                      <button class="table-action" type="button">ACC</button>
+                      <button class="table-action table-action--ghost" type="button">Review</button>
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      {% elif page == "histori-pengajuan" %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Dashboard</p>
+              <h2>Histori Pengajuan</h2>
+              <span>Riwayat pengajuan kegiatan donor berdasarkan bulan yang dipilih.</span>
+            </div>
+            <span>{{ data.month_label }}</span>
+          </div>
+          <div class="review-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Kode</th>
+                  <th>Instansi</th>
+                  <th>PIC</th>
+                  <th>Tanggal</th>
+                  <th>Jam</th>
+                  <th>Status</th>
+                  <th>Detail</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data.pengajuan_history %}
+                  <tr>
+                    <td>{{ item.kode_pengajuan }}</td>
+                    <td>{{ item.instansi }}</td>
+                    <td>{{ item.nama_pic or "-" }}</td>
+                    <td>{{ item.tanggal }}</td>
+                    <td>{{ item.jam_mulai }} - {{ item.jam_selesai }}</td>
+                    <td>{{ item.status }}</td>
+                    <td><a class="table-action table-action--link" href="{{ url_for('cek_pengajuan', kode=item.kode_pengajuan) }}">View</a></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      {% elif page in ["jadwal-mobile-unit", "histori-mobile-unit", "review-kegiatan", "kegiatan-berjalan"] %}
+        {% if page == "jadwal-mobile-unit" %}
+          {% set rows = data.activities %}
+          {% set subtitle = "Daftar jadwal kegiatan mobile unit yang sudah terkonfirmasi." %}
+        {% elif page == "histori-mobile-unit" %}
+          {% set rows = data.histories %}
+          {% set subtitle = "Riwayat kegiatan mobile unit dan hasil perolehan kantong darah." %}
+        {% elif page == "review-kegiatan" %}
+          {% set rows = data.reviews %}
+          {% set subtitle = "Catatan review yang perlu ditindaklanjuti oleh admin." %}
+        {% else %}
+          {% set rows = data.running %}
+          {% set subtitle = "Monitoring kegiatan mobile unit yang sedang berlangsung hari ini." %}
+        {% endif %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Kegiatan</p>
+              <h2>{{ page_title }}</h2>
+              <span>{{ subtitle }}</span>
+            </div>
+            <button class="soft-button" type="button">Tambah Data</button>
+          </div>
+          <div class="admin-card-list">
+            {% for item in rows %}
+              <article>
+                <h3>{{ item.title or item.place or item.name }}</h3>
+                <p>{{ item.address or item.result or item.owner or item.progress }}</p>
+                <dl>
+                  {% for key, value in item.items() %}
+                    <div>
+                      <dt>{{ key|replace("_", " ")|title }}</dt>
+                      <dd>{{ value }}</dd>
+                    </div>
+                  {% endfor %}
+                </dl>
+              </article>
+            {% endfor %}
+          </div>
+        </section>
+
+      {% elif page in ["data-petugas", "histori-petugas", "upload-jadwal-petugas", "view-jadwal-petugas"] %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Master Petugas</p>
+              <h2>{{ page_title }}</h2>
+            </div>
+            {% if page != "upload-jadwal-petugas" %}
+              <button class="soft-button" type="button">Tambah Petugas</button>
+            {% endif %}
+          </div>
+
+          {% if page == "upload-jadwal-petugas" %}
+            <form class="admin-form-grid">
+              <label>
+                Bulan Jadwal
+                <input type="month" value="{{ selected_month }}">
+              </label>
+              <label>
+                File Jadwal Kerja
+                <input type="file" accept=".pdf,.xlsx,.xls,.csv">
+              </label>
+              <button class="submit-request" type="button">Upload Jadwal</button>
+            </form>
+          {% elif page == "histori-petugas" %}
+            <div class="admin-clean-list">
+              {% for item in data.staff_history %}
+                <div>
+                  <b>{{ item.name }}</b>
+                  <span>{{ item.activity }} | {{ item.date }}</span>
+                </div>
+              {% endfor %}
+            </div>
+          {% elif page == "view-jadwal-petugas" %}
+            <div class="review-table">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tim</th>
+                    <th>Tanggal</th>
+                    <th>Shift</th>
+                    <th>Lokasi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for item in data.work_schedules %}
+                    <tr>
+                      <td>{{ item.name }}</td>
+                      <td>{{ item.date }}</td>
+                      <td>{{ item.shift }}</td>
+                      <td>{{ item.location }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="staff-list">
+              {% for staff in data.staff %}
+                <div>
+                  <div>
+                    <b>{{ staff.name }}</b>
+                    <small>{{ staff.role }} | {{ staff.shift }}</small>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </section>
+
+      {% elif page in ["data-lokasi", "histori-kegiatan-lokasi", "validasi-lokasi"] %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Master Lokasi</p>
+              <h2>{{ page_title }}</h2>
+            </div>
+            <button class="soft-button" type="button">Tambah Lokasi</button>
+          </div>
+          <div class="admin-card-list">
+            {% if page == "data-lokasi" %}
+              {% for item in data.locations %}
+                <article>
+                  <h3>{{ item.name }}</h3>
+                  <p>{{ item.address }}</p>
+                  <span class="status status--running">{{ item.status }}</span>
+                </article>
+              {% endfor %}
+            {% elif page == "histori-kegiatan-lokasi" %}
+              {% for item in data.location_history %}
+                <article>
+                  <h3>{{ item.name }}</h3>
+                  <p>{{ item.events }} kegiatan | Terakhir {{ item.last }} | {{ item.bags }} kantong</p>
+                </article>
+              {% endfor %}
+            {% else %}
+              {% for item in data.location_validations %}
+                <article>
+                  <h3>{{ item.name }}</h3>
+                  <p>{{ item.address }}</p>
+                  <b>{{ item.need }}</b>
+                  <div class="row-actions">
+                    <button class="table-action" type="button">Validasi</button>
+                    <button class="table-action table-action--ghost" type="button">Minta Revisi</button>
+                  </div>
+                </article>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </section>
+
+      {% elif page in ["pembayaran", "operasional", "rekap-kantong-darah"] %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Rekapitulasi</p>
+              <h2>{{ page_title }}</h2>
+            </div>
+            <button class="soft-button" type="button">Export</button>
+          </div>
+          <div class="admin-card-list">
+            {% if page == "pembayaran" %}
+              {% for item in data.payments %}
+                <article><h3>{{ item.name }}</h3><p>{{ item.amount }}</p><b>{{ item.status }}</b></article>
+              {% endfor %}
+            {% elif page == "operasional" %}
+              {% for item in data.operations %}
+                <article><h3>{{ item.item }}</h3><p>Budget {{ item.budget }}</p><b>Realisasi {{ item.realization }}</b></article>
+              {% endfor %}
+            {% else %}
+              {% for item in data.blood_recap %}
+                <article><h3>Golongan {{ item.type }}</h3><p>{{ item.bags }} kantong darah</p></article>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </section>
+
+      {% elif page in ["statistik-kompleks", "tren-bulanan", "performa-petugas"] %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Statistik</p>
+              <h2>{{ page_title }}</h2>
+            </div>
+            <span>{{ data.month_label }}</span>
+          </div>
+          {% if page == "statistik-kompleks" %}
+            <div class="analytics-stack">
+              <div><b>Target Kantong</b><span>642 / 1000</span><i style="--progress: 64%"></i></div>
+              <div><b>Rasio ACC Pengajuan</b><span>82%</span><i style="--progress: 82%"></i></div>
+              <div><b>Kehadiran Petugas</b><span>94%</span><i style="--progress: 94%"></i></div>
+              <div><b>Efektivitas Lokasi</b><span>76%</span><i style="--progress: 76%"></i></div>
+            </div>
+          {% elif page == "tren-bulanan" %}
+            <div class="trend-bars">
+              {% for item in data.trends %}
+                <div><span>{{ item.month }}</span><i style="--progress: {{ item.bags / 7 }}%"></i><b>{{ item.bags }}</b></div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="admin-card-list">
+              {% for item in data.performance %}
+                <article><h3>{{ item.name }}</h3><p>{{ item.note }}</p><b>Skor {{ item.score }}</b></article>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </section>
+
+      {% elif page == "profil" %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Akun</p>
+              <h2>Pengaturan Profil</h2>
+            </div>
+          </div>
+          <div class="profile-settings">
+            <label>
+              Nama Petugas
+              <input type="text" value="{{ username }}">
+            </label>
+            <label>
+              Level Akses
+              <input type="text" value="Admin Sementara">
+            </label>
+            <button class="submit-request" type="button">Simpan Pengaturan</button>
+          </div>
+        </section>
+      {% endif %}
+    </main>
+
+    <script src="/static/js/admin.js"></script>
+  </body>
+</html>
