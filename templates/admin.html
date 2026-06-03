@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ page_title }} - SIMODAR Admin</title>
+    <title>{{ page_title }} - SIMODAR</title>
     <meta name="description" content="Dashboard admin SIMODAR untuk pengelolaan mobile unit donor darah.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
     >
     <link rel="stylesheet" href="/static/css/style.css">
   </head>
-  <body class="admin-page">
+  <body class="admin-page" data-toast-message="{{ toast_message }}">
     <button class="admin-menu-toggle" type="button" aria-label="Buka menu admin" aria-controls="adminSidebar" aria-expanded="false">
       <span></span>
       <span></span>
@@ -22,8 +22,13 @@
 
     <aside class="admin-sidebar" id="adminSidebar">
       <div class="admin-brand">
-        <strong>SIMODAR Admin</strong>
-        <span>Blood Unit Management</span>
+        <div class="admin-brand-main">
+          <img src="/static/img/Simodar-logo.png" alt="Logo SIMODAR">
+          <div>
+            <strong>SIMODAR</strong>
+            <span>Sistem Informasi Mobile Unit Donor Darah</span>
+          </div>
+        </div>
         <div class="admin-sidebar-greeting">
           <b>{{ greeting }}, {{ username }}</b>
           <time class="live-clock" datetime="{{ current_time_iso }}" data-live-clock data-start="{{ current_time_iso }}">{{ current_time }}</time>
@@ -32,25 +37,24 @@
 
       <nav class="admin-menu" aria-label="Menu admin SIMODAR">
         {% for group in admin_nav %}
-          <details class="admin-menu-group" {% if group["title"] == page_group %}open{% endif %}>
-            <summary>{{ group["title"] }}</summary>
+          {% if group["title"] == "Dashboard" %}
             {% for slug, label in group["items"] %}
-              <a
-                class="{% if slug == page %}is-active{% endif %}"
-                href="{% if slug in filter_pages %}{{ url_for('admin_page', page=slug, bulan=selected_month) }}{% else %}{{ url_for('admin_page', page=slug) }}{% endif %}"
-              >{{ label }}</a>
+              <a class="admin-menu-direct {% if slug == page %}is-active{% endif %}" href="{{ url_for('admin_page', page=slug) }}">{{ label }}</a>
             {% endfor %}
-          </details>
+          {% else %}
+            <details class="admin-menu-group" {% if group["title"] == page_group %}open{% endif %}>
+              <summary>{{ group["title"] }}</summary>
+              {% for slug, label in group["items"] %}
+                <a
+                  class="{% if slug == page %}is-active{% endif %}"
+                  href="{% if slug in filter_pages %}{{ url_for('admin_page', page=slug, bulan=selected_month) }}{% else %}{{ url_for('admin_page', page=slug) }}{% endif %}"
+                >{{ label }}</a>
+              {% endfor %}
+            </details>
+          {% endif %}
         {% endfor %}
         <a class="admin-menu-logout" href="/logout">Logout</a>
       </nav>
-
-      <div class="admin-user-card">
-        <div>
-          <b>{{ username }}</b>
-          <small>Akses sementara</small>
-        </div>
-      </div>
     </aside>
 
     <main class="admin-main">
@@ -75,107 +79,413 @@
       </header>
 
       {% if page == "dashboard" %}
-        <section class="admin-stat-grid">
-          {% for item in data.stats %}
-            <article class="admin-stat-card admin-stat-card--{{ item.tone }}">
-              <span>{{ item.label }}</span>
-              <strong>{{ item.value }}</strong>
-              <small>{{ item.trend }} | {{ data.month_label }}</small>
-            </article>
+        <section class="admin-workflow-grid">
+          {% for card in data.cards %}
+            <a class="admin-workflow-card admin-workflow-card--{{ card.tone }}" href="{{ card.href }}">
+              <span>{{ card.label }}</span>
+              <strong>{{ card.value }}</strong>
+              <small>{{ card.hint }}</small>
+              <b>Lihat detail <i aria-hidden="true">-></i></b>
+            </a>
           {% endfor %}
         </section>
 
-        <section class="admin-content-grid">
-          <article class="admin-panel">
-            <div class="admin-panel-head">
-              <div>
-                <p class="eyebrow">Prioritas</p>
-                <h2>Approval Pengajuan Masuk</h2>
-              </div>
-              <a class="text-action" href="{{ url_for('admin_page', page='approval-pengajuan', bulan=selected_month) }}">Lihat semua</a>
-            </div>
-            <div class="admin-clean-list">
-              {% for item in data.approval_rows[:3] %}
-                <div>
-                  <b>{{ item.instansi }}</b>
-                  <span>{{ item.kode_pengajuan }} | {{ item.tanggal }} | {{ item.status }}</span>
-                </div>
-              {% endfor %}
-            </div>
-          </article>
-
-          <article class="admin-panel">
-            <div class="admin-panel-head">
-              <div>
-                <p class="eyebrow">Hari Ini</p>
-                <h2>Kegiatan Mobile Unit</h2>
-              </div>
-            </div>
-            <div class="admin-clean-list">
-              {% for item in data.running %}
-                <div>
-                  <b>{{ item.place }}</b>
-                  <span>{{ item.time }} | {{ item.progress }} | {{ item.staff }}</span>
-                </div>
-              {% endfor %}
-            </div>
-          </article>
-        </section>
-
-      {% elif page == "notifikasi" %}
         <section class="admin-panel">
           <div class="admin-panel-head">
             <div>
-              <p class="eyebrow">Dashboard</p>
-              <h2>Notifikasi</h2>
-              <span>Pemberitahuan operasional yang perlu diketahui petugas.</span>
+              <p class="eyebrow">Hari Ini</p>
+              <h2>Kegiatan Mobile Unit Sedang Berjalan</h2>
             </div>
           </div>
-          <div class="admin-notification-grid admin-notification-grid--page">
-            {% for notification in data.notifications %}
-              <article class="admin-notification-card">
-                <span>{{ notification.meta }}</span>
-                <h3>{{ notification.title }}</h3>
-                <p>{{ notification.body }}</p>
-              </article>
-            {% endfor %}
-          </div>
+          {% if data.today_running %}
+            <div class="admin-card-list admin-card-list--compact">
+              {% for item in data.today_running %}
+                <article>
+                  <h3>{{ item.instansi }}</h3>
+                  <p>{{ item.lokasi }}</p>
+                  <dl>
+                    <div><dt>Jam</dt><dd>{{ item.jam_mulai }} - {{ item.jam_selesai }}</dd></div>
+                    <div><dt>PJ</dt><dd>{{ item.pj_petugas }}</dd></div>
+                    <div><dt>Petugas</dt><dd>{{ item.staff_assignments|length }} orang</dd></div>
+                  </dl>
+                </article>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="empty-state">Tidak ada kegiatan mobile unit yang berjalan hari ini.</div>
+          {% endif %}
         </section>
 
       {% elif page == "approval-pengajuan" %}
         <section class="admin-panel">
           <div class="admin-panel-head">
             <div>
-              <p class="eyebrow">Approval</p>
-              <h2>ACC Pengajuan Kegiatan</h2>
+              <p class="eyebrow">Kegiatan</p>
+              <h2>Approval Pengajuan</h2>
+              <span>Data otomatis dari form pengajuan eksternal atau pengajuan admin.</span>
             </div>
-            <span>{{ data.month_label }}</span>
+            <div class="segmented-filter">
+              <a class="{% if sort_order != 'terlama' %}is-active{% endif %}" href="{{ url_for('admin_page', page='approval-pengajuan', sort='terbaru') }}">Terbaru</a>
+              <a class="{% if sort_order == 'terlama' %}is-active{% endif %}" href="{{ url_for('admin_page', page='approval-pengajuan', sort='terlama') }}">Terlama</a>
+            </div>
           </div>
           <div class="review-table">
             <table>
               <thead>
                 <tr>
-                  <th>Kode</th>
-                  <th>Instansi</th>
-                  <th>Lokasi</th>
-                  <th>Tanggal</th>
-                  <th>Peserta</th>
-                  <th>Status</th>
+                  <th>Kode Pengajuan</th>
+                  <th>Tanggal Pengajuan</th>
+                  <th>Nama/Tempat Instansi</th>
+                  <th>Alamat</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                {% for item in data.approval_rows %}
+                {% for item in data.approvals %}
                   <tr>
                     <td>{{ item.kode_pengajuan }}</td>
+                    <td>{{ format_date(item.created_at) }}</td>
                     <td>{{ item.instansi }}</td>
                     <td>{{ item.lokasi }}</td>
-                    <td>{{ item.tanggal }}</td>
-                    <td>{{ item.peserta }}</td>
-                    <td>{{ item.status }}</td>
+                    <td class="table-actions-cell">
+                      <a class="table-action table-action--link" href="{{ url_for('cek_pengajuan', kode=item.kode_pengajuan) }}" target="_blank" rel="noreferrer">Preview</a>
+                      <form action="{{ url_for('approve_pengajuan', kode=item.kode_pengajuan, sort=sort_order) }}" method="post">
+                        <button class="table-action" type="submit">ACC</button>
+                      </form>
+                      <form class="inline-reject-form" action="{{ url_for('reject_pengajuan', kode=item.kode_pengajuan, sort=sort_order) }}" method="post">
+                        <input name="keterangan" type="text" placeholder="Keterangan tolak">
+                        <button class="table-action table-action--danger" type="submit">Tolak</button>
+                      </form>
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr><td colspan="5"><div class="empty-state">Belum ada pengajuan masuk.</div></td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      {% elif page == "penugasan-petugas" %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Kegiatan</p>
+              <h2>Penugasan Petugas</h2>
+              <span>Data dari pengajuan yang sudah di-ACC.</span>
+            </div>
+          </div>
+          <div class="review-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Tempat</th>
+                  <th>Estimasi</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data.assignments %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
                     <td>
-                      <button class="table-action" type="button">ACC</button>
-                      <button class="table-action table-action--ghost" type="button">Review</button>
+                      <b>{{ item.instansi }}</b>
+                      <small>{{ item.tanggal }} | {{ item.jam_mulai }} - {{ item.jam_selesai }}</small>
+                    </td>
+                    <td>{{ item.peserta }} donor</td>
+                    <td>
+                      <details class="inline-editor">
+                        <summary class="table-action">Tambah Petugas</summary>
+                        <form action="{{ url_for('save_assignment', kode=item.kode_pengajuan) }}" method="post">
+                          <label class="form-label">PJ Petugas</label>
+                          <select name="pj_petugas">
+                            {% for staff in data.staff %}
+                              <option value="{{ staff.name }}">{{ staff.name }}</option>
+                            {% endfor %}
+                          </select>
+                          <div class="staff-assignment-list" data-staff-assignment-list>
+                            <div class="staff-assignment-row">
+                              <select name="staff_name">
+                                <option value="">Pilih petugas</option>
+                                {% for staff in data.staff %}
+                                  <option value="{{ staff.name }}">{{ staff.name }}</option>
+                                {% endfor %}
+                              </select>
+                              <select name="staff_role">
+                                {% for role in data.role_options %}
+                                  <option value="{{ role }}">{{ role|upper }}</option>
+                                {% endfor %}
+                              </select>
+                              <button class="icon-button" type="button" data-remove-staff-row>Hapus</button>
+                            </div>
+                          </div>
+                          <button class="soft-button" type="button" data-add-staff-row>Tambah Kolom Petugas</button>
+                          <div class="form-actions">
+                            <button class="table-action table-action--ghost" type="reset">Batal</button>
+                            <button class="table-action" type="submit">Simpan</button>
+                          </div>
+                        </form>
+                      </details>
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr><td colspan="4"><div class="empty-state">Tidak ada kegiatan yang menunggu penugasan.</div></td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      {% elif page == "jadwal-kegiatan" %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Kegiatan</p>
+              <h2>Jadwal Kegiatan</h2>
+              <span>Kegiatan yang sudah siap berangkat dan menunggu waktu pelaksanaan.</span>
+            </div>
+          </div>
+          <div class="review-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Lokasi</th>
+                  <th>PJ Petugas</th>
+                  <th>Jumlah Petugas</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data.schedules %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                      <b>{{ item.instansi }}</b>
+                      <small>{{ item.tanggal }} | {{ item.jam_mulai }} - {{ item.jam_selesai }}</small>
+                    </td>
+                    <td>{{ item.pj_petugas or "-" }}</td>
+                    <td>{{ item.staff_assignments|length }} orang</td>
+                    <td class="table-actions-cell">
+                      <form action="{{ url_for('finish_schedule', kode=item.kode_pengajuan) }}" method="post">
+                        <button class="table-action" type="submit">Selesai</button>
+                      </form>
+                      <form class="inline-reject-form" action="{{ url_for('cancel_schedule', kode=item.kode_pengajuan) }}" method="post">
+                        <input name="keterangan" type="text" placeholder="Keterangan batal">
+                        <button class="table-action table-action--danger" type="submit">Batal</button>
+                      </form>
+                      <details class="inline-editor">
+                        <summary class="table-action table-action--ghost" data-toast-click="Cek dan ubah petugas yang sudah ditugaskan.">Ubah</summary>
+                        <div class="staff-chip-list">
+                          {% for row in item.staff_assignments %}
+                            <span>{{ row.name }} - {{ row.role|upper }}</span>
+                          {% endfor %}
+                        </div>
+                        <form action="{{ url_for('update_schedule_staff', kode=item.kode_pengajuan) }}" method="post">
+                          <label class="form-label">PJ Petugas</label>
+                          <select name="pj_petugas">
+                            {% for staff in data.staff %}
+                              <option value="{{ staff.name }}" {% if staff.name == item.pj_petugas %}selected{% endif %}>{{ staff.name }}</option>
+                            {% endfor %}
+                          </select>
+                          <div class="staff-assignment-list" data-staff-assignment-list>
+                            {% for row in item.staff_assignments %}
+                              <div class="staff-assignment-row">
+                                <select name="staff_name">
+                                  <option value="">Pilih petugas</option>
+                                  {% for staff in data.staff %}
+                                    <option value="{{ staff.name }}" {% if staff.name == row.name %}selected{% endif %}>{{ staff.name }}</option>
+                                  {% endfor %}
+                                </select>
+                                <select name="staff_role">
+                                  {% for role in data.role_options %}
+                                    <option value="{{ role }}" {% if role == row.role %}selected{% endif %}>{{ role|upper }}</option>
+                                  {% endfor %}
+                                </select>
+                                <button class="icon-button" type="button" data-remove-staff-row>Hapus</button>
+                              </div>
+                            {% endfor %}
+                          </div>
+                          <button class="soft-button" type="button" data-add-staff-row>Tambah Petugas</button>
+                          <div class="form-actions">
+                            <button class="table-action table-action--ghost" type="reset">Batal</button>
+                            <button class="table-action" type="submit">Simpan</button>
+                          </div>
+                        </form>
+                      </details>
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr><td colspan="5"><div class="empty-state">Belum ada kegiatan siap berangkat.</div></td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      {% elif page == "hasil-kegiatan" %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Kegiatan</p>
+              <h2>Hasil Kegiatan</h2>
+              <span>Input hasil setelah kegiatan selesai dilaksanakan.</span>
+            </div>
+          </div>
+          <div class="review-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Lokasi</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data.results %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                      <b>{{ item.instansi }}</b>
+                      <small>PJ {{ item.pj_petugas }} | {{ item.tanggal }}</small>
+                    </td>
+                    <td>
+                      <details class="inline-editor">
+                        <summary class="table-action">Input Hasil</summary>
+                        <form class="result-form-grid" action="{{ url_for('save_activity_result', kode=item.kode_pengajuan) }}" method="post">
+                          <label>Donor Terdaftar<input name="donor_terdaftar" type="number" min="0" required></label>
+                          <label>Donor Berhasil<input name="donor_berhasil" type="number" min="0" required></label>
+                          <label>Donor Gagal<input name="donor_gagal" type="number" min="0" required></label>
+                          <label>Jumlah Kantong<input name="kantong_darah" type="number" min="0" required></label>
+                          <label>Snack Terpakai<input name="snack_terpakai" type="number" min="0"></label>
+                          <label>Catatan<textarea name="catatan" rows="3" placeholder="Catatan kegiatan"></textarea></label>
+                          <button class="table-action" type="submit">Selesai Simpan</button>
+                        </form>
+                      </details>
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr><td colspan="3"><div class="empty-state">Belum ada kegiatan yang menunggu input hasil.</div></td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      {% elif page == "histori-kegiatan" %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Kegiatan</p>
+              <h2>Histori Kegiatan</h2>
+              <span>Data permanen yang sudah selesai, ditolak, atau batal pada {{ data.month_label }}.</span>
+            </div>
+          </div>
+          <div class="review-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Kode</th>
+                  <th>Lokasi</th>
+                  <th>Tanggal</th>
+                  <th>Status</th>
+                  <th>Kantong</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in data.histories %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.kode_pengajuan }}</td>
+                    <td>{{ item.instansi }}</td>
+                    <td>{{ format_date(item.tanggal) }}</td>
+                    <td>{{ item.status }}</td>
+                    <td>{{ item.result.kantong_darah or "-" }}</td>
+                    <td>
+                      <details class="inline-editor">
+                        <summary class="table-action table-action--ghost">View</summary>
+                        <dl class="detail-list">
+                          <div><dt>Alamat</dt><dd>{{ item.lokasi }}</dd></div>
+                          <div><dt>PIC</dt><dd>{{ item.nama_pic }}</dd></div>
+                          <div><dt>PJ Petugas</dt><dd>{{ item.pj_petugas or "-" }}</dd></div>
+                          <div><dt>Petugas</dt><dd>{{ item.staff_assignments|length }} orang</dd></div>
+                          <div><dt>Donor Terdaftar</dt><dd>{{ item.result.donor_terdaftar or "-" }}</dd></div>
+                          <div><dt>Donor Berhasil</dt><dd>{{ item.result.donor_berhasil or "-" }}</dd></div>
+                          <div><dt>Donor Gagal</dt><dd>{{ item.result.donor_gagal or "-" }}</dd></div>
+                          <div><dt>Snack Terpakai</dt><dd>{{ item.result.snack_terpakai or "-" }}</dd></div>
+                          <div><dt>Catatan</dt><dd>{{ item.result.catatan or item.rejection_note or item.cancel_note or "-" }}</dd></div>
+                        </dl>
+                      </details>
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr><td colspan="7"><div class="empty-state">Belum ada histori untuk bulan ini.</div></td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      {% elif page == "data-petugas" %}
+        <section class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <p class="eyebrow">Master Petugas</p>
+              <h2>Data Petugas</h2>
+            </div>
+          </div>
+          <form class="admin-inline-form" action="{{ url_for('add_staff') }}" method="post">
+            <input name="name" type="text" placeholder="Nama petugas" required>
+            <input name="absen" type="text" placeholder="No absen XXXX" required>
+            <input name="password" type="text" placeholder="Password absen" required>
+            <div class="checkbox-pill-list">
+              {% for role in data.role_options %}
+                <label><input name="roles" type="checkbox" value="{{ role }}"> {{ role|upper }}</label>
+              {% endfor %}
+            </div>
+            <button class="table-action" type="submit">Tambah Petugas</button>
+          </form>
+          <div class="review-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Petugas</th>
+                  <th>Role</th>
+                  <th>No Absen</th>
+                  <th>Password Absen</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for staff in data.staff %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ staff.name }}</td>
+                    <td>{{ staff.roles|join(", ") }}</td>
+                    <td>{{ staff.absen }}</td>
+                    <td>{{ staff.password }}</td>
+                    <td class="table-actions-cell">
+                      <details class="inline-editor">
+                        <summary class="table-action table-action--ghost">Edit</summary>
+                        <form action="{{ url_for('edit_staff', staff_id=staff.id) }}" method="post">
+                          <input name="name" type="text" value="{{ staff.name }}" required>
+                          <input name="absen" type="text" value="{{ staff.absen }}" required>
+                          <input name="password" type="text" value="{{ staff.password }}" required>
+                          <div class="checkbox-pill-list">
+                            {% for role in data.role_options %}
+                              <label><input name="roles" type="checkbox" value="{{ role }}" {% if role in staff.roles %}checked{% endif %}> {{ role|upper }}</label>
+                            {% endfor %}
+                          </div>
+                          <button class="table-action" type="submit">Simpan</button>
+                        </form>
+                      </details>
+                      <form action="{{ url_for('delete_staff', staff_id=staff.id) }}" method="post">
+                        <button class="table-action table-action--danger" type="submit">Hapus</button>
+                      </form>
                     </td>
                   </tr>
                 {% endfor %}
@@ -184,39 +494,46 @@
           </div>
         </section>
 
-      {% elif page == "histori-pengajuan" %}
+      {% elif page == "histori-petugas" %}
         <section class="admin-panel">
           <div class="admin-panel-head">
             <div>
-              <p class="eyebrow">Dashboard</p>
-              <h2>Histori Pengajuan</h2>
-              <span>Riwayat pengajuan kegiatan donor berdasarkan bulan yang dipilih.</span>
+              <p class="eyebrow">Master Petugas</p>
+              <h2>Histori Petugas</h2>
+              <span>Jumlah penugasan petugas pada {{ data.month_label }}.</span>
             </div>
-            <span>{{ data.month_label }}</span>
           </div>
           <div class="review-table">
             <table>
               <thead>
                 <tr>
-                  <th>Kode</th>
-                  <th>Instansi</th>
-                  <th>PIC</th>
-                  <th>Tanggal</th>
-                  <th>Jam</th>
-                  <th>Status</th>
-                  <th>Detail</th>
+                  <th>No</th>
+                  <th>Nama Petugas</th>
+                  <th>Total Tugas</th>
+                  <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                {% for item in data.pengajuan_history %}
+                {% for item in data.staff_history %}
                   <tr>
-                    <td>{{ item.kode_pengajuan }}</td>
-                    <td>{{ item.instansi }}</td>
-                    <td>{{ item.nama_pic or "-" }}</td>
-                    <td>{{ item.tanggal }}</td>
-                    <td>{{ item.jam_mulai }} - {{ item.jam_selesai }}</td>
-                    <td>{{ item.status }}</td>
-                    <td><a class="table-action table-action--link" href="{{ url_for('cek_pengajuan', kode=item.kode_pengajuan) }}">View</a></td>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.staff.name }}</td>
+                    <td>{{ item.total }} kegiatan</td>
+                    <td>
+                      <details class="inline-editor">
+                        <summary class="table-action table-action--ghost">View Histori</summary>
+                        <div class="admin-clean-list">
+                          {% for place in item.places %}
+                            <div>
+                              <b>{{ place.lokasi }}</b>
+                              <span>{{ format_date(place.tanggal) }} | {{ place.fungsi }}</span>
+                            </div>
+                          {% else %}
+                            <div><span>Belum ada tugas pada bulan ini.</span></div>
+                          {% endfor %}
+                        </div>
+                      </details>
+                    </td>
                   </tr>
                 {% endfor %}
               </tbody>
@@ -224,238 +541,112 @@
           </div>
         </section>
 
-      {% elif page in ["jadwal-mobile-unit", "histori-mobile-unit", "review-kegiatan", "kegiatan-berjalan"] %}
-        {% if page == "jadwal-mobile-unit" %}
-          {% set rows = data.activities %}
-          {% set subtitle = "Daftar jadwal kegiatan mobile unit yang sudah terkonfirmasi." %}
-        {% elif page == "histori-mobile-unit" %}
-          {% set rows = data.histories %}
-          {% set subtitle = "Riwayat kegiatan mobile unit dan hasil perolehan kantong darah." %}
-        {% elif page == "review-kegiatan" %}
-          {% set rows = data.reviews %}
-          {% set subtitle = "Catatan review yang perlu ditindaklanjuti oleh admin." %}
-        {% else %}
-          {% set rows = data.running %}
-          {% set subtitle = "Monitoring kegiatan mobile unit yang sedang berlangsung hari ini." %}
-        {% endif %}
-        <section class="admin-panel">
-          <div class="admin-panel-head">
-            <div>
-              <p class="eyebrow">Kegiatan</p>
-              <h2>{{ page_title }}</h2>
-              <span>{{ subtitle }}</span>
-            </div>
-            <button class="soft-button" type="button">Tambah Data</button>
-          </div>
-          <div class="admin-card-list">
-            {% for item in rows %}
-              <article>
-                <h3>{{ item.title or item.place or item.name }}</h3>
-                <p>{{ item.address or item.result or item.owner or item.progress }}</p>
-                <dl>
-                  {% for key, value in item.items() %}
-                    <div>
-                      <dt>{{ key|replace("_", " ")|title }}</dt>
-                      <dd>{{ value }}</dd>
-                    </div>
-                  {% endfor %}
-                </dl>
-              </article>
-            {% endfor %}
-          </div>
-        </section>
-
-      {% elif page in ["data-petugas", "histori-petugas", "upload-jadwal-petugas", "view-jadwal-petugas"] %}
-        <section class="admin-panel">
-          <div class="admin-panel-head">
-            <div>
-              <p class="eyebrow">Master Petugas</p>
-              <h2>{{ page_title }}</h2>
-            </div>
-            {% if page != "upload-jadwal-petugas" %}
-              <button class="soft-button" type="button">Tambah Petugas</button>
-            {% endif %}
-          </div>
-
-          {% if page == "upload-jadwal-petugas" %}
-            <form class="admin-form-grid">
-              <label>
-                Bulan Jadwal
-                <input type="month" value="{{ selected_month }}">
-              </label>
-              <label>
-                File Jadwal Kerja
-                <input type="file" accept=".pdf,.xlsx,.xls,.csv">
-              </label>
-              <button class="submit-request" type="button">Upload Jadwal</button>
-            </form>
-          {% elif page == "histori-petugas" %}
-            <div class="admin-clean-list">
-              {% for item in data.staff_history %}
-                <div>
-                  <b>{{ item.name }}</b>
-                  <span>{{ item.activity }} | {{ item.date }}</span>
-                </div>
-              {% endfor %}
-            </div>
-          {% elif page == "view-jadwal-petugas" %}
-            <div class="review-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Tim</th>
-                    <th>Tanggal</th>
-                    <th>Shift</th>
-                    <th>Lokasi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for item in data.work_schedules %}
-                    <tr>
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.date }}</td>
-                      <td>{{ item.shift }}</td>
-                      <td>{{ item.location }}</td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          {% else %}
-            <div class="staff-list">
-              {% for staff in data.staff %}
-                <div>
-                  <div>
-                    <b>{{ staff.name }}</b>
-                    <small>{{ staff.role }} | {{ staff.shift }}</small>
-                  </div>
-                </div>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </section>
-
-      {% elif page in ["data-lokasi", "histori-kegiatan-lokasi", "validasi-lokasi"] %}
+      {% elif page == "data-lokasi" %}
         <section class="admin-panel">
           <div class="admin-panel-head">
             <div>
               <p class="eyebrow">Master Lokasi</p>
-              <h2>{{ page_title }}</h2>
+              <h2>Data Lokasi</h2>
             </div>
-            <button class="soft-button" type="button">Tambah Lokasi</button>
           </div>
-          <div class="admin-card-list">
-            {% if page == "data-lokasi" %}
-              {% for item in data.locations %}
-                <article>
-                  <h3>{{ item.name }}</h3>
-                  <p>{{ item.address }}</p>
-                  <span class="status status--running">{{ item.status }}</span>
-                </article>
-              {% endfor %}
-            {% elif page == "histori-kegiatan-lokasi" %}
-              {% for item in data.location_history %}
-                <article>
-                  <h3>{{ item.name }}</h3>
-                  <p>{{ item.events }} kegiatan | Terakhir {{ item.last }} | {{ item.bags }} kantong</p>
-                </article>
-              {% endfor %}
-            {% else %}
-              {% for item in data.location_validations %}
-                <article>
-                  <h3>{{ item.name }}</h3>
-                  <p>{{ item.address }}</p>
-                  <b>{{ item.need }}</b>
-                  <div class="row-actions">
-                    <button class="table-action" type="button">Validasi</button>
-                    <button class="table-action table-action--ghost" type="button">Minta Revisi</button>
-                  </div>
-                </article>
-              {% endfor %}
-            {% endif %}
-          </div>
-        </section>
-
-      {% elif page in ["pembayaran", "operasional", "rekap-kantong-darah"] %}
-        <section class="admin-panel">
-          <div class="admin-panel-head">
-            <div>
-              <p class="eyebrow">Rekapitulasi</p>
-              <h2>{{ page_title }}</h2>
-            </div>
-            <button class="soft-button" type="button">Export</button>
-          </div>
-          <div class="admin-card-list">
-            {% if page == "pembayaran" %}
-              {% for item in data.payments %}
-                <article><h3>{{ item.name }}</h3><p>{{ item.amount }}</p><b>{{ item.status }}</b></article>
-              {% endfor %}
-            {% elif page == "operasional" %}
-              {% for item in data.operations %}
-                <article><h3>{{ item.item }}</h3><p>Budget {{ item.budget }}</p><b>Realisasi {{ item.realization }}</b></article>
-              {% endfor %}
-            {% else %}
-              {% for item in data.blood_recap %}
-                <article><h3>Golongan {{ item.type }}</h3><p>{{ item.bags }} kantong darah</p></article>
-              {% endfor %}
-            {% endif %}
+          <form class="admin-inline-form" action="{{ url_for('add_location') }}" method="post">
+            <input name="name" type="text" placeholder="Nama lokasi" required>
+            <input name="address" type="text" placeholder="Alamat lengkap" required>
+            <button class="table-action" type="submit">Tambah Lokasi</button>
+          </form>
+          <div class="review-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Lokasi</th>
+                  <th>Alamat</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for location in data.locations %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ location.name }}</td>
+                    <td>{{ location.address }}</td>
+                    <td class="table-actions-cell">
+                      {% if location.id %}
+                        <details class="inline-editor">
+                          <summary class="table-action table-action--ghost">Edit</summary>
+                          <form action="{{ url_for('edit_location', location_id=location.id) }}" method="post">
+                            <input name="name" type="text" value="{{ location.name }}" required>
+                            <input name="address" type="text" value="{{ location.address }}" required>
+                            <button class="table-action" type="submit">Simpan</button>
+                          </form>
+                        </details>
+                        <form action="{{ url_for('delete_location', location_id=location.id) }}" method="post">
+                          <button class="table-action table-action--danger" type="submit">Hapus</button>
+                        </form>
+                      {% else %}
+                        <span class="muted-text">Dari data pengajuan</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </section>
 
-      {% elif page in ["statistik-kompleks", "tren-bulanan", "performa-petugas"] %}
+      {% elif page == "kegiatan-lokasi" %}
         <section class="admin-panel">
           <div class="admin-panel-head">
             <div>
-              <p class="eyebrow">Statistik</p>
-              <h2>{{ page_title }}</h2>
-            </div>
-            <span>{{ data.month_label }}</span>
-          </div>
-          {% if page == "statistik-kompleks" %}
-            <div class="analytics-stack">
-              <div><b>Target Kantong</b><span>642 / 1000</span><i style="--progress: 64%"></i></div>
-              <div><b>Rasio ACC Pengajuan</b><span>82%</span><i style="--progress: 82%"></i></div>
-              <div><b>Kehadiran Petugas</b><span>94%</span><i style="--progress: 94%"></i></div>
-              <div><b>Efektivitas Lokasi</b><span>76%</span><i style="--progress: 76%"></i></div>
-            </div>
-          {% elif page == "tren-bulanan" %}
-            <div class="trend-bars">
-              {% for item in data.trends %}
-                <div><span>{{ item.month }}</span><i style="--progress: {{ item.bags / 7 }}%"></i><b>{{ item.bags }}</b></div>
-              {% endfor %}
-            </div>
-          {% else %}
-            <div class="admin-card-list">
-              {% for item in data.performance %}
-                <article><h3>{{ item.name }}</h3><p>{{ item.note }}</p><b>Skor {{ item.score }}</b></article>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </section>
-
-      {% elif page == "profil" %}
-        <section class="admin-panel">
-          <div class="admin-panel-head">
-            <div>
-              <p class="eyebrow">Akun</p>
-              <h2>Pengaturan Profil</h2>
+              <p class="eyebrow">Master Lokasi</p>
+              <h2>Kegiatan Lokasi</h2>
+              <span>Jumlah kegiatan selesai per lokasi pada {{ data.month_label }}.</span>
             </div>
           </div>
-          <div class="profile-settings">
-            <label>
-              Nama Petugas
-              <input type="text" value="{{ username }}">
-            </label>
-            <label>
-              Level Akses
-              <input type="text" value="Admin Sementara">
-            </label>
-            <button class="submit-request" type="button">Simpan Pengaturan</button>
+          <div class="review-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Lokasi</th>
+                  <th>Jumlah Kegiatan</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for location in data.location_activity %}
+                  <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                      <b>{{ location.name }}</b>
+                      <small>{{ location.address }}</small>
+                    </td>
+                    <td>{{ location.total }} kegiatan</td>
+                    <td>
+                      <details class="inline-editor">
+                        <summary class="table-action table-action--ghost">View</summary>
+                        <div class="admin-clean-list">
+                          {% for event in location.events %}
+                            <div>
+                              <b>{{ event.kode_pengajuan }} - {{ event.status }}</b>
+                              <span>{{ format_date(event.tanggal) }} | {{ event.result.kantong_darah or 0 }} kantong</span>
+                            </div>
+                          {% endfor %}
+                        </div>
+                      </details>
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr><td colspan="4"><div class="empty-state">Belum ada histori kegiatan lokasi pada bulan ini.</div></td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
           </div>
         </section>
       {% endif %}
     </main>
 
+    <div class="toast admin-toast" id="adminToast" role="status" aria-live="polite"></div>
     <script src="/static/js/admin.js"></script>
   </body>
 </html>

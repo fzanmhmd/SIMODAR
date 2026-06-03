@@ -1,7 +1,7 @@
 [
   {
     "kode_pengajuan": "2026060001",
-    "status": "Menunggu Verifikasi",
+    "status": "Ditolak",
     "instansi": "Mandiri Inhealth",
     "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
     "tanggal": "2026-06-10",
@@ -21,11 +21,11 @@
       "parkir"
     ],
     "created_at": "2026-06-03 09:15:00",
-    "deskripsi": "Pengajuan sudah diterima sistem dan menunggu verifikasi petugas SIMODAR."
+    "deskripsi": "Pengajuan ditolak oleh admin."
   },
   {
     "kode_pengajuan": "2026060002",
-    "status": "Dalam Peninjauan",
+    "status": "Ditolak",
     "instansi": "SMA 12 Jakarta",
     "lokasi": "SMA Negeri 12 Jakarta, Jl. Pertanian, Duren Sawit, Jakarta Timur",
     "tanggal": "2026-06-14",
@@ -44,11 +44,11 @@
       "ruang_tunggu"
     ],
     "created_at": "2026-06-03 10:20:00",
-    "deskripsi": "Petugas sedang meninjau jadwal, kesiapan lokasi, dan kebutuhan mobile unit untuk kegiatan ini."
+    "deskripsi": "Pengajuan ditolak oleh admin."
   },
   {
     "kode_pengajuan": "2026060003",
-    "status": "Disetujui",
+    "status": "Selesai",
     "instansi": "Universitas Nasional",
     "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
     "tanggal": "2026-06-21",
@@ -70,11 +70,11 @@
       "konsumsi"
     ],
     "created_at": "2026-06-03 11:05:00",
-    "deskripsi": "Pengajuan telah disetujui. Tim SIMODAR akan menghubungi PIC untuk konfirmasi teknis sebelum pelaksanaan."
+    "deskripsi": "Hasil kegiatan sudah diinput dan tersimpan di histori."
   },
   {
     "kode_pengajuan": "2026060004",
-    "status": "Menunggu Verifikasi",
+    "status": "Menunggu Input Hasil",
     "instansi": "Universitas Nasional",
     "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
     "tanggal": "2026-06-29",
@@ -90,6 +90,26 @@
     "surat_file": "2026060004-Simodar-logo_1.png",
     "logistik": [],
     "created_at": "2026-06-03 12:39:26",
-    "deskripsi": "Pengajuan sudah diterima sistem dan menunggu verifikasi petugas SIMODAR."
+    "deskripsi": "Kegiatan selesai dan menunggu input hasil kegiatan."
+  },
+  {
+    "kode_pengajuan": "2026060005",
+    "status": "Siap Kegiatan",
+    "instansi": "SMA 2 Babelan",
+    "lokasi": "babelan",
+    "tanggal": "2026-06-15",
+    "jam_mulai": "05:00",
+    "jam_selesai": "20:00",
+    "peserta": "1000",
+    "nama_pic": "hendra",
+    "whatsapp_pic": "085153515156",
+    "email_pic": "ojan14021@gmail.com",
+    "latitude": "-6.224490",
+    "longitude": "106.823310",
+    "surat_pengajuan": "Simodar-logo_1.png",
+    "surat_file": "2026060005-Simodar-logo_1.png",
+    "logistik": [],
+    "created_at": "2026-06-04 00:11:27",
+    "deskripsi": "Petugas sudah ditugaskan dan kegiatan siap dijadwalkan."
   }
 ]

@@ -1,0 +1,223 @@
+{
+  "assignments": [],
+  "schedules": [
+    {
+      "kode_pengajuan": "2026060005",
+      "tanggal_pengajuan": "2026-06-04 00:11:27",
+      "instansi": "SMA 2 Babelan",
+      "lokasi": "babelan",
+      "tanggal": "2026-06-15",
+      "jam_mulai": "05:00",
+      "jam_selesai": "20:00",
+      "peserta": "1000",
+      "nama_pic": "hendra",
+      "whatsapp_pic": "085153515156",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [],
+      "surat_pengajuan": "Simodar-logo_1.png",
+      "created_at": "2026-06-04 00:11:27",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "dokter"
+        }
+      ],
+      "pj_petugas": "Muhammad Fauzan",
+      "status": "Siap Kegiatan",
+      "assigned_at": "2026-06-04 00:12:19"
+    }
+  ],
+  "results": [
+    {
+      "kode_pengajuan": "2026060004",
+      "tanggal_pengajuan": "2026-06-03 12:39:26",
+      "instansi": "Universitas Nasional",
+      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
+      "tanggal": "2026-06-29",
+      "jam_mulai": "22:00",
+      "jam_selesai": "23:00",
+      "peserta": "100",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0224",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [],
+      "surat_pengajuan": "Simodar-logo_1.png",
+      "created_at": "2026-06-03 12:39:26",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "admin"
+        }
+      ],
+      "pj_petugas": "Muhammad Fauzan",
+      "status": "Menunggu Input Hasil",
+      "assigned_at": "2026-06-04 00:09:43",
+      "updated_at": "2026-06-04 00:10:09",
+      "finished_at": "2026-06-04 00:10:24"
+    }
+  ],
+  "histories": [
+    {
+      "kode_pengajuan": "2026060002",
+      "tanggal_pengajuan": "2026-06-03 10:20:00",
+      "instansi": "SMA 12 Jakarta",
+      "lokasi": "SMA Negeri 12 Jakarta, Jl. Pertanian, Duren Sawit, Jakarta Timur",
+      "tanggal": "2026-06-14",
+      "jam_mulai": "09:00",
+      "jam_selesai": "13:30",
+      "peserta": "180",
+      "nama_pic": "Nur Aisyah",
+      "whatsapp_pic": "082112223333",
+      "email_pic": "humas@sma12jakarta.sch.id",
+      "logistik": [
+        "listrik",
+        "kursi",
+        "ruang_tunggu"
+      ],
+      "surat_pengajuan": "surat-sma12-jakarta.pdf",
+      "created_at": "2026-06-03 10:20:00",
+      "staff_assignments": [],
+      "pj_petugas": "",
+      "status": "Ditolak",
+      "rejection_note": "Pengajuan ditolak oleh admin.",
+      "completed_at": "2026-06-04 00:07:45",
+      "result": {}
+    },
+    {
+      "kode_pengajuan": "2026060001",
+      "tanggal_pengajuan": "2026-06-03 09:15:00",
+      "instansi": "Mandiri Inhealth",
+      "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
+      "tanggal": "2026-06-10",
+      "jam_mulai": "08:00",
+      "jam_selesai": "12:00",
+      "peserta": "120",
+      "nama_pic": "Rizky Pratama",
+      "whatsapp_pic": "081234567890",
+      "email_pic": "rizky.pic@mandiriinhealth.co.id",
+      "logistik": [
+        "listrik",
+        "kursi",
+        "meja",
+        "parkir"
+      ],
+      "surat_pengajuan": "surat-mandiri-inhealth.pdf",
+      "created_at": "2026-06-03 09:15:00",
+      "staff_assignments": [],
+      "pj_petugas": "",
+      "status": "Ditolak",
+      "rejection_note": "Pengajuan ditolak oleh admin.",
+      "completed_at": "2026-06-04 00:07:48",
+      "result": {}
+    },
+    {
+      "kode_pengajuan": "2026060003",
+      "tanggal_pengajuan": "2026-06-03 11:05:00",
+      "instansi": "Universitas Nasional",
+      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
+      "tanggal": "2026-06-21",
+      "jam_mulai": "08:30",
+      "jam_selesai": "14:00",
+      "peserta": "250",
+      "nama_pic": "Dewi Lestari",
+      "whatsapp_pic": "085612345678",
+      "email_pic": "kemahasiswaan@unas.ac.id",
+      "logistik": [
+        "listrik",
+        "kursi",
+        "meja",
+        "ruang_tunggu",
+        "parkir",
+        "konsumsi"
+      ],
+      "surat_pengajuan": "surat-universitas-nasional.pdf",
+      "created_at": "2026-06-03 11:05:00",
+      "staff_assignments": [
+        {
+          "name": "Dr. Nadya Putri",
+          "role": "dokter"
+        },
+        {
+          "name": "Siti Rahma",
+          "role": "dokter"
+        },
+        {
+          "name": "Bima Saputra",
+          "role": "dokter"
+        },
+        {
+          "name": "Raka Pratama",
+          "role": "dokter"
+        },
+        {
+          "name": "Siti Rahma",
+          "role": "dokter"
+        },
+        {
+          "name": "Dr. Nadya Putri",
+          "role": "dokter"
+        }
+      ],
+      "pj_petugas": "Dr. Nadya Putri",
+      "status": "Selesai",
+      "assigned_at": "2026-06-04 00:04:37",
+      "finished_at": "2026-06-04 00:07:18",
+      "result": {
+        "donor_terdaftar": "32",
+        "donor_berhasil": "244",
+        "donor_gagal": "1",
+        "kantong_darah": "50",
+        "snack_terpakai": "",
+        "catatan": ""
+      },
+      "completed_at": "2026-06-04 00:12:42"
+    }
+  ],
+  "staff": [
+    {
+      "id": "ptg-1780506527",
+      "name": "Muhammad Fauzan",
+      "roles": [
+        "admin",
+        "driver"
+      ],
+      "absen": "4988",
+      "password": "1112233"
+    },
+    {
+      "id": "ptg-1780506550",
+      "name": "dr.Yanto",
+      "roles": [
+        "dokter"
+      ],
+      "absen": "1001",
+      "password": "1001"
+    }
+  ],
+  "locations": [
+    {
+      "id": "lok-001",
+      "name": "Mandiri Inhealth",
+      "address": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan"
+    },
+    {
+      "id": "lok-002",
+      "name": "SMA 12 Jakarta",
+      "address": "Jl. Pertanian, Duren Sawit, Jakarta Timur"
+    },
+    {
+      "id": "lok-003",
+      "name": "Universitas Nasional",
+      "address": "Jl. Sawo Manila, Pejaten, Jakarta Selatan"
+    },
+    {
+      "id": "lok-1780506372",
+      "name": "GKY Joglo",
+      "address": "Joglo"
+    }
+  ]
+}

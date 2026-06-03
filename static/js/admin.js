@@ -3,7 +3,16 @@ const searchInput = document.querySelector("#adminSearchInput");
 const menuToggle = document.querySelector(".admin-menu-toggle");
 const adminSidebar = document.querySelector("#adminSidebar");
 const liveClocks = Array.from(document.querySelectorAll("[data-live-clock]"));
+const adminToast = document.querySelector("#adminToast");
 const searchableAreas = Array.from(document.querySelectorAll("[data-admin-search-area], .admin-panel"));
+
+const showAdminToast = (message) => {
+  if (!adminToast || !message) return;
+
+  adminToast.textContent = message;
+  adminToast.classList.add("is-visible");
+  window.setTimeout(() => adminToast.classList.remove("is-visible"), 3200);
+};
 
 monthFilter?.addEventListener("change", () => {
   monthFilter.form?.submit();
@@ -32,6 +41,15 @@ adminSidebar?.addEventListener("click", (event) => {
 });
 
 if (liveClocks.length) {
+  const dayNames = [
+    "Minggu",
+    "Senin",
+    "Selasa",
+    "Rabu",
+    "Kamis",
+    "Jumat",
+    "Sabtu",
+  ];
   const monthNames = [
     "Januari",
     "Februari",
@@ -54,7 +72,7 @@ if (liveClocks.length) {
 
   const updateLiveClock = () => {
     const currentTime = new Date(baseTime + Date.now() - clockStart);
-    const text = `${padClock(currentTime.getDate())} ${monthNames[currentTime.getMonth()]} ${currentTime.getFullYear()}, ${padClock(currentTime.getHours())}:${padClock(currentTime.getMinutes())}:${padClock(currentTime.getSeconds())}`;
+    const text = `${dayNames[currentTime.getDay()]}, ${currentTime.getDate()} ${monthNames[currentTime.getMonth()]} ${currentTime.getFullYear()}, ${padClock(currentTime.getHours())}:${padClock(currentTime.getMinutes())}:${padClock(currentTime.getSeconds())}`;
 
     liveClocks.forEach((clock) => {
       clock.textContent = text;
@@ -65,3 +83,37 @@ if (liveClocks.length) {
   updateLiveClock();
   window.setInterval(updateLiveClock, 1000);
 }
+
+document.addEventListener("click", (event) => {
+  const addButton = event.target.closest("[data-add-staff-row]");
+  const removeButton = event.target.closest("[data-remove-staff-row]");
+  const toastButton = event.target.closest("[data-toast-click]");
+
+  if (addButton) {
+    const list = addButton.closest("form")?.querySelector("[data-staff-assignment-list]");
+    const firstRow = list?.querySelector(".staff-assignment-row");
+    if (!list || !firstRow) return;
+
+    const clone = firstRow.cloneNode(true);
+    clone.querySelectorAll("select").forEach((select) => {
+      select.selectedIndex = 0;
+    });
+    list.appendChild(clone);
+    showAdminToast("Kolom petugas ditambahkan.");
+  }
+
+  if (removeButton) {
+    const row = removeButton.closest(".staff-assignment-row");
+    const list = row?.parentElement;
+    if (row && list && list.querySelectorAll(".staff-assignment-row").length > 1) {
+      row.remove();
+      showAdminToast("Kolom petugas dihapus.");
+    }
+  }
+
+  if (toastButton) {
+    showAdminToast(toastButton.dataset.toastClick);
+  }
+});
+
+showAdminToast(document.body.dataset.toastMessage);
