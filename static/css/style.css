@@ -4727,6 +4727,257 @@ html {
   }
 }
 
+/* Centered action drawers and persistent toast polish */
+.inline-editor[open],
+.cancel-note-box[open] {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  z-index: 125 !important;
+  display: block !important;
+  width: min(640px, calc(100vw - 28px)) !important;
+  max-height: min(82vh, 760px);
+  overflow: auto;
+  padding: 16px !important;
+  border: 1px solid #efc9ca !important;
+  border-radius: 14px !important;
+  background: #ffffff !important;
+  box-shadow: 0 28px 90px rgba(31, 41, 51, 0.22) !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+.inline-editor[open]::before,
+.cancel-note-box[open]::before {
+  position: fixed;
+  inset: -100vmax;
+  z-index: -1;
+  content: "";
+  background: rgba(31, 41, 51, 0.34);
+  backdrop-filter: blur(7px);
+}
+
+.inline-editor[open] > summary,
+.cancel-note-box[open] > summary {
+  width: 100%;
+  min-height: 46px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 0 0 10px !important;
+  color: var(--primary-deep);
+  border: 0;
+  border-radius: 10px;
+  background: #fff3f3;
+  box-shadow: none;
+  white-space: normal;
+}
+
+.inline-editor[open] > summary::after,
+.cancel-note-box[open] > summary::after {
+  display: block;
+  width: 100%;
+  margin-top: 3px;
+  color: #6f4548;
+  font-family: "Poppins", Arial, sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.45;
+  content: "Sedang mengelola data ini. Periksa kembali sebelum menyimpan perubahan.";
+}
+
+.cancel-note-box[open] > summary::after {
+  content: "Isi keterangan pembatalan agar histori kegiatan tetap jelas.";
+}
+
+.inline-editor[open] .drawer-back,
+.cancel-note-box[open] .drawer-back {
+  margin-bottom: 12px;
+}
+
+.inline-editor[open] form,
+.cancel-note-box[open] form,
+.inline-editor[open] .staff-chip-list,
+.inline-editor[open] .admin-clean-list,
+.inline-editor[open] .detail-list {
+  width: 100%;
+}
+
+.inline-editor[open] input,
+.inline-editor[open] select,
+.inline-editor[open] textarea,
+.cancel-note-box[open] input {
+  width: 100%;
+}
+
+.toast,
+.admin-toast {
+  position: fixed !important;
+  top: 14px !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  z-index: 160 !important;
+  cursor: pointer;
+}
+
+.success-modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  display: grid !important;
+  align-items: center !important;
+  justify-items: center !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  min-height: 100dvh !important;
+  padding: 18px;
+  overflow: auto;
+}
+
+.success-modal-card {
+  margin: auto !important;
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+}
+
+/* Re-enabled smooth page loader and inline action panels */
+.loader__panel {
+  width: min(380px, calc(100vw - 34px));
+  padding: 30px 26px 24px;
+  border-radius: 16px;
+  box-shadow: 0 26px 80px rgba(31, 41, 51, 0.16);
+}
+
+.loader__logo {
+  width: 190px;
+  margin-bottom: 14px;
+  animation: simodar-car-drive-smooth 1.95s var(--motion-soft) infinite;
+}
+
+.loader__copy span {
+  font-size: 1.08rem;
+}
+
+.loader__copy p {
+  margin-top: 6px;
+  font-size: 0.86rem;
+}
+
+.inline-editor[open],
+.cancel-note-box[open] {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: auto !important;
+  display: block !important;
+  width: min(620px, 100%) !important;
+  max-height: none;
+  overflow: visible;
+  padding: 12px !important;
+  border: 1px solid #efc9ca !important;
+  border-radius: 12px !important;
+  background: #fffafa !important;
+  box-shadow: 0 14px 34px rgba(31, 41, 51, 0.08) !important;
+  transform: none !important;
+}
+
+.inline-editor[open]::before,
+.cancel-note-box[open]::before {
+  display: none !important;
+  content: none !important;
+}
+
+.inline-editor[open] > summary,
+.cancel-note-box[open] > summary {
+  flex-direction: row;
+  align-items: center;
+  width: max-content;
+  min-height: 36px;
+  margin: 0 0 10px !important;
+  color: var(--primary-deep);
+  border: 1px solid #efb6b8;
+  background: #ffffff;
+  white-space: nowrap;
+}
+
+.inline-editor[open] > summary::after,
+.cancel-note-box[open] > summary::after {
+  display: none !important;
+  content: none !important;
+}
+
+.inline-editor[open] .drawer-back,
+.cancel-note-box[open] .drawer-back {
+  margin-bottom: 10px;
+}
+
+.cancel-note-box[open] {
+  display: grid !important;
+  gap: 8px;
+  width: min(340px, 100%) !important;
+}
+
+.cancel-note-box[open] form {
+  display: grid;
+  gap: 8px;
+}
+
+.cancel-note-box[open] input,
+.cancel-note-box[open] button {
+  width: 100%;
+}
+
+@keyframes simodar-car-drive-smooth {
+  0% {
+    opacity: 0;
+    transform: translateX(145%) scale(0.98);
+  }
+  16% {
+    opacity: 1;
+  }
+  62% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  84% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-145%) scale(0.98);
+  }
+}
+
+@media (max-width: 520px) {
+  .loader__panel {
+    width: min(330px, calc(100vw - 28px));
+    padding: 24px 18px 20px;
+  }
+
+  .loader__logo {
+    width: 165px;
+  }
+
+  .inline-editor[open],
+  .cancel-note-box[open] {
+    width: 100% !important;
+    padding: 10px !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .inline-editor[open],
+  .cancel-note-box[open] {
+    width: calc(100vw - 20px) !important;
+    max-height: calc(100vh - 22px);
+    padding: 13px !important;
+  }
+
+  .inline-editor[open] > summary,
+  .cancel-note-box[open] > summary {
+    min-height: 42px;
+  }
+}
+
 /* Schedule export and cursor polish */
 .panel-actions {
   display: flex;
@@ -5335,5 +5586,52 @@ textarea {
 
   .loader__logo {
     width: 132px;
+  }
+}
+
+/* Final loader sizing: keep the moving car visible on every page load */
+.loader__panel {
+  width: min(390px, calc(100vw - 34px));
+  padding: 30px 26px 24px;
+  border-radius: 16px;
+}
+
+.loader__logo {
+  width: 190px !important;
+  margin-bottom: 14px;
+  animation: simodar-car-drive-smooth 1.95s var(--motion-soft) infinite !important;
+}
+
+@keyframes simodar-car-drive-smooth {
+  0% {
+    opacity: 0;
+    transform: translateX(155%) scale(0.96);
+  }
+  16% {
+    opacity: 1;
+    transform: translateX(82%) scale(0.99);
+  }
+  54% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  82% {
+    opacity: 1;
+    transform: translateX(-88%) scale(0.99);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-155%) scale(0.96);
+  }
+}
+
+@media (max-width: 520px) {
+  .loader__panel {
+    width: min(330px, calc(100vw - 24px));
+    padding: 26px 20px 22px;
+  }
+
+  .loader__logo {
+    width: 165px !important;
   }
 }

@@ -66,11 +66,11 @@ function showToast(message, type = "error") {
   formToast.textContent = message;
   formToast.classList.remove("is-error", "is-success");
   formToast.classList.add(`is-${type}`, "is-visible");
-
-  toastTimer = window.setTimeout(() => {
-    formToast.classList.remove("is-visible");
-  }, 4600);
 }
+
+formToast?.addEventListener("click", () => {
+  formToast.classList.remove("is-visible");
+});
 
 async function copyText(value) {
   if (navigator.clipboard?.writeText) {

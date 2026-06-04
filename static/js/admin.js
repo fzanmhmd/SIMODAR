@@ -19,7 +19,6 @@ const showAdminToast = (message) => {
   window.requestAnimationFrame(() => {
     adminToast.classList.add("is-visible");
   });
-  adminToastTimer = window.setTimeout(() => adminToast.classList.remove("is-visible"), 3800);
 };
 
 monthFilter?.addEventListener("change", () => {
@@ -97,6 +96,7 @@ document.addEventListener("click", (event) => {
   const removeButton = event.target.closest("[data-remove-staff-row]");
   const toastButton = event.target.closest("[data-toast-click]");
   const editorSummary = event.target.closest(".inline-editor > summary");
+  const cancelSummary = event.target.closest(".cancel-note-box > summary");
   const closeEditorButton = event.target.closest("[data-close-editor]");
   const confirmCancel = event.target.closest("[data-confirm-cancel]");
   const confirmAccept = event.target.closest("[data-confirm-accept]");
@@ -145,8 +145,21 @@ document.addEventListener("click", (event) => {
     }
   }
 
+  if (cancelSummary) {
+    const activeEditor = cancelSummary.parentElement;
+    const hasBackButton = Array.from(activeEditor.children).some((child) => child.matches?.("[data-close-editor]"));
+    if (!hasBackButton) {
+      const backButton = document.createElement("button");
+      backButton.className = "drawer-back";
+      backButton.type = "button";
+      backButton.dataset.closeEditor = "";
+      backButton.textContent = "\u2190 Tutup";
+      cancelSummary.insertAdjacentElement("afterend", backButton);
+    }
+  }
+
   if (closeEditorButton) {
-    closeEditorButton.closest(".inline-editor")?.removeAttribute("open");
+    closeEditorButton.closest(".inline-editor, .cancel-note-box")?.removeAttribute("open");
   }
 
   if (confirmCancel) {
@@ -176,11 +189,14 @@ document.addEventListener("submit", (event) => {
     return;
   }
 
-  if (form.dataset.confirmMessage && form.dataset.skipConfirm !== "true") {
+  const isPostForm = (form.getAttribute("method") || "").toLowerCase() === "post";
+  const confirmMessage = form.dataset.confirmMessage || (isPostForm ? "Lanjutkan dan simpan perubahan ini?" : "");
+
+  if (confirmMessage && form.dataset.skipConfirm !== "true" && !form.hasAttribute("data-no-confirm")) {
     event.preventDefault();
     pendingConfirmForm = form;
     if (adminConfirmText) {
-      adminConfirmText.textContent = form.dataset.confirmMessage;
+      adminConfirmText.textContent = confirmMessage;
     }
     adminConfirm?.removeAttribute("hidden");
     adminConfirm?.querySelector("[data-confirm-accept]")?.focus();
@@ -201,3 +217,7 @@ document.addEventListener("keydown", (event) => {
 });
 
 showAdminToast(document.body.dataset.toastMessage);
+
+adminToast?.addEventListener("click", () => {
+  adminToast.classList.remove("is-visible");
+});

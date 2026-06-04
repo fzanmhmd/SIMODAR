@@ -2,56 +2,6 @@
   "assignments": [],
   "schedules": [
     {
-      "kode_pengajuan": "2026060006",
-      "tanggal_pengajuan": "2026-06-04 00:46:05",
-      "instansi": "pt",
-      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
-      "tanggal": "2026-06-02",
-      "jam_mulai": "20:20",
-      "jam_selesai": "23:01",
-      "peserta": "202",
-      "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "0224",
-      "email_pic": "ojan14021@gmail.com",
-      "logistik": [],
-      "surat_pengajuan": "Simodar-logo.png",
-      "created_at": "2026-06-04 00:46:05",
-      "staff_assignments": [
-        {
-          "name": "Muhammad Fauzan",
-          "role": "aftap"
-        },
-        {
-          "name": "dr.Yanto",
-          "role": "aftap"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "admin"
-        },
-        {
-          "name": "dr.Yanto",
-          "role": "aftap"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "dokter"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "dokter"
-        },
-        {
-          "name": "dr.Yanto",
-          "role": "dokter"
-        }
-      ],
-      "pj_petugas": "dr.Yanto",
-      "status": "Siap Kegiatan",
-      "assigned_at": "2026-06-04 00:48:10",
-      "updated_at": "2026-06-04 01:32:27"
-    },
-    {
       "kode_pengajuan": "2026060007",
       "tanggal_pengajuan": "2026-06-04 01:03:04",
       "instansi": "Mandiri Inhealth",
@@ -126,6 +76,60 @@
       "pj_petugas": "dr.Yanto",
       "status": "Siap Kegiatan",
       "assigned_at": "2026-06-04 01:30:10"
+    },
+    {
+      "kode_pengajuan": "2026060009",
+      "tanggal_pengajuan": "2026-06-04 01:43:02",
+      "instansi": "Universitas Nasional",
+      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
+      "tanggal": "2026-06-17",
+      "jam_mulai": "22:00",
+      "jam_selesai": "23:00",
+      "peserta": "54",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0224",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [],
+      "surat_pengajuan": "jadwal-simodar-2026060008-20260604-0130.pdf",
+      "created_at": "2026-06-04 01:43:02",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter"
+        }
+      ],
+      "pj_petugas": "Muhammad Fauzan",
+      "status": "Siap Kegiatan",
+      "assigned_at": "2026-06-04 01:43:56"
+    },
+    {
+      "kode_pengajuan": "2026060010",
+      "tanggal_pengajuan": "2026-06-04 13:40:30",
+      "instansi": "SMA 12 Jakarta",
+      "lokasi": "SMA Negeri 12 Jakarta, Jl. Pertanian, Duren Sawit, Jakarta Timur",
+      "tanggal": "2026-06-14",
+      "jam_mulai": "20:20",
+      "jam_selesai": "23:01",
+      "peserta": "202",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0224",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [],
+      "surat_pengajuan": "jadwal-simodar-2026060006-20260604-0130.pdf",
+      "created_at": "2026-06-04 13:40:30",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "aftap"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "aftap"
+        }
+      ],
+      "pj_petugas": "dr.Yanto",
+      "status": "Siap Kegiatan",
+      "assigned_at": "2026-06-04 13:42:27"
     }
   ],
   "results": [
@@ -155,6 +159,57 @@
       "assigned_at": "2026-06-04 00:12:19",
       "updated_at": "2026-06-04 00:53:22",
       "finished_at": "2026-06-04 01:07:43"
+    },
+    {
+      "kode_pengajuan": "2026060006",
+      "tanggal_pengajuan": "2026-06-04 00:46:05",
+      "instansi": "pt",
+      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
+      "tanggal": "2026-06-02",
+      "jam_mulai": "20:20",
+      "jam_selesai": "23:01",
+      "peserta": "202",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0224",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [],
+      "surat_pengajuan": "Simodar-logo.png",
+      "created_at": "2026-06-04 00:46:05",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "aftap"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "aftap"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "admin"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "aftap"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter"
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter"
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "dokter"
+        }
+      ],
+      "pj_petugas": "dr.Yanto",
+      "status": "Menunggu Input Hasil",
+      "assigned_at": "2026-06-04 00:48:10",
+      "updated_at": "2026-06-04 01:32:27",
+      "finished_at": "2026-06-04 14:30:36"
     }
   ],
   "histories": [
@@ -304,10 +359,11 @@
         "donor_berhasil": "346",
         "donor_gagal": "346",
         "kantong_darah": "346",
-        "snack_terpakai": "",
+        "snack_terpakai": "0",
         "catatan": ""
       },
-      "completed_at": "2026-06-04 00:49:20"
+      "completed_at": "2026-06-04 00:49:20",
+      "history_updated_at": "2026-06-04 01:44:50"
     }
   ],
   "staff": [
