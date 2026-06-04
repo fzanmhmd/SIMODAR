@@ -134,7 +134,7 @@
   },
   {
     "kode_pengajuan": "2026060007",
-    "status": "Siap Kegiatan",
+    "status": "Menunggu Input Hasil",
     "instansi": "Mandiri Inhealth",
     "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
     "tanggal": "2026-06-17",
@@ -150,7 +150,8 @@
     "surat_file": "2026060007-simodar_logo.png",
     "logistik": [],
     "created_at": "2026-06-04 01:03:04",
-    "deskripsi": "Petugas sudah ditugaskan dan kegiatan siap dijadwalkan."
+    "deskripsi": "Kegiatan selesai dan menunggu input hasil kegiatan.",
+    "updated_at": "2026-06-04 14:56:18"
   },
   {
     "kode_pengajuan": "2026060008",
@@ -213,5 +214,26 @@
     "logistik": [],
     "created_at": "2026-06-04 13:40:30",
     "deskripsi": "Petugas sudah ditugaskan dan kegiatan siap dijadwalkan."
+  },
+  {
+    "kode_pengajuan": "2026060011",
+    "status": "Disetujui - Menunggu Penugasan",
+    "instansi": "Mandiri Inhealth",
+    "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
+    "tanggal": "2026-06-16",
+    "jam_mulai": "12:22",
+    "jam_selesai": "12:35",
+    "peserta": "50",
+    "nama_pic": "Muhammad Fauzan",
+    "whatsapp_pic": "75475",
+    "email_pic": "ojan14021@gmail.com",
+    "latitude": "-6.224490",
+    "longitude": "106.823310",
+    "surat_pengajuan": "jadwal-simodar-2026060008-20260604-0130.pdf",
+    "surat_file": "2026060011-jadwal-simodar-2026060008-20260604-0130.pdf",
+    "logistik": [],
+    "created_at": "2026-06-04 14:57:02",
+    "updated_at": "2026-06-04 14:59:23",
+    "deskripsi": "Pengajuan disetujui dan menunggu penugasan petugas."
   }
 ]

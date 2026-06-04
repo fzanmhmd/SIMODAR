@@ -1,11 +1,44 @@
 const pageLoader = document.querySelector("#loader");
+const loaderDuration = 2700;
 let pageLoaderTimer;
+let pageLoaderHideTimer;
+
+function lockPageScroll() {
+  document.documentElement.classList.add("simodar-page-loading");
+  document.body?.classList.add("simodar-page-loading");
+}
+
+function unlockPageScroll() {
+  document.documentElement.classList.remove("simodar-page-loading");
+  document.body?.classList.remove("simodar-page-loading");
+}
+
+function playLoaderAnimation() {
+  const logo = pageLoader?.querySelector(".loader__logo");
+
+  if (!pageLoader || !logo) {
+    return;
+  }
+
+  window.clearTimeout(pageLoaderHideTimer);
+  lockPageScroll();
+  pageLoader.classList.remove("is-hidden", "is-animating");
+  void logo.offsetWidth;
+  pageLoader.classList.add("is-animating");
+}
 
 function hidePageLoader() {
   window.clearTimeout(pageLoaderTimer);
-  window.setTimeout(() => {
-    pageLoader?.classList.add("is-hidden");
-  }, 850);
+  window.clearTimeout(pageLoaderHideTimer);
+  pageLoaderHideTimer = window.setTimeout(() => {
+    if (!pageLoader) {
+      return;
+    }
+
+    pageLoader.classList.add("is-hidden");
+    pageLoader.classList.remove("is-animating");
+    unlockPageScroll();
+  }, loaderDuration);
 }
 
 function showPageLoader() {
@@ -15,10 +48,11 @@ function showPageLoader() {
 
   window.clearTimeout(pageLoaderTimer);
   pageLoaderTimer = window.setTimeout(() => {
-    pageLoader.classList.remove("is-hidden");
-  }, 160);
+    playLoaderAnimation();
+  }, 90);
 }
 
+playLoaderAnimation();
 window.addEventListener("load", hidePageLoader);
 window.addEventListener("pageshow", hidePageLoader);
 

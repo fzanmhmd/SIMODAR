@@ -1,31 +1,28 @@
 {
-  "assignments": [],
-  "schedules": [
+  "assignments": [
     {
-      "kode_pengajuan": "2026060007",
-      "tanggal_pengajuan": "2026-06-04 01:03:04",
+      "kode_pengajuan": "2026060011",
+      "tanggal_pengajuan": "2026-06-04 14:57:02",
       "instansi": "Mandiri Inhealth",
       "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
-      "tanggal": "2026-06-17",
-      "jam_mulai": "22:00",
-      "jam_selesai": "23:00",
-      "peserta": "54",
+      "tanggal": "2026-06-16",
+      "jam_mulai": "12:22",
+      "jam_selesai": "12:35",
+      "peserta": "50",
       "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "0224",
+      "whatsapp_pic": "75475",
       "email_pic": "ojan14021@gmail.com",
       "logistik": [],
-      "surat_pengajuan": "simodar_logo.png",
-      "created_at": "2026-06-04 01:03:04",
-      "staff_assignments": [
-        {
-          "name": "Muhammad Fauzan",
-          "role": "dokter"
-        }
-      ],
-      "pj_petugas": "Muhammad Fauzan",
-      "status": "Siap Kegiatan",
-      "assigned_at": "2026-06-04 01:03:38"
-    },
+      "surat_pengajuan": "jadwal-simodar-2026060008-20260604-0130.pdf",
+      "created_at": "2026-06-04 14:57:02",
+      "updated_at": "2026-06-04 14:59:23",
+      "staff_assignments": [],
+      "pj_petugas": "",
+      "status": "Menunggu Penugasan",
+      "approved_at": "2026-06-04 14:59:23"
+    }
+  ],
+  "schedules": [
     {
       "kode_pengajuan": "2026060008",
       "tanggal_pengajuan": "2026-06-04 01:28:57",
@@ -210,6 +207,33 @@
       "assigned_at": "2026-06-04 00:48:10",
       "updated_at": "2026-06-04 01:32:27",
       "finished_at": "2026-06-04 14:30:36"
+    },
+    {
+      "kode_pengajuan": "2026060007",
+      "tanggal_pengajuan": "2026-06-04 01:03:04",
+      "instansi": "Mandiri Inhealth",
+      "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
+      "tanggal": "2026-06-17",
+      "jam_mulai": "22:00",
+      "jam_selesai": "23:00",
+      "peserta": "54",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0224",
+      "email_pic": "ojan14021@gmail.com",
+      "logistik": [],
+      "surat_pengajuan": "simodar_logo.png",
+      "created_at": "2026-06-04 01:03:04",
+      "staff_assignments": [
+        {
+          "name": "dr.Yanto",
+          "role": "dokter"
+        }
+      ],
+      "pj_petugas": "Muhammad Fauzan",
+      "status": "Menunggu Input Hasil",
+      "assigned_at": "2026-06-04 01:03:38",
+      "updated_at": "2026-06-04 14:56:18",
+      "finished_at": "2026-06-04 14:56:18"
     }
   ],
   "histories": [
@@ -377,7 +401,9 @@
       ],
       "absen": "4988",
       "password": "1112233",
-      "rekening": ""
+      "rekening": "",
+      "created_at": "",
+      "updated_at": ""
     },
     {
       "id": "ptg-1780506550",
@@ -387,34 +413,46 @@
       ],
       "absen": "1001",
       "password": "1001",
-      "rekening": ""
+      "rekening": "",
+      "created_at": "",
+      "updated_at": ""
     }
   ],
   "locations": [
     {
       "id": "lok-001",
       "name": "Mandiri Inhealth",
-      "address": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan"
+      "address": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
+      "created_at": "",
+      "updated_at": ""
     },
     {
       "id": "lok-002",
       "name": "SMA 12 Jakarta",
-      "address": "Jl. Pertanian, Duren Sawit, Jakarta Timur"
+      "address": "Jl. Pertanian, Duren Sawit, Jakarta Timur",
+      "created_at": "",
+      "updated_at": ""
     },
     {
       "id": "lok-003",
       "name": "Universitas Nasional",
-      "address": "Jl. Sawo Manila, Pejaten, Jakarta Selatan"
+      "address": "Jl. Sawo Manila, Pejaten, Jakarta Selatan",
+      "created_at": "",
+      "updated_at": ""
     },
     {
       "id": "lok-1780506372",
       "name": "GKY Joglo",
-      "address": "Joglo"
+      "address": "Joglo",
+      "created_at": "",
+      "updated_at": ""
     },
     {
       "id": "lok-1780508623",
       "name": "tes",
-      "address": "tes"
+      "address": "tes",
+      "created_at": "",
+      "updated_at": ""
     }
   ]
 }

@@ -5635,3 +5635,533 @@ textarea {
     width: 165px !important;
   }
 }
+
+/* Saved-time labels and smoother single-pass car loader */
+.record-time {
+  display: inline-flex;
+  max-width: 230px;
+  color: #7a4b4d;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.review-table td .record-time {
+  white-space: normal;
+}
+
+.loader__logo {
+  animation: simodar-car-glide 1.9s cubic-bezier(0.2, 0.82, 0.22, 1) both !important;
+}
+
+.loader.is-hidden .loader__logo {
+  animation-play-state: paused;
+}
+
+@keyframes simodar-car-glide {
+  0% {
+    opacity: 0;
+    transform: translateX(165%) scale(0.96);
+  }
+  12% {
+    opacity: 1;
+    transform: translateX(95%) scale(0.99);
+  }
+  34% {
+    opacity: 1;
+    transform: translateX(22%) scale(1);
+  }
+  48% {
+    opacity: 1;
+    transform: translateX(3%) scale(1.015);
+  }
+  56% {
+    opacity: 1;
+    transform: translateX(0) scale(1.015);
+  }
+  64% {
+    opacity: 1;
+    transform: translateX(-8%) scale(1);
+  }
+  84% {
+    opacity: 1;
+    transform: translateX(-92%) scale(0.99);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-165%) scale(0.96);
+  }
+}
+
+/* Red arrow cursor requested for SIMODAR */
+.simodar-cursor-dot,
+.simodar-cursor-ring {
+  display: none !important;
+}
+
+@media (pointer: fine) {
+  body.simodar-cursor-ready,
+  body.simodar-cursor-ready a,
+  body.simodar-cursor-ready button,
+  body.simodar-cursor-ready summary,
+  body.simodar-cursor-ready label,
+  body.simodar-cursor-ready select,
+  body.simodar-cursor-ready [role="button"],
+  body.simodar-cursor-ready .table-action,
+  body.simodar-cursor-ready .soft-button {
+    cursor: url("/static/img/cursor-red.svg") 5 4, auto !important;
+  }
+
+  body.simodar-cursor-ready input,
+  body.simodar-cursor-ready textarea,
+  body.simodar-cursor-ready [contenteditable="true"] {
+    cursor: text !important;
+  }
+}
+
+/* Loader car keeps moving while the loader is visible */
+.loader__logo {
+  opacity: 0;
+  transform: translateX(140%) scale(0.96);
+  animation: none !important;
+  will-change: transform, opacity;
+}
+
+.loader.is-animating .loader__logo {
+  animation: simodar-car-loop 1.28s linear infinite !important;
+}
+
+.loader.is-hidden .loader__logo {
+  opacity: 0;
+  transform: translateX(-140%) scale(0.96);
+  animation: none !important;
+}
+
+@keyframes simodar-car-loop {
+  0% {
+    opacity: 1;
+    transform: translateX(140%) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-140%) scale(0.98);
+  }
+}
+
+html.simodar-page-loading,
+body.simodar-page-loading {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+body.simodar-page-loading {
+  height: 100dvh;
+}
+
+/* Mobile pengajuan layout alignment */
+@media (max-width: 700px) {
+  body.submission-page {
+    overflow-x: hidden;
+  }
+
+  .submission-topbar {
+    height: 58px;
+    gap: 10px;
+    padding: 0 16px;
+  }
+
+  .submission-topbar strong {
+    min-width: 0;
+    font-size: 1.16rem;
+    line-height: 1;
+  }
+
+  .back-link {
+    flex: 0 0 auto;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+  }
+
+  .back-link svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .submission-shell {
+    width: 100%;
+    max-width: none;
+    padding: 20px 16px 44px;
+    box-sizing: border-box;
+  }
+
+  .submission-hero {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+    margin: 0 0 16px;
+  }
+
+  .submission-hero .eyebrow,
+  .submission-hero h1,
+  .submission-hero p {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .submission-hero h1 {
+    font-size: clamp(1.65rem, 8vw, 2.1rem);
+    line-height: 1.12;
+  }
+
+  .submission-hero p:last-child {
+    margin-top: 0;
+    font-size: 0.92rem;
+    line-height: 1.58;
+  }
+
+  .submission-layout,
+  .form-grid,
+  .coordinate-grid,
+  .checklist-grid,
+  .map-action-row,
+  .request-code-box,
+  .success-code-row,
+  .success-modal-actions {
+    grid-template-columns: 1fr !important;
+  }
+
+  .submission-layout {
+    gap: 16px;
+  }
+
+  .submission-form,
+  .submission-aside,
+  .important-card,
+  .help-card,
+  .quote-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .submission-form,
+  .important-card,
+  .help-card {
+    padding: 16px;
+  }
+
+  .submission-form {
+    gap: 14px;
+    border-radius: 12px;
+  }
+
+  .submission-form input,
+  .submission-form textarea,
+  .submission-form select,
+  .request-code-box input,
+  .input-suffix,
+  .map-action,
+  .submit-request {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .request-code-box {
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .request-code-box input {
+    text-align: left;
+  }
+
+  .form-label {
+    align-items: flex-start;
+    font-size: 0.74rem;
+    line-height: 1.35;
+  }
+
+  .field-help {
+    margin-top: -4px;
+  }
+
+  .not-found-row {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    width: 100%;
+    box-sizing: border-box;
+    align-items: start;
+  }
+
+  .new-location-block,
+  .checklist-card,
+  .coordinate-panel {
+    padding: 13px;
+  }
+
+  .map-action {
+    min-height: 46px;
+    justify-content: flex-start;
+    padding: 0 14px;
+    text-align: left;
+  }
+
+  .map-picker {
+    min-height: 210px;
+  }
+
+  .map-status {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 13px;
+    font-size: 0.84rem;
+  }
+
+  .map-status::before {
+    width: max-content;
+    min-width: auto;
+  }
+
+  .maps-link {
+    width: auto;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .check-item {
+    grid-template-columns: 20px minmax(0, 1fr);
+    padding: 11px;
+  }
+
+  .terms-row {
+    grid-template-columns: 22px minmax(0, 1fr);
+    font-size: 0.9rem;
+  }
+
+  .submit-request {
+    min-height: 54px;
+    border-radius: 12px;
+    font-size: 0.98rem;
+  }
+
+  .submission-aside {
+    gap: 16px;
+  }
+
+  .aside-title {
+    font-size: 1.18rem;
+  }
+
+  .important-card ol {
+    padding-left: 20px;
+  }
+
+  .contact-row {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .contact-row > span {
+    flex: 0 0 auto;
+    width: 42px;
+    height: 42px;
+  }
+
+  .quote-card {
+    min-height: 150px;
+  }
+
+  .quote-card img {
+    width: 180px;
+    inset: 18px 14px auto auto;
+  }
+
+  .quote-card p {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .submission-topbar {
+    padding: 0 14px;
+  }
+
+  .submission-shell {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .submission-form,
+  .important-card,
+  .help-card {
+    padding: 14px;
+  }
+
+  .submission-form input,
+  .submission-form textarea,
+  .submission-form select {
+    min-height: 50px;
+    padding-left: 13px;
+    padding-right: 13px;
+    font-size: 0.9rem;
+  }
+
+  .input-suffix span {
+    padding: 0 13px 0 6px;
+  }
+}
+
+.record-date {
+  display: block;
+  color: #241314;
+  font-weight: 800;
+}
+
+.review-table td .record-date + .record-time {
+  display: block;
+  margin-top: 4px;
+  color: #7a4b4d;
+  font-size: 0.74rem;
+}
+
+/* Loader car: stop at center, flash siren/horn, then continue left forever */
+.loader__panel {
+  overflow: hidden;
+}
+
+.loader__panel::before,
+.loader__panel::after {
+  position: absolute;
+  z-index: 2;
+  content: "";
+  pointer-events: none;
+  opacity: 0;
+}
+
+.loader__panel::before {
+  left: calc(50% - 112px);
+  top: 38px;
+  width: 46px;
+  height: 28px;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 12px 14px, rgba(255, 235, 59, 0.96) 0 5px, rgba(255, 235, 59, 0.22) 9px, transparent 18px),
+    radial-gradient(circle at 34px 14px, rgba(255, 235, 59, 0.78) 0 4px, rgba(255, 235, 59, 0.16) 8px, transparent 16px);
+  filter: drop-shadow(0 0 14px rgba(255, 198, 41, 0.7));
+}
+
+.loader__panel::after {
+  left: calc(50% - 144px);
+  top: 44px;
+  width: 34px;
+  height: 26px;
+  border-top: 3px solid rgba(185, 15, 20, 0.9);
+  border-bottom: 3px solid rgba(185, 15, 20, 0.72);
+  border-left: 0;
+  border-radius: 50%;
+  transform: rotate(-10deg);
+}
+
+.loader.is-animating .loader__panel::before {
+  animation: simodar-loader-flash 2.65s ease-in-out infinite;
+}
+
+.loader.is-animating .loader__panel::after {
+  animation: simodar-loader-horn 2.65s ease-in-out infinite;
+}
+
+.loader__logo {
+  opacity: 0;
+  transform: translateX(145%) scale(0.98);
+  animation: none !important;
+  will-change: transform, opacity;
+}
+
+.loader.is-animating .loader__logo {
+  animation: simodar-car-stop-honk 2.65s linear infinite !important;
+}
+
+.loader.is-hidden .loader__logo,
+.loader.is-hidden .loader__panel::before,
+.loader.is-hidden .loader__panel::after {
+  opacity: 0;
+  animation: none !important;
+}
+
+@keyframes simodar-car-stop-honk {
+  0% {
+    opacity: 1;
+    transform: translateX(145%) scale(0.98);
+  }
+  34% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  52% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-145%) scale(0.98);
+  }
+}
+
+@keyframes simodar-loader-flash {
+  0%,
+  32%,
+  53%,
+  100% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  37%,
+  44%,
+  50% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  40%,
+  47% {
+    opacity: 0.22;
+    transform: scale(0.86);
+  }
+}
+
+@keyframes simodar-loader-horn {
+  0%,
+  34%,
+  54%,
+  100% {
+    opacity: 0;
+    transform: translateX(0) scale(0.7) rotate(-10deg);
+  }
+  38%,
+  47% {
+    opacity: 0.95;
+    transform: translateX(-6px) scale(1) rotate(-10deg);
+  }
+  43%,
+  51% {
+    opacity: 0.35;
+    transform: translateX(-12px) scale(1.2) rotate(-10deg);
+  }
+}
+
+@media (max-width: 520px) {
+  .loader__panel::before {
+    left: calc(50% - 98px);
+    top: 34px;
+  }
+
+  .loader__panel::after {
+    left: calc(50% - 126px);
+    top: 40px;
+  }
+}

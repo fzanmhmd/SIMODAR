@@ -11,9 +11,9 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&family=Urbanist:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css?v=simodar-20260604-loader-honk">
   </head>
-  <body class="admin-page" data-toast-message="{{ toast_message }}">
+  <body class="admin-page simodar-page-loading" data-toast-message="{{ toast_message }}">
     <div class="loader" id="loader" aria-label="Memuat SIMODAR">
       <div class="loader__panel">
         <img class="loader__logo" src="/static/img/Simodar-logo.png" alt="Logo SIMODAR">
@@ -196,11 +196,14 @@
                 {% for item in data.approvals %}
                   <tr>
                     <td>{{ item.kode_pengajuan }}</td>
-                    <td>{{ format_date(item.created_at) }}</td>
+                    <td>
+                      <span class="record-date">{{ format_date(item.created_at) }}</span>
+                      <small class="record-time">{{ format_time(item.created_at) }}</small>
+                    </td>
                     <td>{{ item.instansi }}</td>
                     <td>{{ item.lokasi }}</td>
                     <td class="table-actions-cell">
-                      <a class="table-action table-action--link" href="{{ url_for('cek_pengajuan', kode=item.kode_pengajuan) }}" target="_blank" rel="noreferrer">Preview</a>
+                      <a class="table-action table-action--link" href="{{ url_for('cek_pengajuan', kode=item.kode_pengajuan) }}">Preview</a>
                       <form action="{{ url_for('approve_pengajuan', kode=item.kode_pengajuan, sort=sort_order) }}" method="post">
                         <button class="table-action" type="submit">ACC</button>
                       </form>
@@ -234,6 +237,7 @@
                   <th>No</th>
                   <th>Nama Tempat</th>
                   <th>Estimasi</th>
+                  <th>Update Terakhir</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -246,6 +250,7 @@
                       <small>{{ item.tanggal }} | {{ item.jam_mulai }} - {{ item.jam_selesai }}</small>
                     </td>
                     <td>{{ item.peserta }} donor</td>
+                    <td><span class="record-time">{{ format_saved(item) }}</span></td>
                     <td>
                       <details class="inline-editor">
                         <summary class="table-action">Tambah Petugas</summary>
@@ -282,7 +287,7 @@
                     </td>
                   </tr>
                 {% else %}
-                  <tr><td colspan="4"><div class="empty-state">Tidak ada kegiatan yang menunggu penugasan.</div></td></tr>
+                  <tr><td colspan="5"><div class="empty-state">Tidak ada kegiatan yang menunggu penugasan.</div></td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -309,6 +314,7 @@
                   <th>Nama Lokasi</th>
                   <th>PJ Petugas</th>
                   <th>Jumlah Petugas</th>
+                  <th>Update Terakhir</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -322,6 +328,7 @@
                     </td>
                     <td>{{ item.pj_petugas or "-" }}</td>
                     <td>{{ item.staff_assignments|length }} orang</td>
+                    <td><span class="record-time">{{ format_saved(item) }}</span></td>
                     <td class="table-actions-cell">
                       <a class="table-action table-action--ghost export-schedule-button" href="{{ url_for('export_schedule_pdf', kode=item.kode_pengajuan) }}" download>PDF</a>
                       <details class="inline-editor">
@@ -380,7 +387,7 @@
                     </td>
                   </tr>
                 {% else %}
-                  <tr><td colspan="5"><div class="empty-state">Belum ada kegiatan siap berangkat.</div></td></tr>
+                  <tr><td colspan="6"><div class="empty-state">Belum ada kegiatan siap berangkat.</div></td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -402,6 +409,7 @@
                 <tr>
                   <th>No</th>
                   <th>Lokasi</th>
+                  <th>Update Terakhir</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -413,6 +421,7 @@
                       <b>{{ item.instansi }}</b>
                       <small>PJ {{ item.pj_petugas }} | {{ item.tanggal }}</small>
                     </td>
+                    <td><span class="record-time">{{ format_saved(item) }}</span></td>
                     <td>
                       <details class="inline-editor">
                         <summary class="table-action">Input Hasil</summary>
@@ -429,7 +438,7 @@
                     </td>
                   </tr>
                 {% else %}
-                  <tr><td colspan="3"><div class="empty-state">Belum ada kegiatan yang menunggu input hasil.</div></td></tr>
+                  <tr><td colspan="4"><div class="empty-state">Belum ada kegiatan yang menunggu input hasil.</div></td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -455,6 +464,7 @@
                   <th>Tanggal</th>
                   <th>Status</th>
                   <th>Kantong Darah</th>
+                  <th>Update Terakhir</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -467,6 +477,7 @@
                     <td>{{ format_date(item.tanggal) }}</td>
                     <td>{{ item.status }}</td>
                     <td>{{ item.result.kantong_darah or "-" }}</td>
+                    <td><span class="record-time">{{ format_saved(item) }}</span></td>
                     <td class="table-actions-cell">
                       <details class="inline-editor">
                         <summary class="table-action table-action--ghost">Detail</summary>
@@ -492,6 +503,7 @@
                           <div><dt>Donor Gagal</dt><dd>{{ item.result.donor_gagal or "-" }}</dd></div>
                           <div><dt>Kantong Darah</dt><dd>{{ item.result.kantong_darah or "-" }}</dd></div>
                           <div><dt>Snack Terpakai</dt><dd>{{ item.result.snack_terpakai or "-" }}</dd></div>
+                          <div><dt>Terakhir Disimpan</dt><dd>{{ format_saved(item) }}</dd></div>
                           <div><dt>Catatan</dt><dd>{{ item.result.catatan or item.rejection_note or item.cancel_note or "-" }}</dd></div>
                         </dl>
                       </details>
@@ -512,7 +524,7 @@
                     </td>
                   </tr>
                 {% else %}
-                  <tr><td colspan="7"><div class="empty-state">Belum ada histori untuk bulan ini.</div></td></tr>
+                  <tr><td colspan="8"><div class="empty-state">Belum ada histori untuk bulan ini.</div></td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -549,6 +561,7 @@
                   <th>No Absen</th>
                   <th>Password Absen</th>
                   <th>Rekening</th>
+                  <th>Terakhir Simpan</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -561,6 +574,7 @@
                     <td>{{ staff.absen }}</td>
                     <td>{{ staff.password }}</td>
                     <td>{{ staff.rekening or "-" }}</td>
+                    <td><span class="record-time">{{ format_saved(staff) }}</span></td>
                     <td class="table-actions-cell">
                       <details class="inline-editor">
                         <summary class="table-action table-action--ghost">Edit</summary>
@@ -659,6 +673,7 @@
                   <th>No</th>
                   <th>Nama Lokasi</th>
                   <th>Alamat</th>
+                  <th>Terakhir Simpan</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
@@ -668,6 +683,7 @@
                     <td>{{ loop.index }}</td>
                     <td>{{ location.name }}</td>
                     <td>{{ location.address }}</td>
+                    <td><span class="record-time">{{ format_saved(location) }}</span></td>
                     <td class="table-actions-cell">
                       {% if location.id %}
                         <details class="inline-editor">
@@ -759,8 +775,8 @@
         </div>
       </div>
     </div>
-    <script src="/static/js/page-transition.js"></script>
-    <script src="/static/js/cursor.js"></script>
-    <script src="/static/js/admin.js"></script>
+    <script src="/static/js/page-transition.js?v=simodar-20260604-loader-honk"></script>
+    <script src="/static/js/cursor.js?v=simodar-20260604-loader-honk"></script>
+    <script src="/static/js/admin.js?v=simodar-20260604-loader-honk"></script>
   </body>
 </html>

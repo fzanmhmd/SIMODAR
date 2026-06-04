@@ -85,6 +85,10 @@ ADMIN_FILTER_PAGES = {
 }
 
 
+def now_stamp():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+
 def load_pengajuan():
     if not PENGAJUAN_FILE.exists():
         return []
@@ -116,6 +120,7 @@ def write_json(path, payload):
 
 
 def default_workflow():
+    timestamp = now_stamp()
     return {
         "assignments": [],
         "schedules": [],
@@ -129,6 +134,8 @@ def default_workflow():
                 "absen": "0001",
                 "password": "1234",
                 "rekening": "",
+                "created_at": timestamp,
+                "updated_at": timestamp,
             },
             {
                 "id": "ptg-002",
@@ -137,6 +144,8 @@ def default_workflow():
                 "absen": "0002",
                 "password": "1234",
                 "rekening": "",
+                "created_at": timestamp,
+                "updated_at": timestamp,
             },
             {
                 "id": "ptg-003",
@@ -145,6 +154,8 @@ def default_workflow():
                 "absen": "0003",
                 "password": "1234",
                 "rekening": "",
+                "created_at": timestamp,
+                "updated_at": timestamp,
             },
             {
                 "id": "ptg-004",
@@ -153,6 +164,8 @@ def default_workflow():
                 "absen": "0004",
                 "password": "1234",
                 "rekening": "",
+                "created_at": timestamp,
+                "updated_at": timestamp,
             },
             {
                 "id": "ptg-005",
@@ -161,6 +174,8 @@ def default_workflow():
                 "absen": "0005",
                 "password": "1234",
                 "rekening": "",
+                "created_at": timestamp,
+                "updated_at": timestamp,
             },
         ],
         "locations": [
@@ -168,16 +183,22 @@ def default_workflow():
                 "id": "lok-001",
                 "name": "Mandiri Inhealth",
                 "address": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
+                "created_at": timestamp,
+                "updated_at": timestamp,
             },
             {
                 "id": "lok-002",
                 "name": "SMA 12 Jakarta",
                 "address": "Jl. Pertanian, Duren Sawit, Jakarta Timur",
+                "created_at": timestamp,
+                "updated_at": timestamp,
             },
             {
                 "id": "lok-003",
                 "name": "Universitas Nasional",
                 "address": "Jl. Sawo Manila, Pejaten, Jakarta Selatan",
+                "created_at": timestamp,
+                "updated_at": timestamp,
             },
         ],
     }
@@ -192,6 +213,12 @@ def load_workflow():
 
     for staff in workflow.get("staff", []):
         staff.setdefault("rekening", "")
+        staff.setdefault("created_at", "")
+        staff.setdefault("updated_at", staff.get("created_at", ""))
+
+    for location in workflow.get("locations", []):
+        location.setdefault("created_at", "")
+        location.setdefault("updated_at", location.get("created_at", ""))
 
     return workflow
 
@@ -202,10 +229,12 @@ def save_workflow(workflow):
 
 def update_pengajuan_status(kode, status, deskripsi=None):
     records = load_pengajuan()
+    timestamp = now_stamp()
 
     for record in records:
         if record.get("kode_pengajuan") == kode:
             record["status"] = status
+            record["updated_at"] = timestamp
             if deskripsi:
                 record["deskripsi"] = deskripsi
             break
@@ -322,6 +351,39 @@ def format_datetime_id(value):
     return f"{DAY_NAMES[parsed.weekday()]}, {parsed.day} {MONTH_NAMES[parsed.month - 1]} {parsed.year}, {parsed:%H:%M:%S}"
 
 
+def format_time_id(value):
+    parsed = value if isinstance(value, datetime) else parse_datetime(value)
+    if not parsed:
+        return ""
+    return parsed.strftime("%H:%M:%S")
+
+
+def last_saved_value(record):
+    if not isinstance(record, dict):
+        return ""
+
+    for key in (
+        "updated_at",
+        "history_updated_at",
+        "completed_at",
+        "finished_at",
+        "assigned_at",
+        "approved_at",
+        "created_at",
+        "tanggal_pengajuan",
+    ):
+        value = record.get(key)
+        if value:
+            return value
+
+    return ""
+
+
+def format_saved_id(record):
+    value = last_saved_value(record)
+    return format_datetime_id(value) if value else "Belum tercatat"
+
+
 def month_label(value):
     year, month = value.split("-")
     return f"{MONTH_NAMES[int(month) - 1]} {year}"
@@ -340,6 +402,7 @@ def workflow_codes(workflow):
 
 
 def activity_from_pengajuan(record):
+    timestamp = record.get("updated_at") or record.get("created_at") or now_stamp()
     return {
         "kode_pengajuan": record.get("kode_pengajuan", ""),
         "tanggal_pengajuan": record.get("created_at", ""),
@@ -354,7 +417,8 @@ def activity_from_pengajuan(record):
         "email_pic": record.get("email_pic", "-"),
         "logistik": record.get("logistik", []),
         "surat_pengajuan": record.get("surat_pengajuan", ""),
-        "created_at": record.get("created_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S")),
+        "created_at": record.get("created_at", timestamp),
+        "updated_at": timestamp,
         "staff_assignments": [],
         "pj_petugas": "",
         "status": "Menunggu Penugasan",
@@ -517,6 +581,8 @@ def admin_data(selected_month, now=None):
                     "id": "",
                     "name": instansi,
                     "address": record.get("lokasi", "-"),
+                    "created_at": record.get("created_at", ""),
+                    "updated_at": record.get("updated_at") or record.get("created_at", ""),
                 }
             )
             known_locations.add(instansi.lower())
@@ -626,6 +692,8 @@ def admin_page(page):
         toast_message=request.args.get("pesan", ""),
         format_date=format_date_id,
         format_datetime=format_datetime_id,
+        format_time=format_time_id,
+        format_saved=format_saved_id,
         data=data,
     )
 
@@ -859,12 +927,16 @@ def approve_pengajuan(kode):
     workflow = load_workflow()
     records = load_pengajuan()
     record = find_record(records, "kode_pengajuan", kode)
+    timestamp = now_stamp()
 
     if not record:
         abort(404)
 
     if not find_record(workflow["assignments"], "kode_pengajuan", kode):
-        workflow["assignments"].append(activity_from_pengajuan(record))
+        activity = activity_from_pengajuan(record)
+        activity["approved_at"] = timestamp
+        activity["updated_at"] = timestamp
+        workflow["assignments"].append(activity)
 
     save_workflow(workflow)
     update_pengajuan_status(
@@ -880,6 +952,7 @@ def reject_pengajuan(kode):
     workflow = load_workflow()
     records = load_pengajuan()
     record = find_record(records, "kode_pengajuan", kode)
+    timestamp = now_stamp()
 
     if not record:
         abort(404)
@@ -890,7 +963,8 @@ def reject_pengajuan(kode):
         {
             "status": "Ditolak",
             "rejection_note": note,
-            "completed_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "completed_at": timestamp,
+            "updated_at": timestamp,
             "result": {},
         }
     )
@@ -904,6 +978,7 @@ def reject_pengajuan(kode):
 def save_assignment(kode):
     workflow = load_workflow()
     activity = remove_record(workflow["assignments"], "kode_pengajuan", kode)
+    timestamp = now_stamp()
 
     if not activity:
         abort(404)
@@ -920,7 +995,8 @@ def save_assignment(kode):
             "status": "Siap Kegiatan",
             "staff_assignments": staff_rows,
             "pj_petugas": pj_petugas,
-            "assigned_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "assigned_at": timestamp,
+            "updated_at": timestamp,
         }
     )
     workflow["schedules"].append(activity)
@@ -933,6 +1009,7 @@ def save_assignment(kode):
 def update_schedule_staff(kode):
     workflow = load_workflow()
     activity = find_record(workflow["schedules"], "kode_pengajuan", kode)
+    timestamp = now_stamp()
 
     if not activity:
         abort(404)
@@ -941,7 +1018,7 @@ def update_schedule_staff(kode):
     if staff_rows:
         activity["staff_assignments"] = staff_rows
         activity["pj_petugas"] = request.form.get("pj_petugas", "").strip() or staff_rows[0]["name"]
-        activity["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        activity["updated_at"] = timestamp
         save_workflow(workflow)
         return admin_redirect("jadwal-kegiatan", "Data petugas pada jadwal diperbarui.")
 
@@ -952,6 +1029,7 @@ def update_schedule_staff(kode):
 def finish_schedule(kode):
     workflow = load_workflow()
     activity = remove_record(workflow["schedules"], "kode_pengajuan", kode)
+    timestamp = now_stamp()
 
     if not activity:
         abort(404)
@@ -959,7 +1037,8 @@ def finish_schedule(kode):
     activity.update(
         {
             "status": "Menunggu Input Hasil",
-            "finished_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "finished_at": timestamp,
+            "updated_at": timestamp,
         }
     )
     workflow["results"].append(activity)
@@ -972,6 +1051,7 @@ def finish_schedule(kode):
 def cancel_schedule(kode):
     workflow = load_workflow()
     activity = remove_record(workflow["schedules"], "kode_pengajuan", kode)
+    timestamp = now_stamp()
 
     if not activity:
         abort(404)
@@ -981,7 +1061,8 @@ def cancel_schedule(kode):
         {
             "status": "Batal",
             "cancel_note": note,
-            "completed_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "completed_at": timestamp,
+            "updated_at": timestamp,
             "result": {},
         }
     )
@@ -995,6 +1076,7 @@ def cancel_schedule(kode):
 def save_activity_result(kode):
     workflow = load_workflow()
     activity = remove_record(workflow["results"], "kode_pengajuan", kode)
+    timestamp = now_stamp()
 
     if not activity:
         abort(404)
@@ -1011,7 +1093,8 @@ def save_activity_result(kode):
         {
             "status": "Selesai",
             "result": result,
-            "completed_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "completed_at": timestamp,
+            "updated_at": timestamp,
         }
     )
     workflow["histories"].append(activity)
@@ -1024,6 +1107,7 @@ def save_activity_result(kode):
 def edit_history_result(kode):
     workflow = load_workflow()
     history = find_record(workflow["histories"], "kode_pengajuan", kode)
+    timestamp = now_stamp()
 
     if not history:
         abort(404)
@@ -1039,7 +1123,8 @@ def edit_history_result(kode):
             "catatan": request.form.get("catatan", "").strip(),
         }
     )
-    history["history_updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    history["history_updated_at"] = timestamp
+    history["updated_at"] = timestamp
     save_workflow(workflow)
     selected_month = request.form.get("bulan", datetime.now().strftime("%Y-%m"))
     return admin_redirect("histori-kegiatan", "Histori kegiatan diperbarui.", bulan=selected_month)
@@ -1049,6 +1134,7 @@ def edit_history_result(kode):
 def add_staff():
     workflow = load_workflow()
     roles = request.form.getlist("roles") or ["other"]
+    timestamp = now_stamp()
     workflow["staff"].append(
         {
             "id": f"ptg-{int(datetime.now().timestamp())}",
@@ -1057,6 +1143,8 @@ def add_staff():
             "absen": request.form.get("absen", "").strip(),
             "password": request.form.get("password", "").strip(),
             "rekening": request.form.get("rekening", "").strip(),
+            "created_at": timestamp,
+            "updated_at": timestamp,
         }
     )
     save_workflow(workflow)
@@ -1067,6 +1155,7 @@ def add_staff():
 def edit_staff(staff_id):
     workflow = load_workflow()
     staff = find_record(workflow["staff"], "id", staff_id)
+    timestamp = now_stamp()
 
     if not staff:
         abort(404)
@@ -1076,6 +1165,8 @@ def edit_staff(staff_id):
     staff["absen"] = request.form.get("absen", "").strip()
     staff["password"] = request.form.get("password", "").strip()
     staff["rekening"] = request.form.get("rekening", "").strip()
+    staff["updated_at"] = timestamp
+    staff.setdefault("created_at", timestamp)
     save_workflow(workflow)
     return admin_redirect("data-petugas", "Data petugas diperbarui.")
 
@@ -1091,11 +1182,14 @@ def delete_staff(staff_id):
 @app.post("/admin/lokasi/tambah")
 def add_location():
     workflow = load_workflow()
+    timestamp = now_stamp()
     workflow["locations"].append(
         {
             "id": f"lok-{int(datetime.now().timestamp())}",
             "name": request.form.get("name", "").strip() or "Lokasi Baru",
             "address": request.form.get("address", "").strip(),
+            "created_at": timestamp,
+            "updated_at": timestamp,
         }
     )
     save_workflow(workflow)
@@ -1106,12 +1200,15 @@ def add_location():
 def edit_location(location_id):
     workflow = load_workflow()
     location = find_record(workflow["locations"], "id", location_id)
+    timestamp = now_stamp()
 
     if not location:
         abort(404)
 
     location["name"] = request.form.get("name", "").strip() or location["name"]
     location["address"] = request.form.get("address", "").strip()
+    location["updated_at"] = timestamp
+    location.setdefault("created_at", timestamp)
     save_workflow(workflow)
     return admin_redirect("data-lokasi", "Data lokasi diperbarui.")
 
@@ -1144,6 +1241,7 @@ def pengajuan():
         surat = request.files.get("surat_pengajuan")
         surat_filename = secure_filename(surat.filename) if surat and surat.filename else ""
         saved_surat = ""
+        timestamp = now_stamp()
 
         if surat_filename:
             UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -1168,7 +1266,8 @@ def pengajuan():
                 "surat_pengajuan": surat_filename,
                 "surat_file": saved_surat,
                 "logistik": logistik,
-                "created_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "created_at": timestamp,
+                "updated_at": timestamp,
                 "deskripsi": "Pengajuan sudah diterima sistem dan menunggu verifikasi petugas SIMODAR.",
             }
         )
