@@ -11,7 +11,7 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&family=Urbanist:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="/static/css/style.css?v=simodar-20260604-loader-honk">
+    <link rel="stylesheet" href="/static/css/style.css?v=simodar-20260604-centered-panels-v6">
   </head>
   <body class="admin-page simodar-page-loading" data-toast-message="{{ toast_message }}">
     <div class="loader" id="loader" aria-label="Memuat SIMODAR">
@@ -202,14 +202,22 @@
                     </td>
                     <td>{{ item.instansi }}</td>
                     <td>{{ item.lokasi }}</td>
-                    <td class="table-actions-cell">
+                    <td class="table-actions-cell approval-actions">
                       <a class="table-action table-action--link" href="{{ url_for('cek_pengajuan', kode=item.kode_pengajuan) }}">Preview</a>
                       <form action="{{ url_for('approve_pengajuan', kode=item.kode_pengajuan, sort=sort_order) }}" method="post">
                         <button class="table-action" type="submit">ACC</button>
                       </form>
-                      <form class="inline-reject-form" action="{{ url_for('reject_pengajuan', kode=item.kode_pengajuan, sort=sort_order) }}" method="post" data-requires-note data-note-message="Isi keterangan tolak terlebih dahulu." data-confirm-message="Tolak pengajuan ini? Data akan masuk ke histori.">
+                      <button class="table-action table-action--danger" type="button" data-toggle-reject>Tolak</button>
+                      <form class="approval-reject-form" action="{{ url_for('reject_pengajuan', kode=item.kode_pengajuan, sort=sort_order) }}" method="post" data-requires-note data-note-message="Isi keterangan tolak terlebih dahulu." data-confirm-message="Tolak pengajuan ini? Data akan masuk ke histori." hidden>
+                        <div class="approval-reject-form__copy">
+                          <strong>Tolak pengajuan ini?</strong>
+                          <small data-reject-target>Sedang eksekusi data: {{ item.instansi }} - {{ item.lokasi }}</small>
+                        </div>
                         <input name="keterangan" type="text" placeholder="Keterangan tolak">
-                        <button class="table-action table-action--danger" type="submit">Tolak</button>
+                        <div class="approval-reject-form__actions">
+                          <button class="table-action table-action--ghost" type="button" data-close-reject>Batal</button>
+                          <button class="table-action table-action--danger" type="submit">Simpan Tolak</button>
+                        </div>
                       </form>
                     </td>
                   </tr>
@@ -228,6 +236,9 @@
               <p class="eyebrow">Kegiatan</p>
               <h2>Penugasan Petugas</h2>
               <span>Data dari pengajuan yang sudah di-ACC.</span>
+            </div>
+            <div class="panel-actions">
+              <a class="table-action table-action--ghost" href="{{ url_for('admin_page', page='jadwal-kegiatan') }}">Lihat Jadwal</a>
             </div>
           </div>
           <div class="review-table">
@@ -254,7 +265,7 @@
                     <td>
                       <details class="inline-editor">
                         <summary class="table-action">Tambah Petugas</summary>
-                        <form action="{{ url_for('save_assignment', kode=item.kode_pengajuan) }}" method="post">
+                        <form action="{{ url_for('save_assignment', kode=item.kode_pengajuan) }}" method="post" data-confirm-message="Simpan penugasan dan pindahkan ke Jadwal Kegiatan?">
                           <label class="form-label">PJ Petugas</label>
                           <select name="pj_petugas">
                             {% for staff in data.staff %}
@@ -280,7 +291,7 @@
                           <button class="soft-button" type="button" data-add-staff-row>Tambah Kolom Petugas</button>
                           <div class="form-actions">
                             <button class="table-action table-action--ghost" type="reset">Batal</button>
-                            <button class="table-action" type="submit">Simpan</button>
+                            <button class="table-action" type="submit">Simpan ke Jadwal</button>
                           </div>
                         </form>
                       </details>
@@ -333,7 +344,6 @@
                       <a class="table-action table-action--ghost export-schedule-button" href="{{ url_for('export_schedule_pdf', kode=item.kode_pengajuan) }}" download>PDF</a>
                       <details class="inline-editor">
                         <summary class="table-action table-action--ghost" data-toast-click="Cek dan ubah petugas yang sudah ditugaskan.">Ubah</summary>
-                        <button class="drawer-back" type="button" data-close-editor>&larr; Tutup</button>
                         <p class="inline-helper">Petugas yang sudah dijadwalkan</p>
                         <div class="staff-chip-list">
                           {% for row in item.staff_assignments %}
@@ -375,7 +385,7 @@
                         </form>
                       </details>
                       <form action="{{ url_for('finish_schedule', kode=item.kode_pengajuan) }}" method="post" data-confirm-message="Tandai kegiatan ini selesai dan pindahkan ke Hasil Kegiatan?">
-                        <button class="table-action" type="submit">Selesai</button>
+                        <button class="table-action" type="submit">Selesai Kegiatan</button>
                       </form>
                       <details class="cancel-note-box">
                         <summary class="table-action table-action--danger">Batal</summary>
@@ -481,7 +491,6 @@
                     <td class="table-actions-cell">
                       <details class="inline-editor">
                         <summary class="table-action table-action--ghost">Detail</summary>
-                        <button class="drawer-back" type="button" data-close-editor>&larr; Tutup</button>
                         <dl class="detail-list">
                           <div><dt>Alamat</dt><dd>{{ item.lokasi }}</dd></div>
                           <div><dt>PIC</dt><dd>{{ item.nama_pic }}</dd></div>
@@ -509,7 +518,6 @@
                       </details>
                       <details class="inline-editor">
                         <summary class="table-action table-action--ghost">Edit</summary>
-                        <button class="drawer-back" type="button" data-close-editor>&larr; Tutup</button>
                         <form class="result-form-grid" action="{{ url_for('edit_history_result', kode=item.kode_pengajuan) }}" method="post">
                           <input type="hidden" name="bulan" value="{{ selected_month }}">
                           <label>Donor Terdaftar<input name="donor_terdaftar" type="number" min="0" value="{{ item.result.donor_terdaftar or 0 }}"></label>
@@ -764,6 +772,7 @@
       {% endif %}
     </main>
 
+    <div class="admin-action-backdrop" id="adminActionBackdrop" hidden></div>
     <div class="toast admin-toast" id="adminToast" role="status" aria-live="polite"></div>
     <div class="admin-confirm" id="adminConfirm" role="dialog" aria-modal="true" aria-labelledby="adminConfirmTitle" hidden>
       <div class="admin-confirm__box">
@@ -775,8 +784,8 @@
         </div>
       </div>
     </div>
-    <script src="/static/js/page-transition.js?v=simodar-20260604-loader-honk"></script>
-    <script src="/static/js/cursor.js?v=simodar-20260604-loader-honk"></script>
-    <script src="/static/js/admin.js?v=simodar-20260604-loader-honk"></script>
+    <script src="/static/js/page-transition.js?v=simodar-20260604-centered-panels-v6"></script>
+    <script src="/static/js/cursor.js?v=simodar-20260604-centered-panels-v6"></script>
+    <script src="/static/js/admin.js?v=simodar-20260604-centered-panels-v6"></script>
   </body>
 </html>

@@ -4,11 +4,14 @@ const menuToggle = document.querySelector(".admin-menu-toggle");
 const adminSidebar = document.querySelector("#adminSidebar");
 const liveClocks = Array.from(document.querySelectorAll("[data-live-clock]"));
 const adminToast = document.querySelector("#adminToast");
+const adminActionBackdrop = document.querySelector("#adminActionBackdrop");
 const adminConfirm = document.querySelector("#adminConfirm");
 const adminConfirmText = adminConfirm?.querySelector("[data-confirm-text]");
 const searchableAreas = Array.from(document.querySelectorAll("[data-admin-search-area], .admin-panel"));
 let adminToastTimer;
 let pendingConfirmForm;
+let activeRejectContext;
+let activeFloatingEditor;
 
 const showAdminToast = (message) => {
   if (!adminToast || !message) return;
@@ -19,6 +22,119 @@ const showAdminToast = (message) => {
   window.requestAnimationFrame(() => {
     adminToast.classList.add("is-visible");
   });
+};
+
+const hasActiveActionPanel = () =>
+  Boolean(activeRejectContext) ||
+  Boolean(activeFloatingEditor) ||
+  Boolean(document.querySelector(".inline-editor[open], .cancel-note-box[open], .approval-reject-form.is-floating:not([hidden])"));
+
+const syncActionBackdrop = () => {
+  const shouldShow = hasActiveActionPanel();
+  adminActionBackdrop?.toggleAttribute("hidden", !shouldShow);
+  document.body.classList.toggle("admin-action-open", shouldShow);
+};
+
+const closeRejectPopover = () => {
+  if (!activeRejectContext) return;
+
+  const { form, row } = activeRejectContext;
+  form.hidden = true;
+  form.classList.remove("is-floating", "is-measuring", "is-positioned", "is-below");
+  form.style.removeProperty("--reject-top");
+  form.style.removeProperty("--reject-left");
+  form.style.removeProperty("--reject-arrow-left");
+  row?.classList.remove("approval-row--rejecting");
+  activeRejectContext = undefined;
+  syncActionBackdrop();
+};
+
+const openRejectPopover = (toggleButton) => {
+  const actionCell = toggleButton.closest(".approval-actions");
+  const form = actionCell?.querySelector(".approval-reject-form");
+  const row = toggleButton.closest("tr");
+  if (!form || !row) return;
+
+  const isSameFormOpen = activeRejectContext?.form === form && !form.hidden;
+  closeFloatingEditors();
+  closeRejectPopover();
+
+  if (isSameFormOpen) {
+    return;
+  }
+
+  const targetCell = row.cells?.[3] || row;
+  const instansiText = row.cells?.[2]?.textContent?.trim();
+  const lokasiText = targetCell?.textContent?.trim();
+  const targetText = [instansiText, lokasiText].filter(Boolean).join(" - ");
+  const targetLabel = form.querySelector("[data-reject-target]");
+  if (targetLabel && targetText) {
+    targetLabel.textContent = `Sedang eksekusi data: ${targetText}`;
+  }
+
+  row.classList.add("approval-row--rejecting");
+  form.hidden = false;
+  form.classList.add("is-floating", "is-positioned");
+  activeRejectContext = { form, row, targetCell, toggleButton };
+  syncActionBackdrop();
+};
+
+const clearFloatingEditorStyles = (editor) => {
+  editor.classList.remove("is-floating-panel", "is-measuring", "is-positioned", "is-below");
+  editor.style.removeProperty("--panel-top");
+  editor.style.removeProperty("--panel-left");
+  editor.style.removeProperty("--panel-arrow-left");
+  editor.querySelector(":scope > summary")?.removeAttribute("data-execution-label");
+};
+
+const closeFloatingEditors = (exceptEditor) => {
+  document.querySelectorAll(".inline-editor[open], .cancel-note-box[open]").forEach((editor) => {
+    if (editor === exceptEditor) return;
+    editor.removeAttribute("open");
+    clearFloatingEditorStyles(editor);
+    editor.closest("tr")?.classList.remove("admin-row--editing");
+  });
+
+  if (activeFloatingEditor && activeFloatingEditor.editor !== exceptEditor) {
+    activeFloatingEditor = undefined;
+  }
+  syncActionBackdrop();
+};
+
+const syncFloatingEditor = (editor) => {
+  if (!editor?.matches?.(".inline-editor, .cancel-note-box")) return;
+
+  const row = editor.closest("tr");
+  const summary = editor.querySelector(":scope > summary");
+
+  if (!editor.open) {
+    clearFloatingEditorStyles(editor);
+    row?.classList.remove("admin-row--editing");
+    if (activeFloatingEditor?.editor === editor) {
+      activeFloatingEditor = undefined;
+    }
+    syncActionBackdrop();
+    return;
+  }
+
+  if (activeFloatingEditor?.editor === editor && editor.classList.contains("is-positioned")) {
+    syncActionBackdrop();
+    return;
+  }
+
+  closeRejectPopover();
+  closeFloatingEditors(editor);
+
+  const targetCell = row?.cells?.[1] || row?.querySelector("td") || row;
+  const targetText = targetCell?.textContent?.replace(/\s+/g, " ").trim();
+  if (summary && targetText) {
+    summary.dataset.executionLabel = `Sedang eksekusi data: ${targetText}`;
+  }
+
+  editor.classList.add("is-floating-panel", "is-positioned");
+  row?.classList.add("admin-row--editing");
+  activeFloatingEditor = { editor, row, targetCell };
+  syncActionBackdrop();
 };
 
 monthFilter?.addEventListener("change", () => {
@@ -95,11 +211,14 @@ document.addEventListener("click", (event) => {
   const addButton = event.target.closest("[data-add-staff-row]");
   const removeButton = event.target.closest("[data-remove-staff-row]");
   const toastButton = event.target.closest("[data-toast-click]");
+  const rejectToggle = event.target.closest("[data-toggle-reject]");
+  const closeRejectButton = event.target.closest("[data-close-reject]");
   const editorSummary = event.target.closest(".inline-editor > summary");
   const cancelSummary = event.target.closest(".cancel-note-box > summary");
   const closeEditorButton = event.target.closest("[data-close-editor]");
   const confirmCancel = event.target.closest("[data-confirm-cancel]");
   const confirmAccept = event.target.closest("[data-confirm-accept]");
+  const actionBackdropClick = event.target.closest("#adminActionBackdrop");
 
   if (addButton) {
     const list = addButton.closest("form")?.querySelector("[data-staff-assignment-list]");
@@ -127,39 +246,55 @@ document.addEventListener("click", (event) => {
     showAdminToast(toastButton.dataset.toastClick);
   }
 
+  if (actionBackdropClick) {
+    closeFloatingEditors();
+    closeRejectPopover();
+    return;
+  }
+
+  if (rejectToggle) {
+    openRejectPopover(rejectToggle);
+    return;
+  }
+
+  if (closeRejectButton) {
+    closeRejectPopover();
+    showAdminToast("Penolakan dibatalkan.");
+    return;
+  }
+
+  if (
+    activeRejectContext &&
+    !event.target.closest(".approval-reject-form") &&
+    !event.target.closest("[data-toggle-reject]") &&
+    !event.target.closest(".admin-confirm")
+  ) {
+    closeRejectPopover();
+  }
+
   if (editorSummary) {
-    const activeEditor = editorSummary.parentElement;
-    document.querySelectorAll(".inline-editor[open]").forEach((editor) => {
-      if (editor !== activeEditor) {
-        editor.removeAttribute("open");
-      }
-    });
-    const hasBackButton = Array.from(activeEditor.children).some((child) => child.matches?.("[data-close-editor]"));
-    if (!hasBackButton) {
-      const backButton = document.createElement("button");
-      backButton.className = "drawer-back";
-      backButton.type = "button";
-      backButton.dataset.closeEditor = "";
-      backButton.textContent = "\u2190 Tutup";
-      editorSummary.insertAdjacentElement("afterend", backButton);
-    }
+    closeRejectPopover();
+    return;
   }
 
   if (cancelSummary) {
-    const activeEditor = cancelSummary.parentElement;
-    const hasBackButton = Array.from(activeEditor.children).some((child) => child.matches?.("[data-close-editor]"));
-    if (!hasBackButton) {
-      const backButton = document.createElement("button");
-      backButton.className = "drawer-back";
-      backButton.type = "button";
-      backButton.dataset.closeEditor = "";
-      backButton.textContent = "\u2190 Tutup";
-      cancelSummary.insertAdjacentElement("afterend", backButton);
-    }
+    closeRejectPopover();
+    return;
   }
 
   if (closeEditorButton) {
-    closeEditorButton.closest(".inline-editor, .cancel-note-box")?.removeAttribute("open");
+    const editor = closeEditorButton.closest(".inline-editor, .cancel-note-box");
+    editor?.removeAttribute("open");
+    closeFloatingEditors();
+    return;
+  }
+
+  if (
+    activeFloatingEditor &&
+    (event.target === activeFloatingEditor.editor ||
+      !event.target.closest(".inline-editor[open], .cancel-note-box[open], .admin-confirm"))
+  ) {
+    closeFloatingEditors();
   }
 
   if (confirmCancel) {
@@ -176,6 +311,14 @@ document.addEventListener("click", (event) => {
     form.requestSubmit();
   }
 });
+
+document.addEventListener(
+  "toggle",
+  (event) => {
+    syncFloatingEditor(event.target);
+  },
+  true,
+);
 
 document.addEventListener("submit", (event) => {
   const form = event.target.closest("form");
@@ -211,7 +354,8 @@ document.addEventListener("keydown", (event) => {
 
   document.body.classList.remove("admin-menu-open");
   menuToggle?.setAttribute("aria-expanded", "false");
-  document.querySelectorAll(".inline-editor[open]").forEach((editor) => editor.removeAttribute("open"));
+  closeFloatingEditors();
+  closeRejectPopover();
   pendingConfirmForm = undefined;
   adminConfirm?.setAttribute("hidden", "");
 });

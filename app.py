@@ -1002,7 +1002,7 @@ def save_assignment(kode):
     workflow["schedules"].append(activity)
     save_workflow(workflow)
     update_pengajuan_status(kode, "Siap Kegiatan", "Petugas sudah ditugaskan dan kegiatan siap dijadwalkan.")
-    return admin_redirect("penugasan-petugas", "Penugasan tersimpan dan masuk Jadwal Kegiatan.")
+    return admin_redirect("jadwal-kegiatan", "Penugasan tersimpan. Lanjutkan dari Jadwal Kegiatan.")
 
 
 @app.post("/admin/jadwal-kegiatan/<kode>/ubah-petugas")

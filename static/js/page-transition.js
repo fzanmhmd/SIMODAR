@@ -1,7 +1,33 @@
 const pageLoader = document.querySelector("#loader");
-const loaderDuration = 2700;
+const firstVisitLoaderDuration = 1500;
+const normalLoaderDuration = 800;
+const loaderSeenKey = "simodar-loader-seen";
 let pageLoaderTimer;
 let pageLoaderHideTimer;
+
+function hasSeenLoader() {
+  try {
+    if (window.sessionStorage?.getItem(loaderSeenKey) === "1") {
+      return true;
+    }
+  } catch (error) {
+    // Ignore storage restrictions and fall back to window.name.
+  }
+
+  return window.name.includes(`${loaderSeenKey}=1`);
+}
+
+function markLoaderSeen() {
+  try {
+    window.sessionStorage?.setItem(loaderSeenKey, "1");
+  } catch (error) {
+    // Ignore storage restrictions and fall back to window.name.
+  }
+
+  if (!window.name.includes(`${loaderSeenKey}=1`)) {
+    window.name = [window.name, `${loaderSeenKey}=1`].filter(Boolean).join("|");
+  }
+}
 
 function lockPageScroll() {
   document.documentElement.classList.add("simodar-page-loading");
@@ -30,6 +56,8 @@ function playLoaderAnimation() {
 function hidePageLoader() {
   window.clearTimeout(pageLoaderTimer);
   window.clearTimeout(pageLoaderHideTimer);
+  const loaderDuration = hasSeenLoader() ? normalLoaderDuration : firstVisitLoaderDuration;
+
   pageLoaderHideTimer = window.setTimeout(() => {
     if (!pageLoader) {
       return;
@@ -37,6 +65,7 @@ function hidePageLoader() {
 
     pageLoader.classList.add("is-hidden");
     pageLoader.classList.remove("is-animating");
+    markLoaderSeen();
     unlockPageScroll();
   }, loaderDuration);
 }
