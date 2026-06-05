@@ -2,12 +2,10 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Run SIMODAR Flask",
+      "label": "Run SIMODAR React + Express",
       "type": "shell",
-      "command": "C:\\Users\\COLORFUL-P15\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
-      "args": [
-        "app.py"
-      ],
+      "command": "npm",
+      "args": ["run", "dev"],
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -17,6 +15,16 @@
         "reveal": "always",
         "panel": "new"
       }
+    },
+    {
+      "label": "Build SIMODAR Frontend",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
     }
   ]
 }

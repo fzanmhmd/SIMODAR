@@ -1,7 +1,16 @@
 __pycache__/
 *.py[cod]
+node_modules/
+frontend/dist/
+backend/uploads/*
+!backend/uploads/.gitkeep
+!backend/uploads/surat_pengajuan/
+backend/uploads/surat_pengajuan/*
+!backend/uploads/surat_pengajuan/.gitkeep
 
 .env
+backend/.env
+frontend/.env
 .venv/
 venv/
 env/

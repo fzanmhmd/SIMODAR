@@ -1,19 +1,61 @@
 # SIMODAR
 
-## Cara Cek di VS Code
+SIMODAR adalah Sistem Informasi Mobile Unit Donor Darah.
 
-Jangan gunakan Live Server untuk project ini, karena Live Server hanya menjalankan HTML statis dan tidak menjalankan route Flask seperti `/pengajuan`.
+Stack baru:
 
-Gunakan salah satu cara berikut:
+- Frontend: React + Vite + Tailwind CSS
+- Backend: Node.js + Express
+- Database: MySQL-ready, dengan fallback JSON lokal agar workflow lama tetap bisa diuji
+- Auth: role-based login memakai JWT
 
-1. Buka VS Code di folder project `SIMODAR`.
-2. Tekan `Ctrl + Shift + P`.
-3. Ketik `Tasks: Run Task`.
-4. Pilih `Run SIMODAR Flask`.
-5. Buka browser ke `http://127.0.0.1:5000`.
+## Jalankan di VS Code
 
-Halaman pengajuan tersedia di:
+```bash
+npm install
+npm run dev
+```
 
-`http://127.0.0.1:5000/pengajuan`
+Frontend:
 
-Jika tampilan belum berubah, tekan `Ctrl + F5` di browser.
+`http://127.0.0.1:5173`
+
+Backend API:
+
+`http://127.0.0.1:5001/api/health`
+
+Akun sementara:
+
+- Username: `admin`
+- Password: `admin123`
+- Role: `admin`
+
+## MySQL
+
+1. Buat database dengan file:
+
+```bash
+backend/src/data/schema.sql
+```
+
+2. Copy `backend/.env.example` menjadi `backend/.env`.
+3. Set:
+
+```env
+DB_ENABLED=true
+DB_HOST=127.0.0.1
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=simodar
+```
+
+Jika `DB_ENABLED=false`, sistem memakai data lama di folder `data/` supaya workflow tetap bisa dicoba.
+
+## Production Lokal
+
+```bash
+npm run build
+npm start
+```
+
+Express akan menjalankan API sekaligus melayani build React.

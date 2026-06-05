@@ -28,13 +28,12 @@
 - Urbanist
 
 ## Teknologi
-- HTML
-- CSS
-- JavaScript
-- Python
-- Flask
-- MySQL
-- Laragon
+- Frontend: React, Vite, Tailwind CSS, JavaScript
+- Backend: Node.js, Express
+- Database: MySQL
+- Auth: role-based login memakai JWT
+- Local fallback: JSON di folder `data/` untuk testing workflow sebelum MySQL aktif
+- Laragon tetap bisa digunakan untuk MySQL lokal
 
 ## Arah Desain
 - Tampilan aplikasi sebaiknya bersih, modern, profesional, dan mudah dipakai.

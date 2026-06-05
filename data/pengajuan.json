@@ -319,5 +319,26 @@
     "created_at": "2026-06-04 20:36:39",
     "updated_at": "2026-06-04 20:36:39",
     "deskripsi": "Pengajuan sudah diterima sistem dan menunggu verifikasi petugas SIMODAR."
+  },
+  {
+    "kode_pengajuan": "2026060016",
+    "status": "Menunggu Verifikasi",
+    "instansi": "kantor",
+    "lokasi": "jakarta",
+    "tanggal": "2026-06-11",
+    "jam_mulai": "07:37",
+    "jam_selesai": "12:37",
+    "peserta": "202",
+    "nama_pic": "Muhammad Fauzan",
+    "whatsapp_pic": "ojan14021@gmail.com",
+    "email_pic": "ojan14021@gmail.com",
+    "latitude": "-6.208800",
+    "longitude": "106.845600",
+    "surat_pengajuan": "jadwal-simodar-2026060006-20260604-0131.pdf",
+    "surat_file": "1780626823641-jadwal-simodar-2026060006-20260604-0131.pdf",
+    "logistik": [],
+    "created_at": "2026-06-05 09:33:43",
+    "updated_at": "2026-06-05 09:33:43",
+    "deskripsi": "Pengajuan sudah diterima sistem dan menunggu verifikasi petugas SIMODAR."
   }
 ]

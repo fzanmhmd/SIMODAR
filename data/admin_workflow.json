@@ -392,6 +392,9 @@
   ],
   "staff": [
     {
+      "rekening": "11700323226",
+      "created_at": "",
+      "updated_at": "2026-06-05 09:35:59",
       "id": "ptg-1780506527",
       "name": "Muhammad Fauzan",
       "roles": [
@@ -400,59 +403,66 @@
         "driver"
       ],
       "absen": "4988",
-      "password": "1112233",
-      "rekening": "",
-      "created_at": "",
-      "updated_at": ""
+      "password": "1112233"
     },
     {
+      "rekening": "",
+      "created_at": "",
+      "updated_at": "",
       "id": "ptg-1780506550",
       "name": "dr.Yanto",
       "roles": [
         "dokter"
       ],
       "absen": "1001",
-      "password": "1001",
-      "rekening": "",
-      "created_at": "",
-      "updated_at": ""
+      "password": "1001"
     }
   ],
   "locations": [
     {
+      "latitude": "",
+      "longitude": "",
+      "created_at": "",
+      "updated_at": "",
       "id": "lok-001",
       "name": "Mandiri Inhealth",
-      "address": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
-      "created_at": "",
-      "updated_at": ""
+      "address": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan"
     },
     {
+      "latitude": "",
+      "longitude": "",
+      "created_at": "",
+      "updated_at": "",
       "id": "lok-002",
       "name": "SMA 12 Jakarta",
-      "address": "Jl. Pertanian, Duren Sawit, Jakarta Timur",
-      "created_at": "",
-      "updated_at": ""
+      "address": "Jl. Pertanian, Duren Sawit, Jakarta Timur"
     },
     {
+      "latitude": "",
+      "longitude": "",
+      "created_at": "",
+      "updated_at": "",
       "id": "lok-003",
       "name": "Universitas Nasional",
-      "address": "Jl. Sawo Manila, Pejaten, Jakarta Selatan",
-      "created_at": "",
-      "updated_at": ""
+      "address": "Jl. Sawo Manila, Pejaten, Jakarta Selatan"
     },
     {
+      "latitude": "",
+      "longitude": "",
+      "created_at": "",
+      "updated_at": "",
       "id": "lok-1780506372",
       "name": "GKY Joglo",
-      "address": "Joglo",
-      "created_at": "",
-      "updated_at": ""
+      "address": "Joglo"
     },
     {
+      "latitude": "",
+      "longitude": "",
+      "created_at": "",
+      "updated_at": "",
       "id": "lok-1780508623",
       "name": "tes",
-      "address": "tes",
-      "created_at": "",
-      "updated_at": ""
+      "address": "tes"
     }
   ]
 }
