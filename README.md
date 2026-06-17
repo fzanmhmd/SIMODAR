@@ -15,7 +15,7 @@
 <br />
 
 ## 📖 Tentang Aplikasi
-**SIMODAR** adalah sistem operasional modern berbasis *Full-Stack Web* yang dikembangkan khusus untuk mengelola kegiatan *Mobile Unit* Unit Donor Darah (UDD). Aplikasi ini mengintegrasikan seluruh alur kerja—mulai dari penjadwalan *event*, verifikasi surat pengajuan, penugasan staf medis lapangan, hingga pelaporan data perolehan kantong darah secara *real-time*.
+**SIMODAR** adalah sistem operasional modern berbasis *Full-Stack Web* yang dikembangkan khusus untuk mengelola kegiatan *Mobile Unit* Donor Darah. Aplikasi ini mengintegrasikan seluruh alur kerja—mulai dari penjadwalan *event*, verifikasi surat pengajuan, penugasan staf medis lapangan, hingga pelaporan data perolehan kantong darah secara *real-time*.
 
 Dengan antarmuka yang sangat responsif, SIMODAR didesain untuk digunakan dengan nyaman baik dari monitor komputer di kantor administrasi maupun dari *smartphone* para petugas langsung di lokasi kegiatan.
 
