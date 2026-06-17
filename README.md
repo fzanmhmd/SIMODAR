@@ -11,8 +11,17 @@ Stack baru:
 
 ## Jalankan di VS Code
 
+Install dependency satu kali saja:
+
 ```bash
 npm install
+```
+
+### Mode laptop saja
+
+Pakai ini kalau cek di browser laptop:
+
+```bash
 npm run dev
 ```
 
@@ -23,6 +32,34 @@ Frontend:
 Backend API:
 
 `http://127.0.0.1:5001/api/health`
+
+### Mode cek di HP satu WiFi
+
+Pakai ini kalau ingin buka dari HP:
+
+```bash
+npm run dev:lan
+```
+
+Cari IP laptop:
+
+```powershell
+Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '127.*' -and $_.PrefixOrigin -ne 'WellKnown' } | Select-Object IPAddress,InterfaceAlias
+```
+
+Buka di browser HP dengan format:
+
+```text
+http://IP-LAPTOP:5173/
+```
+
+Contoh:
+
+```text
+http://192.168.100.142:5173/
+```
+
+HP dan laptop harus berada di WiFi yang sama. Jika tidak bisa dibuka, cek Windows Firewall dan izinkan Node.js pada Private Network.
 
 Akun sementara:
 

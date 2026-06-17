@@ -1,468 +1,728 @@
 {
   "assignments": [
     {
-      "kode_pengajuan": "2026060011",
-      "tanggal_pengajuan": "2026-06-04 14:57:02",
-      "instansi": "Mandiri Inhealth",
-      "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
-      "tanggal": "2026-06-16",
-      "jam_mulai": "12:22",
-      "jam_selesai": "12:35",
-      "peserta": "50",
-      "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "75475",
+      "kode_pengajuan": "2026060001",
+      "tanggal_pengajuan": "2026-06-08 02:27:25",
+      "instansi": "RS Kanker Dharmais",
+      "lokasi": "Rumah Sakit Kanker \"Dharmais\", Jalan Letnan Jenderal Siswondo Parman, RW 09, Kota Bambu Selatan, Palmerah, Jakarta Barat, Daerah Khusus Ibukota Jakarta, Jawa, 11420, Indonesia",
+      "tanggal": "2026-06-09",
+      "jam_mulai": "23:00",
+      "jam_selesai": "23:59",
+      "peserta": "60",
+      "nama_pic": "MARKOJAN",
+      "whatsapp_pic": "085162811421",
       "email_pic": "ojan14021@gmail.com",
+      "latitude": "-6.1868617",
+      "longitude": "106.7979586",
+      "maps_url": "https://www.google.com/maps?q=-6.1868617,106.7979586",
       "logistik": [],
-      "surat_pengajuan": "jadwal-simodar-2026060008-20260604-0130.pdf",
-      "created_at": "2026-06-04 14:57:02",
-      "updated_at": "2026-06-04 14:59:23",
+      "surat_pengajuan": "report-simodar-2026-06.xls",
+      "surat_file": "1780860445241-report-simodar-2026-06.xls",
+      "created_at": "2026-06-08 02:27:25",
+      "updated_at": "2026-06-12 00:17:47",
       "staff_assignments": [],
       "pj_petugas": "",
       "status": "Menunggu Penugasan",
-      "approved_at": "2026-06-04 14:59:23"
+      "approved_at": "2026-06-12 00:17:47"
     }
   ],
   "schedules": [
     {
-      "kode_pengajuan": "2026060008",
-      "tanggal_pengajuan": "2026-06-04 01:28:57",
-      "instansi": "SMA 12 Jakarta",
-      "lokasi": "SMA Negeri 12 Jakarta, Jl. Pertanian, Duren Sawit, Jakarta Timur",
-      "tanggal": "2026-06-17",
-      "jam_mulai": "22:00",
-      "jam_selesai": "23:00",
-      "peserta": "54",
+      "kode_pengajuan": "2026060004",
+      "tanggal_pengajuan": "2026-06-08 02:37:12",
+      "instansi": "RS Kanker Dharmais",
+      "lokasi": "Rumah Sakit Kanker \"Dharmais\", Jalan Letnan Jenderal Siswondo Parman, RW 09, Kota Bambu Selatan, Palmerah, Jakarta Barat, Daerah Khusus Ibukota Jakarta, Jawa, 11420, Indonesia",
+      "tanggal": "2026-06-12",
+      "jam_mulai": "",
+      "jam_selesai": "",
+      "peserta": "60",
       "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "0224",
+      "whatsapp_pic": "0896536133262",
       "email_pic": "ojan14021@gmail.com",
-      "logistik": [
-        "listrik"
-      ],
-      "surat_pengajuan": "Simodar-logo_1.png",
-      "created_at": "2026-06-04 01:28:57",
-      "staff_assignments": [
-        {
-          "name": "Muhammad Fauzan",
-          "role": "dokter"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "aftap"
-        },
-        {
-          "name": "dr.Yanto",
-          "role": "aftap"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "hb"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "driver"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "dokter"
-        },
-        {
-          "name": "dr.Yanto",
-          "role": "dokter"
-        }
-      ],
-      "pj_petugas": "dr.Yanto",
-      "status": "Siap Kegiatan",
-      "assigned_at": "2026-06-04 01:30:10"
-    },
-    {
-      "kode_pengajuan": "2026060009",
-      "tanggal_pengajuan": "2026-06-04 01:43:02",
-      "instansi": "Universitas Nasional",
-      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
-      "tanggal": "2026-06-17",
-      "jam_mulai": "22:00",
-      "jam_selesai": "23:00",
-      "peserta": "54",
-      "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "0224",
-      "email_pic": "ojan14021@gmail.com",
+      "latitude": "-6.1868617",
+      "longitude": "106.7979586",
+      "maps_url": "https://www.google.com/maps?q=-6.1868617,106.7979586",
       "logistik": [],
-      "surat_pengajuan": "jadwal-simodar-2026060008-20260604-0130.pdf",
-      "created_at": "2026-06-04 01:43:02",
+      "surat_pengajuan": "report-simodar-2026-06.xls",
+      "surat_file": "1780861032605-report-simodar-2026-06.xls",
+      "created_at": "2026-06-08 02:37:12",
+      "updated_at": "2026-06-09 10:38:36",
       "staff_assignments": [
         {
           "name": "Muhammad Fauzan",
-          "role": "dokter"
+          "role": "aftap",
+          "is_pj": true
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "admin",
+          "is_pj": true
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "aftap",
+          "is_pj": false
         }
       ],
       "pj_petugas": "Muhammad Fauzan",
       "status": "Siap Kegiatan",
-      "assigned_at": "2026-06-04 01:43:56"
+      "approved_at": "2026-06-09 09:45:43",
+      "assigned_at": "2026-06-09 10:38:36"
     },
     {
-      "kode_pengajuan": "2026060010",
-      "tanggal_pengajuan": "2026-06-04 13:40:30",
-      "instansi": "SMA 12 Jakarta",
-      "lokasi": "SMA Negeri 12 Jakarta, Jl. Pertanian, Duren Sawit, Jakarta Timur",
-      "tanggal": "2026-06-14",
-      "jam_mulai": "20:20",
-      "jam_selesai": "23:01",
-      "peserta": "202",
-      "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "0224",
+      "kode_pengajuan": "2026060014",
+      "tanggal_pengajuan": "2026-06-09 10:41:43",
+      "instansi": "SMA 2 BABELAN",
+      "lokasi": "SMU N 02 Babelan, Jalan Babelan Mas Permai RW 09, Taman Kebalen, Satriamekar, Kab Bekasi, Jawa Barat, Jawa, 17150, Indonesia",
+      "tanggal": "2026-06-09",
+      "jam_mulai": "10:42",
+      "jam_selesai": "15:15",
+      "peserta": "50",
+      "nama_pic": "Ryan Maulana",
+      "whatsapp_pic": "75475",
       "email_pic": "ojan14021@gmail.com",
+      "latitude": "-6.195506",
+      "longitude": "107.036517",
+      "maps_url": "https://www.google.com/maps?q=-6.195506,107.036517",
       "logistik": [],
-      "surat_pengajuan": "jadwal-simodar-2026060006-20260604-0130.pdf",
-      "created_at": "2026-06-04 13:40:30",
+      "surat_pengajuan": "laporan-klaim-petugas-2026-06 (5).xls",
+      "surat_file": "1780976503280-laporan-klaim-petugas-2026-06 (5).xls",
+      "created_at": "2026-06-09 10:41:43",
+      "updated_at": "2026-06-09 10:42:09",
       "staff_assignments": [
         {
           "name": "Muhammad Fauzan",
-          "role": "aftap"
+          "role": "aftap",
+          "is_pj": true
+        },
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "driver",
+          "is_pj": false
+        },
+        {
+          "name": "Tri Hartanti",
+          "role": "aftap",
+          "is_pj": false
         },
         {
           "name": "dr.Yanto",
-          "role": "aftap"
+          "role": "aftap",
+          "is_pj": true
         }
       ],
-      "pj_petugas": "dr.Yanto",
+      "pj_petugas": "Muhammad Fauzan, dr.Yanto",
       "status": "Siap Kegiatan",
-      "assigned_at": "2026-06-04 13:42:27"
+      "approved_at": "2026-06-09 10:41:53",
+      "assigned_at": "2026-06-09 10:42:09"
+    },
+    {
+      "kode_pengajuan": "2026060015",
+      "tanggal_pengajuan": "2026-06-12 00:18:45",
+      "instansi": "Masjid Istiqlal",
+      "lokasi": "jakarta",
+      "tanggal": "2026-06-12",
+      "jam_mulai": "22:22",
+      "jam_selesai": "22:40",
+      "peserta": "50",
+      "nama_pic": "MARKOJAN",
+      "whatsapp_pic": "08623216562",
+      "email_pic": "ojan14021@gmail.com",
+      "latitude": "",
+      "longitude": "",
+      "maps_url": "https://maps.app.goo.gl/LP3bRxSXBhKW2Rge8",
+      "logistik": [],
+      "surat_pengajuan": "laporan-klaim-petugas-2026-06 (7).xls",
+      "surat_file": "1781198325738-laporan-klaim-petugas-2026-06 (7).xls",
+      "created_at": "2026-06-12 00:18:45",
+      "updated_at": "2026-06-12 00:19:18",
+      "staff_assignments": [
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "dokter",
+          "is_pj": true
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter",
+          "is_pj": false
+        },
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "hb",
+          "is_pj": true
+        }
+      ],
+      "pj_petugas": "Ayu Putri Savitri",
+      "status": "Siap Kegiatan",
+      "approved_at": "2026-06-12 00:19:00",
+      "assigned_at": "2026-06-12 00:19:18"
     }
   ],
-  "results": [
+  "results": [],
+  "histories": [
     {
-      "kode_pengajuan": "2026060005",
-      "tanggal_pengajuan": "2026-06-04 00:11:27",
-      "instansi": "SMA 2 Babelan",
-      "lokasi": "babelan",
-      "tanggal": "2026-06-15",
-      "jam_mulai": "05:00",
-      "jam_selesai": "20:00",
-      "peserta": "1000",
-      "nama_pic": "hendra",
-      "whatsapp_pic": "085153515156",
+      "kode_pengajuan": "2026060008",
+      "tanggal_pengajuan": "2026-06-08 02:45:26",
+      "instansi": "Test Instansi",
+      "lokasi": "Test Lokasi",
+      "tanggal": "2026-06-22",
+      "jam_mulai": "22:00",
+      "jam_selesai": "23:00",
+      "peserta": "202",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "ojan14021@gmail.com",
       "email_pic": "ojan14021@gmail.com",
+      "latitude": "-6.208800",
+      "longitude": "106.845600",
+      "maps_url": "https://www.google.com/maps?q=-6.208800,106.845600",
       "logistik": [],
-      "surat_pengajuan": "Simodar-logo_1.png",
-      "created_at": "2026-06-04 00:11:27",
+      "surat_pengajuan": "report-simodar-kegiatan-2026-06 (1).pdf",
+      "surat_file": "1780861526053-report-simodar-kegiatan-2026-06 (1).pdf",
+      "created_at": "2026-06-08 02:45:26",
+      "updated_at": "2026-06-09 08:50:57",
       "staff_assignments": [
         {
-          "name": "dr.Yanto",
-          "role": "driver"
+          "name": "Muhammad Fauzan",
+          "role": "aftap",
+          "is_pj": true
         }
       ],
       "pj_petugas": "Muhammad Fauzan",
-      "status": "Menunggu Input Hasil",
-      "assigned_at": "2026-06-04 00:12:19",
-      "updated_at": "2026-06-04 00:53:22",
-      "finished_at": "2026-06-04 01:07:43"
-    },
-    {
-      "kode_pengajuan": "2026060006",
-      "tanggal_pengajuan": "2026-06-04 00:46:05",
-      "instansi": "pt",
-      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
-      "tanggal": "2026-06-02",
-      "jam_mulai": "20:20",
-      "jam_selesai": "23:01",
-      "peserta": "202",
-      "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "0224",
-      "email_pic": "ojan14021@gmail.com",
-      "logistik": [],
-      "surat_pengajuan": "Simodar-logo.png",
-      "created_at": "2026-06-04 00:46:05",
-      "staff_assignments": [
-        {
-          "name": "Muhammad Fauzan",
-          "role": "aftap"
-        },
-        {
-          "name": "dr.Yanto",
-          "role": "aftap"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "admin"
-        },
-        {
-          "name": "dr.Yanto",
-          "role": "aftap"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "dokter"
-        },
-        {
-          "name": "Muhammad Fauzan",
-          "role": "dokter"
-        },
-        {
-          "name": "dr.Yanto",
-          "role": "dokter"
-        }
-      ],
-      "pj_petugas": "dr.Yanto",
-      "status": "Menunggu Input Hasil",
-      "assigned_at": "2026-06-04 00:48:10",
-      "updated_at": "2026-06-04 01:32:27",
-      "finished_at": "2026-06-04 14:30:36"
+      "status": "Selesai",
+      "approved_at": "2026-06-08 02:45:50",
+      "assigned_at": "2026-06-08 02:45:59",
+      "finished_at": "2026-06-08 02:46:09",
+      "result": {
+        "donor_terdaftar": "100",
+        "donor_berhasil": "50",
+        "donor_gagal": "40",
+        "kantong_darah": "60",
+        "snack_terpakai": "40",
+        "catatan": "",
+        "images": [
+          {
+            "name": "WhatsApp Image 2026-05-14 at 10.08.22.jpeg",
+            "file": "2026060008-1780861795742-WhatsApp Image 2026-05-14 at 10.08.22.jpeg",
+            "url": "/uploads/kegiatan/2026060008-1780861795742-WhatsApp Image 2026-05-14 at 10.08.22.jpeg",
+            "uploaded_at": "2026-06-08 02:49:55"
+          },
+          {
+            "name": "Simodar-logo.png",
+            "file": "2026060008-1780861795745-Simodar-logo.png",
+            "url": "/uploads/kegiatan/2026060008-1780861795745-Simodar-logo.png",
+            "uploaded_at": "2026-06-08 02:49:55"
+          },
+          {
+            "name": "ChatGPT Image 2 Jun 2026, 21.27.55.png",
+            "file": "2026060008-1780861795747-ChatGPT Image 2 Jun 2026_ 21.27.55.png",
+            "url": "/uploads/kegiatan/2026060008-1780861795747-ChatGPT Image 2 Jun 2026_ 21.27.55.png",
+            "uploaded_at": "2026-06-08 02:49:55"
+          }
+        ]
+      },
+      "completed_at": "2026-06-08 02:49:55",
+      "history_updated_at": "2026-06-09 08:50:57"
     },
     {
       "kode_pengajuan": "2026060007",
-      "tanggal_pengajuan": "2026-06-04 01:03:04",
-      "instansi": "Mandiri Inhealth",
-      "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
-      "tanggal": "2026-06-17",
-      "jam_mulai": "22:00",
-      "jam_selesai": "23:00",
-      "peserta": "54",
+      "tanggal_pengajuan": "2026-06-08 02:44:59",
+      "instansi": "Test Instansi",
+      "lokasi": "Test Lokasi",
+      "tanggal": "2026-06-11",
+      "jam_mulai": "20:20",
+      "jam_selesai": "20:30",
+      "peserta": "202",
       "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "0224",
+      "whatsapp_pic": "ojan14021@gmail.com",
       "email_pic": "ojan14021@gmail.com",
+      "latitude": "-6.1641587",
+      "longitude": "107.0405920",
+      "maps_url": "https://www.google.com/maps?q=-6.1641587,107.0405920",
       "logistik": [],
-      "surat_pengajuan": "simodar_logo.png",
-      "created_at": "2026-06-04 01:03:04",
+      "surat_pengajuan": "report-simodar-2026-06.xls",
+      "surat_file": "1780861499629-report-simodar-2026-06.xls",
+      "created_at": "2026-06-08 02:44:59",
+      "updated_at": "2026-06-08 03:20:43",
       "staff_assignments": [
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "admin",
+          "is_pj": true
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "driver",
+          "is_pj": true
+        },
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "aftap",
+          "is_pj": true
+        },
         {
           "name": "dr.Yanto",
-          "role": "dokter"
+          "role": "dokter",
+          "is_pj": false
         }
       ],
-      "pj_petugas": "Muhammad Fauzan",
-      "status": "Menunggu Input Hasil",
-      "assigned_at": "2026-06-04 01:03:38",
-      "updated_at": "2026-06-04 14:56:18",
-      "finished_at": "2026-06-04 14:56:18"
-    }
-  ],
-  "histories": [
-    {
-      "kode_pengajuan": "2026060002",
-      "tanggal_pengajuan": "2026-06-03 10:20:00",
-      "instansi": "SMA 12 Jakarta",
-      "lokasi": "SMA Negeri 12 Jakarta, Jl. Pertanian, Duren Sawit, Jakarta Timur",
-      "tanggal": "2026-06-14",
-      "jam_mulai": "09:00",
-      "jam_selesai": "13:30",
-      "peserta": "180",
-      "nama_pic": "Nur Aisyah",
-      "whatsapp_pic": "082112223333",
-      "email_pic": "humas@sma12jakarta.sch.id",
-      "logistik": [
-        "listrik",
-        "kursi",
-        "ruang_tunggu"
-      ],
-      "surat_pengajuan": "surat-sma12-jakarta.pdf",
-      "created_at": "2026-06-03 10:20:00",
-      "staff_assignments": [],
-      "pj_petugas": "",
-      "status": "Ditolak",
-      "rejection_note": "Pengajuan ditolak oleh admin.",
-      "completed_at": "2026-06-04 00:07:45",
-      "result": {}
+      "pj_petugas": "Muhammad Fauzan, Ayu Putri Savitri",
+      "status": "Selesai",
+      "approved_at": "2026-06-08 03:00:04",
+      "assigned_at": "2026-06-08 03:00:24",
+      "finished_at": "2026-06-08 03:20:26",
+      "result": {
+        "donor_terdaftar": "100",
+        "donor_berhasil": "50",
+        "donor_gagal": "50",
+        "kantong_darah": "50",
+        "snack_terpakai": "50",
+        "catatan": "",
+        "images": [
+          {
+            "name": "Simodar-logo.png",
+            "file": "2026060007-1780863643647-Simodar-logo.png",
+            "url": "/uploads/kegiatan/2026060007-1780863643647-Simodar-logo.png",
+            "uploaded_at": "2026-06-08 03:20:43"
+          },
+          {
+            "name": "simodar_logo.png",
+            "file": "2026060007-1780863643650-simodar_logo.png",
+            "url": "/uploads/kegiatan/2026060007-1780863643650-simodar_logo.png",
+            "uploaded_at": "2026-06-08 03:20:43"
+          },
+          {
+            "name": "Simodar-logo (1).png",
+            "file": "2026060007-1780863643663-Simodar-logo (1).png",
+            "url": "/uploads/kegiatan/2026060007-1780863643663-Simodar-logo (1).png",
+            "uploaded_at": "2026-06-08 03:20:43"
+          }
+        ]
+      },
+      "completed_at": "2026-06-08 03:20:43",
+      "history_updated_at": "2026-06-08 03:51:12"
     },
     {
-      "kode_pengajuan": "2026060001",
-      "tanggal_pengajuan": "2026-06-03 09:15:00",
-      "instansi": "Mandiri Inhealth",
-      "lokasi": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan",
-      "tanggal": "2026-06-10",
+      "kode_pengajuan": "REQ1234",
+      "tanggal_pengajuan": "2026-06-08 02:41:29",
+      "instansi": "Test Instansi",
+      "lokasi": "Test Lokasi",
+      "tanggal": "2026-06-20",
       "jam_mulai": "08:00",
       "jam_selesai": "12:00",
-      "peserta": "120",
-      "nama_pic": "Rizky Pratama",
-      "whatsapp_pic": "081234567890",
-      "email_pic": "rizky.pic@mandiriinhealth.co.id",
-      "logistik": [
-        "listrik",
-        "kursi",
-        "meja",
-        "parkir"
-      ],
-      "surat_pengajuan": "surat-mandiri-inhealth.pdf",
-      "created_at": "2026-06-03 09:15:00",
+      "peserta": "100",
+      "nama_pic": "Test",
+      "whatsapp_pic": "123",
+      "email_pic": "test@test.com",
+      "latitude": "",
+      "longitude": "",
+      "maps_url": "",
+      "logistik": [],
+      "surat_pengajuan": "",
+      "surat_file": "",
+      "created_at": "2026-06-08 02:41:29",
+      "updated_at": "2026-06-08 03:24:23",
       "staff_assignments": [],
       "pj_petugas": "",
       "status": "Ditolak",
-      "rejection_note": "Pengajuan ditolak oleh admin.",
-      "completed_at": "2026-06-04 00:07:48",
+      "rejection_note": "DG",
+      "completed_at": "2026-06-08 03:24:23",
       "result": {}
     },
     {
-      "kode_pengajuan": "2026060003",
-      "tanggal_pengajuan": "2026-06-03 11:05:00",
-      "instansi": "Universitas Nasional",
-      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
-      "tanggal": "2026-06-21",
-      "jam_mulai": "08:30",
-      "jam_selesai": "14:00",
-      "peserta": "250",
-      "nama_pic": "Dewi Lestari",
-      "whatsapp_pic": "085612345678",
-      "email_pic": "kemahasiswaan@unas.ac.id",
-      "logistik": [
-        "listrik",
-        "kursi",
-        "meja",
-        "ruang_tunggu",
-        "parkir",
-        "konsumsi"
-      ],
-      "surat_pengajuan": "surat-universitas-nasional.pdf",
-      "created_at": "2026-06-03 11:05:00",
-      "staff_assignments": [
-        {
-          "name": "Dr. Nadya Putri",
-          "role": "dokter"
-        },
-        {
-          "name": "Siti Rahma",
-          "role": "dokter"
-        },
-        {
-          "name": "Bima Saputra",
-          "role": "dokter"
-        },
-        {
-          "name": "Raka Pratama",
-          "role": "dokter"
-        },
-        {
-          "name": "Siti Rahma",
-          "role": "dokter"
-        },
-        {
-          "name": "Dr. Nadya Putri",
-          "role": "dokter"
-        }
-      ],
-      "pj_petugas": "Dr. Nadya Putri",
-      "status": "Selesai",
-      "assigned_at": "2026-06-04 00:04:37",
-      "finished_at": "2026-06-04 00:07:18",
-      "result": {
-        "donor_terdaftar": "32",
-        "donor_berhasil": "244",
-        "donor_gagal": "1",
-        "kantong_darah": "50",
-        "snack_terpakai": "",
-        "catatan": ""
-      },
-      "completed_at": "2026-06-04 00:12:42"
-    },
-    {
-      "kode_pengajuan": "2026060004",
-      "tanggal_pengajuan": "2026-06-03 12:39:26",
-      "instansi": "Universitas Nasional",
-      "lokasi": "Universitas Nasional, Jl. Sawo Manila, Pejaten, Jakarta Selatan",
-      "tanggal": "2026-06-29",
-      "jam_mulai": "22:00",
-      "jam_selesai": "23:00",
-      "peserta": "100",
-      "nama_pic": "Muhammad Fauzan",
-      "whatsapp_pic": "0224",
+      "kode_pengajuan": "2026060006",
+      "tanggal_pengajuan": "2026-06-08 02:43:31",
+      "instansi": "Test Instansi",
+      "lokasi": "Test Lokasi",
+      "tanggal": "2026-06-11",
+      "jam_mulai": "",
+      "jam_selesai": "",
+      "peserta": "50",
+      "nama_pic": "Ryan Maulana",
+      "whatsapp_pic": "085162326462",
       "email_pic": "ojan14021@gmail.com",
+      "latitude": "-6.208800",
+      "longitude": "106.845600",
+      "maps_url": "https://www.google.com/maps?q=-6.208800,106.845600",
       "logistik": [],
-      "surat_pengajuan": "Simodar-logo_1.png",
-      "created_at": "2026-06-03 12:39:26",
+      "surat_pengajuan": "report-simodar-kegiatan-2026-06.pdf",
+      "surat_file": "1780861411637-report-simodar-kegiatan-2026-06.pdf",
+      "created_at": "2026-06-08 02:43:31",
+      "updated_at": "2026-06-08 03:24:45",
       "staff_assignments": [
         {
           "name": "Muhammad Fauzan",
-          "role": "admin"
+          "role": "hb",
+          "is_pj": true
+        },
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "aftap",
+          "is_pj": false
+        }
+      ],
+      "pj_petugas": "Muhammad Fauzan",
+      "status": "Batal",
+      "approved_at": "2026-06-08 03:22:33",
+      "assigned_at": "2026-06-08 03:22:45",
+      "cancel_note": "SALAH",
+      "completed_at": "2026-06-08 03:24:45",
+      "result": {}
+    },
+    {
+      "kode_pengajuan": "2026060005",
+      "tanggal_pengajuan": "2026-06-08 02:39:19",
+      "instansi": "RS Kanker Dharmais",
+      "lokasi": "Rumah Sakit Kanker \"Dharmais\", Jalan Letnan Jenderal Siswondo Parman, RW 09, Kota Bambu Selatan, Palmerah, Jakarta Barat, Daerah Khusus Ibukota Jakarta, Jawa, 11420, Indonesia",
+      "tanggal": "2026-06-10",
+      "jam_mulai": "",
+      "jam_selesai": "",
+      "peserta": "50",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "0896536133262",
+      "email_pic": "ojan14021@gmail.com",
+      "latitude": "-6.1868617",
+      "longitude": "106.7979586",
+      "maps_url": "https://www.google.com/maps?q=-6.1868617,106.7979586",
+      "logistik": [],
+      "surat_pengajuan": "report-simodar-kegiatan-2026-06 (1).pdf",
+      "surat_file": "1780861159359-report-simodar-kegiatan-2026-06 (1).pdf",
+      "created_at": "2026-06-08 02:39:19",
+      "updated_at": "2026-06-08 03:58:14",
+      "staff_assignments": [
+        {
+          "name": "Tri Hartanti",
+          "role": "aftap",
+          "is_pj": true
+        },
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "aftap",
+          "is_pj": true
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "dokter",
+          "is_pj": true
+        }
+      ],
+      "pj_petugas": "Tri Hartanti, Ayu Putri Savitri, dr.Yanto",
+      "status": "Batal",
+      "approved_at": "2026-06-08 03:25:16",
+      "assigned_at": "2026-06-08 03:25:28",
+      "history_updated_at": "2026-06-08 03:47:50",
+      "cancel_note": "a",
+      "completed_at": "2026-06-08 03:58:14",
+      "result": {}
+    },
+    {
+      "kode_pengajuan": "2026060009",
+      "tanggal_pengajuan": "2026-06-08 04:01:35",
+      "instansi": "SMA 2 BABELAN",
+      "lokasi": "SMU N 02 Babelan, Jalan Babelan Mas Permai RW 09, Taman Kebalen, Satriamekar, Kab Bekasi, Jawa Barat, Jawa, 17150, Indonesia",
+      "tanggal": "2026-06-15",
+      "jam_mulai": "20:20",
+      "jam_selesai": "20:25",
+      "peserta": "202",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "ojan14021@gmail.com",
+      "email_pic": "ojan14021@gmail.com",
+      "latitude": "-6.195506",
+      "longitude": "107.036517",
+      "maps_url": "https://www.google.com/maps?q=-6.195506,107.036517",
+      "logistik": [],
+      "surat_pengajuan": "jadwal-simodar-2026060006 (1).pdf",
+      "surat_file": "1780866095697-jadwal-simodar-2026060006 (1).pdf",
+      "created_at": "2026-06-08 04:01:35",
+      "updated_at": "2026-06-08 08:17:23",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter",
+          "is_pj": true
+        },
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "dokter",
+          "is_pj": false
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "aftap",
+          "is_pj": false
         }
       ],
       "pj_petugas": "Muhammad Fauzan",
       "status": "Selesai",
-      "assigned_at": "2026-06-04 00:09:43",
-      "updated_at": "2026-06-04 00:10:09",
-      "finished_at": "2026-06-04 00:10:24",
+      "approved_at": "2026-06-08 04:01:43",
+      "assigned_at": "2026-06-08 04:01:54",
+      "finished_at": "2026-06-08 08:16:56",
       "result": {
-        "donor_terdaftar": "463",
-        "donor_berhasil": "346",
-        "donor_gagal": "346",
-        "kantong_darah": "346",
-        "snack_terpakai": "0",
-        "catatan": ""
+        "donor_terdaftar": "100",
+        "donor_berhasil": "50",
+        "donor_gagal": "40",
+        "kantong_darah": "30",
+        "snack_terpakai": "40",
+        "catatan": "",
+        "images": [
+          {
+            "name": "WhatsApp Image 2026-05-14 at 10.08.22.jpeg",
+            "file": "2026060009-1780881443207-WhatsApp Image 2026-05-14 at 10.08.22.jpeg",
+            "url": "/uploads/kegiatan/2026060009-1780881443207-WhatsApp Image 2026-05-14 at 10.08.22.jpeg",
+            "uploaded_at": "2026-06-08 08:17:23"
+          },
+          {
+            "name": "Simodar-logo (1).png",
+            "file": "2026060009-1780881443216-Simodar-logo (1).png",
+            "url": "/uploads/kegiatan/2026060009-1780881443216-Simodar-logo (1).png",
+            "uploaded_at": "2026-06-08 08:17:23"
+          },
+          {
+            "name": "Simodar-logo (1).png",
+            "file": "2026060009-1780881443238-Simodar-logo (1).png",
+            "url": "/uploads/kegiatan/2026060009-1780881443238-Simodar-logo (1).png",
+            "uploaded_at": "2026-06-08 08:17:23"
+          }
+        ]
       },
-      "completed_at": "2026-06-04 00:49:20",
-      "history_updated_at": "2026-06-04 01:44:50"
+      "completed_at": "2026-06-08 08:17:23"
+    },
+    {
+      "kode_pengajuan": "2026060010",
+      "tanggal_pengajuan": "2026-06-08 07:48:41",
+      "instansi": "Masjid Istiqlal",
+      "lokasi": "Masjid Istiqlal",
+      "tanggal": "2026-06-23",
+      "jam_mulai": "20:20",
+      "jam_selesai": "20:24",
+      "peserta": "202",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "ojan14021@gmail.com",
+      "email_pic": "ojan14021@gmail.com",
+      "latitude": "",
+      "longitude": "",
+      "maps_url": "https://maps.app.goo.gl/LP3bRxSXBhKW2Rge8",
+      "logistik": [],
+      "surat_pengajuan": "jadwal-simodar-2026060006 (1).pdf",
+      "surat_file": "1780879721131-jadwal-simodar-2026060006 (1).pdf",
+      "created_at": "2026-06-08 07:48:41",
+      "updated_at": "2026-06-09 08:54:13",
+      "staff_assignments": [
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "aftap",
+          "is_pj": true
+        },
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "admin",
+          "is_pj": true
+        },
+        {
+          "name": "Muhammad Fauzan",
+          "role": "dokter",
+          "is_pj": false
+        },
+        {
+          "name": "Tri Hartanti",
+          "role": "admin",
+          "is_pj": false
+        }
+      ],
+      "pj_petugas": "Ayu Putri Savitri",
+      "status": "Selesai",
+      "approved_at": "2026-06-08 08:16:10",
+      "assigned_at": "2026-06-08 08:16:29",
+      "finished_at": "2026-06-08 08:26:45",
+      "result": {
+        "donor_terdaftar": "50",
+        "donor_berhasil": "50",
+        "donor_gagal": "0",
+        "kantong_darah": "50",
+        "snack_terpakai": "50",
+        "catatan": "",
+        "images": [
+          {
+            "name": "dokumentasi-kegiatan-3.png",
+            "file": "2026060010-1780970049817-dokumentasi-kegiatan-3.png",
+            "url": "/uploads/kegiatan/2026060010-1780970049817-dokumentasi-kegiatan-3.png",
+            "uploaded_at": "2026-06-09 08:54:13"
+          },
+          {
+            "name": "dokumentasi-kegiatan-3.png",
+            "file": "2026060010-1780970049894-dokumentasi-kegiatan-3.png",
+            "url": "/uploads/kegiatan/2026060010-1780970049894-dokumentasi-kegiatan-3.png",
+            "uploaded_at": "2026-06-09 08:54:13"
+          },
+          {
+            "name": "dokumentasi-kegiatan-3.png",
+            "file": "2026060010-1780970052260-dokumentasi-kegiatan-3.png",
+            "url": "/uploads/kegiatan/2026060010-1780970052260-dokumentasi-kegiatan-3.png",
+            "uploaded_at": "2026-06-09 08:54:13"
+          }
+        ]
+      },
+      "completed_at": "2026-06-09 08:54:13"
+    },
+    {
+      "kode_pengajuan": "2026060011",
+      "tanggal_pengajuan": "2026-06-09 09:03:17",
+      "instansi": "Masjid Istiqlal",
+      "lokasi": "jakarta",
+      "tanggal": "2026-06-10",
+      "jam_mulai": "20:20",
+      "jam_selesai": "20:24",
+      "peserta": "202",
+      "nama_pic": "Muhammad Fauzan",
+      "whatsapp_pic": "ojan14021@gmail.com",
+      "email_pic": "ojan14021@gmail.com",
+      "latitude": "",
+      "longitude": "",
+      "maps_url": "https://maps.app.goo.gl/LP3bRxSXBhKW2Rge8",
+      "logistik": [],
+      "surat_pengajuan": "laporan-klaim-petugas-2026-06 (5).xls",
+      "surat_file": "1780970597423-laporan-klaim-petugas-2026-06 (5).xls",
+      "created_at": "2026-06-09 09:03:17",
+      "updated_at": "2026-06-09 09:03:57",
+      "staff_assignments": [
+        {
+          "name": "Muhammad Fauzan",
+          "role": "admin",
+          "is_pj": true
+        },
+        {
+          "name": "Ayu Putri Savitri",
+          "role": "hb",
+          "is_pj": false
+        },
+        {
+          "name": "dr.Yanto",
+          "role": "dokter",
+          "is_pj": false
+        }
+      ],
+      "pj_petugas": "Muhammad Fauzan",
+      "status": "Selesai",
+      "approved_at": "2026-06-09 09:03:25",
+      "assigned_at": "2026-06-09 09:03:36",
+      "finished_at": "2026-06-09 09:03:40",
+      "result": {
+        "donor_terdaftar": "50",
+        "donor_berhasil": "50",
+        "donor_gagal": "0",
+        "kantong_darah": "50",
+        "snack_terpakai": "05",
+        "catatan": "",
+        "images": [
+          {
+            "name": "dokumentasi-kegiatan-3.png",
+            "file": "2026060011-1780970637655-dokumentasi-kegiatan-3.png",
+            "url": "/uploads/kegiatan/2026060011-1780970637655-dokumentasi-kegiatan-3.png",
+            "uploaded_at": "2026-06-09 09:03:57"
+          },
+          {
+            "name": "dokumentasi-kegiatan-3.png",
+            "file": "2026060011-1780970637765-dokumentasi-kegiatan-3.png",
+            "url": "/uploads/kegiatan/2026060011-1780970637765-dokumentasi-kegiatan-3.png",
+            "uploaded_at": "2026-06-09 09:03:57"
+          },
+          {
+            "name": "dokumentasi-kegiatan-3.png",
+            "file": "2026060011-1780970637856-dokumentasi-kegiatan-3.png",
+            "url": "/uploads/kegiatan/2026060011-1780970637856-dokumentasi-kegiatan-3.png",
+            "uploaded_at": "2026-06-09 09:03:57"
+          }
+        ]
+      },
+      "completed_at": "2026-06-09 09:03:57"
     }
+  ],
+  "claims": {
+    "2026060010-dokter": "Ayu Putri Savitri"
+  },
+  "logistics": [
+    "Akses colokan listrik",
+    "Parkir Bus"
   ],
   "staff": [
     {
-      "rekening": "11700323226",
-      "created_at": "",
-      "updated_at": "2026-06-05 09:35:59",
-      "id": "ptg-1780506527",
+      "rekening": "117000255062",
+      "created_at": "2026-06-08 01:36:57",
+      "updated_at": "2026-06-08 01:36:57",
+      "id": "ptg-1780857417885",
       "name": "Muhammad Fauzan",
       "roles": [
-        "aftap",
+        "other",
         "admin",
-        "driver"
+        "dokter",
+        "driver",
+        "hb",
+        "aftap"
       ],
       "absen": "4988",
-      "password": "1112233"
+      "password": "4988"
     },
     {
-      "rekening": "",
-      "created_at": "",
-      "updated_at": "",
-      "id": "ptg-1780506550",
+      "rekening": "117000513266",
+      "created_at": "2026-06-08 01:37:25",
+      "updated_at": "2026-06-08 01:37:25",
+      "id": "ptg-1780857445125",
+      "name": "Ayu Putri Savitri",
+      "roles": [
+        "hb",
+        "aftap"
+      ],
+      "absen": "4661",
+      "password": "4661"
+    },
+    {
+      "rekening": "117002615236",
+      "created_at": "2026-06-08 01:44:01",
+      "updated_at": "2026-06-08 01:44:01",
+      "id": "ptg-1780857841919",
       "name": "dr.Yanto",
       "roles": [
+        "other",
         "dokter"
       ],
-      "absen": "1001",
-      "password": "1001"
+      "absen": "1002",
+      "password": "1002"
+    },
+    {
+      "rekening": "11700026060",
+      "created_at": "2026-06-08 03:32:05",
+      "updated_at": "2026-06-08 03:32:05",
+      "id": "ptg-1780864325312",
+      "name": "Tri Hartanti",
+      "roles": [
+        "other",
+        "driver",
+        "aftap"
+      ],
+      "absen": "3002",
+      "password": "3002"
     }
   ],
   "locations": [
     {
       "latitude": "",
       "longitude": "",
+      "maps_url": "https://maps.app.goo.gl/LP3bRxSXBhKW2Rge8",
       "created_at": "",
-      "updated_at": "",
-      "id": "lok-001",
-      "name": "Mandiri Inhealth",
-      "address": "Menara Mandiri Inhealth, Jl. Prof. Dr. Satrio, Jakarta Selatan"
+      "updated_at": "2026-06-08 08:04:07",
+      "id": "test",
+      "name": "Test",
+      "address": ""
     },
     {
       "latitude": "",
       "longitude": "",
-      "created_at": "",
-      "updated_at": "",
-      "id": "lok-002",
-      "name": "SMA 12 Jakarta",
-      "address": "Jl. Pertanian, Duren Sawit, Jakarta Timur"
-    },
-    {
-      "latitude": "",
-      "longitude": "",
-      "created_at": "",
-      "updated_at": "",
-      "id": "lok-003",
-      "name": "Universitas Nasional",
-      "address": "Jl. Sawo Manila, Pejaten, Jakarta Selatan"
-    },
-    {
-      "latitude": "",
-      "longitude": "",
-      "created_at": "",
-      "updated_at": "",
-      "id": "lok-1780506372",
-      "name": "GKY Joglo",
-      "address": "Joglo"
-    },
-    {
-      "latitude": "",
-      "longitude": "",
-      "created_at": "",
-      "updated_at": "",
-      "id": "lok-1780508623",
-      "name": "tes",
-      "address": "tes"
+      "maps_url": "https://maps.app.goo.gl/LP3bRxSXBhKW2Rge8",
+      "created_at": "2026-06-08 08:04:23",
+      "updated_at": "2026-06-09 09:00:45",
+      "id": "lok-2026060010",
+      "name": "Masjid Istiqlal",
+      "address": "jakarta"
     }
   ]
 }

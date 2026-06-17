@@ -39,6 +39,7 @@ export async function loadWorkflowFile() {
     ...workflow,
     staff: workflow.staff || defaults.staff,
     locations: workflow.locations || defaults.locations,
+    logistics: workflow.logistics || defaults.logistics,
   };
 }
 

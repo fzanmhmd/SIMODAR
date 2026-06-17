@@ -12,7 +12,7 @@ import {
   saveWorkflowMysql,
 } from "./mysqlStore.js";
 import { defaultWorkflow, staffRoleOptions } from "./defaults.js";
-import { monthKey, nowStamp, sameMonth } from "../utils/date.js";
+import { dateKey, monthKey, nowStamp, sameMonth, scheduleRuntimeStatus } from "../utils/date.js";
 
 export async function loadPengajuan() {
   return mysqlEnabled() ? loadPengajuanMysql() : loadPengajuanFile();
@@ -36,6 +36,7 @@ export async function loadWorkflow() {
   normalized.locations = (normalized.locations || defaults.locations).map((location) => ({
     latitude: "",
     longitude: "",
+    maps_url: "",
     created_at: "",
     updated_at: "",
     ...location,
@@ -95,6 +96,7 @@ export function activityFromPengajuan(record) {
     email_pic: record.email_pic || "-",
     latitude: record.latitude || "",
     longitude: record.longitude || "",
+    maps_url: record.maps_url || "",
     logistik: record.logistik || [],
     surat_pengajuan: record.surat_pengajuan || "",
     surat_file: record.surat_file || "",
@@ -171,6 +173,7 @@ export function staffHistoryRows(workflow, selectedMonth) {
         return assignments.map((assignment) => ({
           kode: activity.kode_pengajuan,
           lokasi: activity.instansi,
+          alamat: activity.lokasi || "-",
           tanggal: activity.tanggal,
           jam_mulai: activity.jam_mulai || "",
           jam_selesai: activity.jam_selesai || "",
@@ -215,7 +218,23 @@ export async function getAdminSnapshot(selectedMonth = monthKey()) {
   const { records, workflow } = await syncWorkflowFromPengajuan();
   const approvals = pendingPengajuan(records, workflow);
   const histories = (workflow.histories || []).filter((row) => sameMonth(row.tanggal || row.completed_at, selectedMonth));
-  const today = new Date().toISOString().slice(0, 10);
+  const today = dateKey();
+  const todaySchedules = (workflow.schedules || [])
+    .filter((row) => row.tanggal === today)
+    .map((row) => ({
+      ...row,
+      runtime_status: scheduleRuntimeStatus(row),
+    }));
+  const todayFinished = [
+    ...(workflow.results || []).filter((row) => row.tanggal === today),
+    ...(workflow.histories || []).filter((row) => row.tanggal === today && String(row.status || "").toLowerCase().includes("selesai")),
+  ].map((row) => ({
+    ...row,
+    status: "Selesai",
+    runtime_status: "Selesai",
+  }));
+  const todayRunning = [...todaySchedules, ...todayFinished]
+    .sort((a, b) => String(a.jam_mulai || "").localeCompare(String(b.jam_mulai || "")));
 
   const knownLocations = new Map((workflow.locations || []).map((location) => [String(location.name).toLowerCase(), location]));
   for (const record of records) {
@@ -232,6 +251,15 @@ export async function getAdminSnapshot(selectedMonth = monthKey()) {
       });
     }
   }
+  const schedules = (workflow.schedules || []).map((row) => {
+    const location = knownLocations.get(String(row.instansi || "").toLowerCase());
+    return {
+      ...row,
+      latitude: row.latitude || location?.latitude || "",
+      longitude: row.longitude || location?.longitude || "",
+      maps_url: row.maps_url || location?.maps_url || location?.google_maps_url || "",
+    };
+  });
 
   return {
     cards: [
@@ -242,12 +270,12 @@ export async function getAdminSnapshot(selectedMonth = monthKey()) {
     ],
     approvals,
     assignments: workflow.assignments || [],
-    schedules: workflow.schedules || [],
+    schedules,
     results: workflow.results || [],
     histories,
     allHistories: workflow.histories || [],
     historyCounts: historyStatusCounts(histories),
-    todayRunning: (workflow.schedules || []).filter((row) => row.tanggal === today),
+    todayRunning,
     staff: workflow.staff || [],
     staffHistory: staffHistoryRows(workflow, selectedMonth),
     locations: Array.from(knownLocations.values()),

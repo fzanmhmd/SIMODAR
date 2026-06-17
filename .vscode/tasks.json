@@ -17,6 +17,21 @@
       }
     },
     {
+      "label": "Run SIMODAR LAN untuk HP",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev:lan"],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      }
+    },
+    {
       "label": "Build SIMODAR Frontend",
       "type": "shell",
       "command": "npm",

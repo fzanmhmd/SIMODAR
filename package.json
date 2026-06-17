@@ -5,10 +5,13 @@
   "description": "SIMODAR - Sistem Informasi Mobile Unit Donor Darah",
   "scripts": {
     "dev": "concurrently \"npm run dev --workspace backend\" \"npm run dev --workspace frontend\"",
+    "dev:lan": "concurrently \"npm run dev --workspace backend\" \"npm run dev:lan --workspace frontend\"",
     "dev:backend": "npm run dev --workspace backend",
     "dev:frontend": "npm run dev --workspace frontend",
+    "dev:frontend:lan": "npm run dev:lan --workspace frontend",
     "build": "npm run build --workspace frontend",
-    "start": "npm run start --workspace backend"
+    "start": "npm run start --workspace backend",
+    "serve:lan": "npm run build && node scripts/start-lan.mjs"
   },
   "workspaces": [
     "backend",

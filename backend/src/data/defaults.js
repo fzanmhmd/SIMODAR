@@ -1,6 +1,7 @@
 import { nowStamp } from "../utils/date.js";
 
 export const staffRoleOptions = ["dokter", "hb", "aftap", "admin", "driver", "other"];
+export const defaultLogistik = ["listrik", "kursi", "meja", "ruang_tunggu", "parkir", "konsumsi"];
 
 export function defaultWorkflow() {
   const timestamp = nowStamp();
@@ -9,6 +10,8 @@ export function defaultWorkflow() {
     schedules: [],
     results: [],
     histories: [],
+    claims: {},
+    logistics: defaultLogistik,
     staff: [
       {
         id: "ptg-001",
