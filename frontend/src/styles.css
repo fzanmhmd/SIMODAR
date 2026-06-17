@@ -21,7 +21,6 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  cursor: url("/img/cursor-red.svg") 3 2, auto;
 }
 
 button,
@@ -44,7 +43,7 @@ label,
 select,
 input[type="checkbox"],
 input[type="file"] {
-  cursor: url("/img/cursor-red.svg") 3 2, pointer;
+  cursor: pointer;
 }
 
 .simodar-scrollbar::-webkit-scrollbar {
