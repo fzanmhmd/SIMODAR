@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://img.icons8.com/color/120/000000/rh-minus.png" alt="Logo SIMODAR" width="80" />
   <h1>SIMODAR (Sistem Informasi Mobile Unit Donor Darah)</h1>
-  <p><i>Mendigitalisasi dan Mempermudah Operasional Donor Darah PMI & Instansi.</i></p>
+  <p><i>Mendigitalisasi dan Mempermudah Operasional Donor Darah Petugas UPD/PMI.</i></p>
 
   [![Live Demo](https://img.shields.io/badge/Live_Demo-simodar--blood.vercel.app-red?style=for-the-badge)](https://simodar-blood.vercel.app)
   [![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
